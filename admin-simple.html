@@ -1,16 +1,33 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Admin Dashboard (Simple)</title>
+  <title>Admin Simple – No Redirects</title>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; max-width: 1000px; margin: 0 auto; background: #f5f5f5; }
+    .card { background: white; padding: 15px; margin: 10px 0; border-radius: 8px; border: 1px solid #ddd; }
+    .pending { color: #E63946; font-weight: bold; }
+    .approved { color: #2A9D8F; font-weight: bold; }
+    .btn { padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; margin: 5px; }
+    .btn-success { background: #2A9D8F; color: white; }
+    .btn-danger { background: #E63946; color: white; }
+    .btn-primary { background: #C9A84C; color: #0A1628; }
+    #status { padding: 10px; background: #0A1628; color: white; border-radius: 4px; margin-bottom: 20px; }
+    .signin-box { background: white; padding: 30px; border-radius: 8px; text-align: center; max-width: 400px; margin: 50px auto; }
+    .signin-box input { display: block; width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 4px; }
+  </style>
 </head>
 <body>
-  <h1>Admin Dashboard – Simple View</h1>
-  <div id="jobs"></div>
+
+  <div id="status">Loading...</div>
+  <div id="content"></div>
 
   <script>
+    // ============================================================
+    // FIREBASE CONFIG
+    // ============================================================
     const firebaseConfig = {
       apiKey: "AIzaSyBxeiG78oHv8wSLGRK_GAAD_mqvZKJtu30",
       authDomain: "jobpitality-1cfb2.firebaseapp.com",
@@ -23,92 +40,249 @@
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
     const db = firebase.firestore();
-    const jobsDiv = document.getElementById('jobs');
 
-    // ---- Show a sign‑in pop‑up if not logged in ----
-    auth.onAuthStateChanged(async function(user) {
-      if (!user) {
-        jobsDiv.innerHTML = `
-          <p>🔐 Please sign in to view jobs.</p>
-          <button onclick="signInPopup()" style="padding:12px 24px;font-size:16px;cursor:pointer;background:#C9A84C;border:none;border-radius:8px;font-weight:bold;">
-            Sign in with Email
+    const statusDiv = document.getElementById('status');
+    const contentDiv = document.getElementById('content');
+    let currentUser = null;
+
+    // ============================================================
+    // SHOW LOGIN FORM (No redirects, no loops)
+    // ============================================================
+    function showLoginForm() {
+      statusDiv.innerHTML = '🔐 Please sign in to continue.';
+      contentDiv.innerHTML = `
+        <div class="signin-box">
+          <h2>Admin Sign In</h2>
+          <p style="color:#666;">Sign in to approve employers and manage jobs.</p>
+          <input type="email" id="loginEmail" placeholder="Email" value="oborimusa@gmail.com" />
+          <input type="password" id="loginPassword" placeholder="Password" />
+          <button class="btn btn-primary" onclick="handleLogin()" style="width:100%;padding:12px;font-size:16px;">
+            <i class="fas fa-sign-in-alt"></i> Sign In
           </button>
-          <p style="font-size:13px;color:#888;margin-top:12px;">Default admin: jobpitality@gmail.com</p>
-        `;
+          <p style="margin-top:10px;font-size:12px;color:#999;">Try: oborimusa@gmail.com</p>
+        </div>
+      `;
+    }
+
+    // ============================================================
+    // HANDLE LOGIN
+    // ============================================================
+    window.handleLogin = function() {
+      const email = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value.trim();
+
+      if (!email || !password) {
+        alert('Please enter both email and password.');
         return;
       }
 
-      // ---- Signed in – load jobs ----
-      jobsDiv.innerHTML = '<p>⏳ Loading jobs…</p>';
-
-      try {
-        const snapshot = await db.collection('jobs').get();
-
-        if (snapshot.empty) {
-          jobsDiv.innerHTML = '<p>📭 No jobs found in Firestore.</p>';
-          return;
-        }
-
-        let html = `<h2>📋 All Jobs (${snapshot.size})</h2>`;
-        snapshot.forEach(doc => {
-          const job = doc.data();
-          const status = job.status || 'pending';
-          const posted = job.postedDate?.toDate?.() 
-            ? new Date(job.postedDate.toDate()).toLocaleDateString() 
-            : 'Unknown';
-
-          html += `
-            <div style="border:1px solid #ccc;padding:15px;margin:10px 0;border-radius:8px;">
-              <h3>${job.jobTitle || 'Untitled'}</h3>
-              <p><strong>Company:</strong> ${job.companyName || 'N/A'}</p>
-              <p><strong>Status:</strong> <span style="font-weight:bold;color:${status === 'pending' ? '#E63946' : '#2A9D8F'}">${status}</span></p>
-              <p><strong>Posted:</strong> ${posted}</p>
-              <p><strong>Description:</strong> ${job.jobDescription ? job.jobDescription.substring(0, 120) + '…' : 'N/A'}</p>
-              ${status === 'pending' ? `
-                <button onclick="updateStatus('${doc.id}', 'approved')" style="background:#2A9D8F;color:white;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;">✅ Approve</button>
-                <button onclick="updateStatus('${doc.id}', 'rejected')" style="background:#E63946;color:white;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;">❌ Reject</button>
-              ` : `
-                <span>✅ Already ${status}</span>
-              `}
-            </div>
-          `;
-        });
-        jobsDiv.innerHTML = html;
-
-      } catch (error) {
-        console.error('Error loading jobs:', error);
-        jobsDiv.innerHTML = `<p>❌ Error loading jobs: ${error.message}</p>`;
-      }
-    });
-
-    // ---- Sign‑in function (pop‑up) ----
-    window.signInPopup = function() {
-      const email = prompt('Enter your email:');
-      if (!email) return;
-      const password = prompt('Enter your password:');
-      if (!password) return;
-
+      statusDiv.innerHTML = '⏳ Signing in...';
       auth.signInWithEmailAndPassword(email, password)
-        .then(() => {
-          alert('✅ Signed in successfully!');
-          location.reload();
+        .then(function(userCredential) {
+          currentUser = userCredential.user;
+          statusDiv.innerHTML = '✅ Signed in as: ' + currentUser.email;
+          loadData();
         })
-        .catch(error => {
-          alert('❌ Error signing in: ' + error.message);
+        .catch(function(error) {
+          statusDiv.innerHTML = '❌ Error: ' + error.message;
+          alert('Login failed: ' + error.message);
         });
     };
 
-    // ---- Update job status ----
-    window.updateStatus = async function(jobId, newStatus) {
+    // ============================================================
+    // CHECK AUTH STATE (No redirects)
+    // ============================================================
+    auth.onAuthStateChanged(function(user) {
+      if (user) {
+        currentUser = user;
+        statusDiv.innerHTML = '✅ Signed in as: ' + user.email;
+        loadData();
+      } else {
+        showLoginForm();
+      }
+    });
+
+    // ============================================================
+    // LOAD DATA
+    // ============================================================
+    async function loadData() {
+      contentDiv.innerHTML = '<p>📡 Loading data...</p>';
+
       try {
-        await db.collection('jobs').doc(jobId).update({
-          status: newStatus,
+        // Load employers
+        const empSnap = await db.collection('employers').get();
+        const employers = [];
+        empSnap.forEach(function(doc) {
+          const data = doc.data();
+          data.id = doc.id;
+          if (!data.status) data.status = 'pending';
+          employers.push(data);
+        });
+
+        // Load jobs
+        const jobSnap = await db.collection('jobs').get();
+        const jobs = [];
+        jobSnap.forEach(function(doc) {
+          const data = doc.data();
+          data.id = doc.id;
+          if (!data.status) data.status = 'pending';
+          jobs.push(data);
+        });
+
+        // Render
+        renderEmployers(employers);
+        renderJobs(jobs);
+
+      } catch (e) {
+        contentDiv.innerHTML = '<p style="color:red;">❌ Error loading data: ' + e.message + '</p>';
+        console.error('Error:', e);
+      }
+    }
+
+    // ============================================================
+    // RENDER EMPLOYERS
+    // ============================================================
+    function renderEmployers(employers) {
+      if (employers.length === 0) {
+        contentDiv.innerHTML += '<h3>Employers</h3><p>No employers found.</p>';
+        return;
+      }
+
+      let html = '<h3>👥 Employers (' + employers.length + ')</h3>';
+      employers.forEach(function(emp) {
+        const statusClass = emp.status === 'approved' ? 'approved' : 'pending';
+        const statusLabel = emp.status ? emp.status.toUpperCase() : 'PENDING';
+
+        html += `
+          <div class="card">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+              <div>
+                <strong>${emp.companyName || 'Unnamed'}</strong>
+                <span style="font-size:0.85rem;color:#666;margin-left:10px;">${emp.contactName || 'N/A'}</span>
+              </div>
+              <span class="${statusClass}">${statusLabel}</span>
+            </div>
+            <div style="font-size:0.85rem;color:#666;margin:5px 0;">
+              <span>📧 ${emp.contactEmail || 'N/A'}</span>
+              <span style="margin-left:15px;">📋 ${emp.plan || 'No plan'}</span>
+            </div>
+            ${emp.status === 'pending' ? `
+              <div style="margin-top:10px;">
+                <button class="btn btn-success" onclick="approveEmployer('${emp.id}')">✅ Approve</button>
+                <button class="btn btn-danger" onclick="rejectEmployer('${emp.id}')">❌ Reject</button>
+              </div>
+            ` : `
+              <div style="margin-top:10px;color:#666;font-size:0.85rem;">
+                ✅ Already ${emp.status}
+              </div>
+            `}
+          </div>
+        `;
+      });
+
+      contentDiv.innerHTML = html + contentDiv.innerHTML;
+    }
+
+    // ============================================================
+    // RENDER JOBS
+    // ============================================================
+    function renderJobs(jobs) {
+      if (jobs.length === 0) {
+        contentDiv.innerHTML += '<h3 style="margin-top:20px;">📋 Jobs</h3><p>No jobs found.</p>';
+        return;
+      }
+
+      let html = '<h3 style="margin-top:20px;">📋 Jobs (' + jobs.length + ')</h3>';
+      jobs.forEach(function(job) {
+        const statusClass = job.status === 'approved' ? 'approved' : 'pending';
+        const statusLabel = job.status ? job.status.toUpperCase() : 'PENDING';
+
+        html += `
+          <div class="card">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+              <div>
+                <strong>${job.jobTitle || 'Untitled'}</strong>
+                <span style="font-size:0.85rem;color:#666;margin-left:10px;">${job.companyName || 'N/A'}</span>
+              </div>
+              <span class="${statusClass}">${statusLabel}</span>
+            </div>
+            <div style="font-size:0.85rem;color:#666;margin:5px 0;">
+              <span>📍 ${job.jobLocation || 'N/A'}</span>
+              <span style="margin-left:15px;">💰 ${job.jobSalary || 'N/A'}</span>
+            </div>
+            ${job.status === 'pending' ? `
+              <div style="margin-top:10px;">
+                <button class="btn btn-success" onclick="approveJob('${job.id}')">✅ Approve Job</button>
+                <button class="btn btn-danger" onclick="rejectJob('${job.id}')">❌ Reject Job</button>
+              </div>
+            ` : `
+              <div style="margin-top:10px;color:#666;font-size:0.85rem;">
+                ✅ Already ${job.status}
+              </div>
+            `}
+          </div>
+        `;
+      });
+
+      contentDiv.innerHTML += html;
+    }
+
+    // ============================================================
+    // APPROVE / REJECT FUNCTIONS
+    // ============================================================
+    window.approveEmployer = async function(id) {
+      if (!confirm('Approve this employer?')) return;
+      try {
+        await db.collection('employers').doc(id).update({
+          status: 'approved',
           approvedDate: firebase.firestore.FieldValue.serverTimestamp()
         });
-        alert('✅ Job ' + newStatus + ' successfully!');
+        alert('✅ Employer approved!');
         location.reload();
-      } catch (error) {
-        alert('❌ Error: ' + error.message);
+      } catch (e) {
+        alert('❌ Error: ' + e.message);
+      }
+    };
+
+    window.rejectEmployer = async function(id) {
+      if (!confirm('Reject this employer?')) return;
+      try {
+        await db.collection('employers').doc(id).update({
+          status: 'rejected',
+          approvedDate: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        alert('❌ Employer rejected.');
+        location.reload();
+      } catch (e) {
+        alert('❌ Error: ' + e.message);
+      }
+    };
+
+    window.approveJob = async function(id) {
+      if (!confirm('Approve this job?')) return;
+      try {
+        await db.collection('jobs').doc(id).update({
+          status: 'approved',
+          approvedDate: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        alert('✅ Job approved!');
+        location.reload();
+      } catch (e) {
+        alert('❌ Error: ' + e.message);
+      }
+    };
+
+    window.rejectJob = async function(id) {
+      if (!confirm('Reject this job?')) return;
+      try {
+        await db.collection('jobs').doc(id).update({
+          status: 'rejected',
+          approvedDate: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        alert('❌ Job rejected.');
+        location.reload();
+      } catch (e) {
+        alert('❌ Error: ' + e.message);
       }
     };
   </script>
