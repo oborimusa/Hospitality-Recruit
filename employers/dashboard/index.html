@@ -2,18 +2,16 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin Dashboard | HospitalityRecruit</title>
-  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700&display=swap" rel="stylesheet" />
-  <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
   <style>
     * { margin:0; padding:0; box-sizing:border-box; }
     body { font-family:'Inter',sans-serif; background:#f4f2ee; }
@@ -23,7 +21,7 @@
     .brand { font-family:'Playfair Display',serif; font-size:1.6rem; font-weight:800; color:white; text-decoration:none; }
     .brand .gold { color:#C9A84C; }
     .user-badge { background:rgba(255,255,255,0.1); padding:8px 16px; border-radius:50px; font-weight:600; font-size:0.85rem; display:inline-flex; align-items:center; gap:8px; }
-    .btn { padding:8px 20px; border-radius:50px; border:2px solid #C9A84C; background:transparent; color:#C9A84C; font-weight:600; cursor:pointer; transition:0.2s; font-size:0.85rem; }
+    .btn { padding:8px 20px; border-radius:50px; border:2px solid #C9A84C; background:transparent; color:#C9A84C; font-weight:600; cursor:pointer; transition:0.2s; font-size:0.85rem; font-family:'Inter',sans-serif; }
     .btn:hover { background:#C9A84C; color:#0A1628; }
     .btn-success { background:#2A9D8F; border-color:#2A9D8F; color:white; }
     .btn-success:hover { background:#21867a; border-color:#21867a; }
@@ -33,23 +31,20 @@
     .btn-gold { background:#C9A84C; border-color:#C9A84C; color:#0A1628; }
     .btn-gold:hover { background:#E8C84A; border-color:#E8C84A; }
 
-    /* Tabs */
     .tabs { display:flex; gap:5px; margin:20px 0; border-bottom:2px solid #ddd; }
-    .tab-btn { padding:10px 25px; border:none; background:transparent; font-weight:600; font-size:0.95rem; color:#8A8580; cursor:pointer; border-bottom:3px solid transparent; transition:0.2s; }
+    .tab-btn { padding:10px 25px; border:none; background:transparent; font-weight:600; font-size:0.95rem; color:#8A8580; cursor:pointer; border-bottom:3px solid transparent; transition:0.2s; font-family:'Inter',sans-serif; }
     .tab-btn.active { color:#0A1628; border-bottom-color:#C9A84C; }
+    .tab-btn .badge { background:#E63946; color:white; padding:0 8px; border-radius:50px; font-size:0.7rem; margin-left:5px; }
 
-    /* Stats */
     .stats { display:grid; grid-template-columns:repeat(4,1fr); gap:15px; margin:20px 0; }
     .stat-card { background:white; padding:20px; border-radius:12px; text-align:center; box-shadow:0 2px 8px rgba(0,0,0,0.05); }
-    .stat-number { font-size:2rem; font-weight:800; color:#0A1628; }
+    .stat-number { font-size:2rem; font-weight:800; color:#0A1628; display:block; }
     .stat-label { font-size:0.8rem; color:#8A8580; text-transform:uppercase; letter-spacing:0.5px; }
 
-    /* Filters */
     .filters { display:flex; gap:10px; margin:15px 0; flex-wrap:wrap; }
-    .filter-btn { padding:6px 16px; border:2px solid #ddd; border-radius:50px; background:white; font-weight:600; cursor:pointer; transition:0.2s; font-size:0.85rem; }
+    .filter-btn { padding:6px 16px; border:2px solid #ddd; border-radius:50px; background:white; font-weight:600; cursor:pointer; transition:0.2s; font-size:0.85rem; font-family:'Inter',sans-serif; }
     .filter-btn.active { background:#C9A84C; border-color:#C9A84C; color:#0A1628; }
 
-    /* Cards */
     .card-list { display:grid; gap:15px; margin-top:15px; }
     .card { background:white; padding:18px; border-radius:12px; border:1px solid #ddd; box-shadow:0 2px 8px rgba(0,0,0,0.05); }
     .card .header { display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:10px; }
@@ -75,10 +70,17 @@
     .toast.error { background:#E63946; }
     .toast.info { background:#0A1628; }
 
-    @media (max-width:768px) { .stats { grid-template-columns:1fr 1fr; } }
+    .access-denied { text-align:center; padding:60px 20px; background:white; border-radius:12px; border:1px solid #ddd; }
+
+    @media (max-width:768px) {
+      .stats { grid-template-columns:1fr 1fr; }
+      .header-flex { flex-direction:column; align-items:flex-start; }
+    }
   </style>
 </head>
 <body>
+
+  <!-- ===== HEADER ===== -->
   <header>
     <div class="container">
       <div class="header-flex">
@@ -91,22 +93,39 @@
     </div>
   </header>
 
+  <!-- ===== MAIN ===== -->
   <main class="container" style="padding:20px 0;">
     <h1>Admin Dashboard</h1>
-    <p style="color:#8A8580;margin-bottom:10px;">Manage job postings and employer registrations.</p>
+    <p style="color:#8A8580;margin-bottom:10px;">Approve or reject job postings and employer registrations.</p>
 
     <!-- Tabs -->
     <div class="tabs">
-      <button class="tab-btn active" data-tab="jobs">Jobs</button>
-      <button class="tab-btn" data-tab="employers">Employers <span id="pendingEmployerBadge" style="background:#E63946;color:white;padding:0 8px;border-radius:50px;font-size:0.7rem;margin-left:5px;">0</span></button>
+      <button class="tab-btn active" data-tab="jobs">
+        Jobs <span class="badge" id="pendingJobBadge">0</span>
+      </button>
+      <button class="tab-btn" data-tab="employers">
+        Employers <span class="badge" id="pendingEmployerBadge">0</span>
+      </button>
     </div>
 
     <!-- Stats -->
     <div class="stats" id="statsGrid">
-      <div class="stat-card"><span class="stat-number" id="statTotal">0</span><span class="stat-label">Total Jobs</span></div>
-      <div class="stat-card"><span class="stat-number" id="statPending" style="color:#E63946;">0</span><span class="stat-label">Pending Jobs</span></div>
-      <div class="stat-card"><span class="stat-number" id="statApproved" style="color:#2A9D8F;">0</span><span class="stat-label">Approved</span></div>
-      <div class="stat-card"><span class="stat-number" id="statRejected">0</span><span class="stat-label">Rejected</span></div>
+      <div class="stat-card">
+        <span class="stat-number" id="statTotal">0</span>
+        <span class="stat-label" id="statTotalLabel">Total Jobs</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number" id="statPending" style="color:#E63946;">0</span>
+        <span class="stat-label" id="statPendingLabel">Pending Jobs</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number" id="statApproved" style="color:#2A9D8F;">0</span>
+        <span class="stat-label" id="statApprovedLabel">Approved</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number" id="statRejected">0</span>
+        <span class="stat-label" id="statRejectedLabel">Rejected</span>
+      </div>
     </div>
 
     <!-- Filters -->
@@ -132,6 +151,7 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
+
       // ============================================================
       // 1. FIREBASE CONFIG
       // ============================================================
@@ -162,11 +182,15 @@
       const statPending = document.getElementById('statPending');
       const statApproved = document.getElementById('statApproved');
       const statRejected = document.getElementById('statRejected');
+      const statTotalLabel = document.getElementById('statTotalLabel');
+      const statPendingLabel = document.getElementById('statPendingLabel');
+      const statApprovedLabel = document.getElementById('statApprovedLabel');
+      const statRejectedLabel = document.getElementById('statRejectedLabel');
       const pendingBadge = document.getElementById('pendingBadge');
+      const pendingJobBadge = document.getElementById('pendingJobBadge');
       const pendingEmployerBadge = document.getElementById('pendingEmployerBadge');
       const logoutBtn = document.getElementById('logoutBtn');
-      const filterBtns = document.querySelectorAll('.filter-btn');
-      const tabBtns = document.querySelectorAll('.tab-btn');
+      const filterContainer = document.getElementById('filterContainer');
       const toast = document.getElementById('toast');
 
       let allJobs = [];
@@ -174,109 +198,153 @@
       let currentTab = 'jobs';
       let currentFilter = 'all';
       let toastTimeout = null;
+      let listenersBound = false; // guards against duplicate binding
 
       // ============================================================
-      // 3. AUTH
+      // 3. AUTH + ADMIN CHECK
       // ============================================================
       if (auth) {
         auth.onAuthStateChanged(async function(user) {
-          if (user) {
+          if (!user) {
+            document.getElementById('adminName').textContent = 'Not Signed In';
+            container.innerHTML = `
+              <div class="access-denied">
+                <i class="fas fa-lock" style="font-size:3rem;color:#E63946;margin-bottom:15px;"></i>
+                <h3>Sign In Required</h3>
+                <p style="color:#8A8580;">Please sign in to access the admin dashboard.</p>
+                <a href="/employers/login/" class="btn btn-gold" style="margin-top:15px;display:inline-block;">Sign In</a>
+              </div>
+            `;
+            filterContainer.style.display = 'none';
+            return;
+          }
+
+          // --- Admin authorization check via custom claim ---
+          try {
+            const tokenResult = await user.getIdTokenResult(true); // force refresh
+            const isAdmin = tokenResult.claims.admin === true;
+
+            if (!isAdmin) {
+              document.getElementById('adminName').textContent = user.displayName || user.email || 'User';
+              container.innerHTML = `
+                <div class="access-denied">
+                  <i class="fas fa-ban" style="font-size:3rem;color:#E63946;margin-bottom:15px;"></i>
+                  <h3>Access Denied</h3>
+                  <p style="color:#8A8580;">This dashboard is for administrators only.</p>
+                </div>
+              `;
+              filterContainer.style.display = 'none';
+              return;
+            }
+
             document.getElementById('adminName').textContent = user.displayName || user.email || 'Admin';
-            try {
-              if (db) {
-                const doc = await db.collection('admins').doc(user.uid).get();
-                const isAdmin = doc.exists && doc.data().role === 'admin';
-                if (!isAdmin) {
-                  const emailQuery = await db.collection('admins').where('email', '==', user.email).get();
-                  if (emailQuery.empty) {
-                    showToast('Access denied.', 'error');
-                    setTimeout(() => window.location.href = '/', 2000);
-                    return;
-                  }
-                }
-                loadAllData();
-              } else { loadDemoData(); }
-            } catch(e) { console.error('Error:', e); loadDemoData(); }
-          } else {
-            window.location.href = '/employers/login/';
+            console.log('✅ Admin signed in:', user.email);
+            loadAllData();
+          } catch (err) {
+            console.error('❌ Auth check failed:', err);
+            showToast('Could not verify admin access.', 'error');
           }
         });
+      } else {
+        // Firebase failed to init — run in demo mode so page is not dead
+        document.getElementById('adminName').textContent = 'Demo Mode';
+        loadDemoData();
       }
 
       // ============================================================
       // 4. LOGOUT
       // ============================================================
       if (logoutBtn && auth) {
-        logoutBtn.addEventListener('click', () => auth.signOut().then(() => window.location.href = '/employers/login/'));
+        logoutBtn.addEventListener('click', function() {
+          auth.signOut().then(() => window.location.href = '/employers/login/');
+        });
       }
 
       // ============================================================
-      // 5. LOAD ALL DATA
+      // 5. LOAD ALL DATA (client-side sort to avoid dropping docs)
       // ============================================================
       async function loadAllData() {
         if (!db) { loadDemoData(); return; }
         try {
-          // Load Jobs
-          const jobSnap = await db.collection('jobs').orderBy('postedDate', 'desc').get();
+          // ----- Jobs -----
+          const jobSnap = await db.collection('jobs').get();
           allJobs = [];
           jobSnap.forEach(doc => {
             const data = doc.data();
             if (!data.status) data.status = 'pending';
             allJobs.push({ id: doc.id, ...data });
           });
-          console.log('📋 Jobs:', allJobs.length);
+          allJobs.sort((a, b) => toMillis(b.postedDate) - toMillis(a.postedDate));
+          console.log('📋 Jobs loaded:', allJobs.length);
 
-          // Load Employers
-          const empSnap = await db.collection('employers').orderBy('createdAt', 'desc').get();
+          // ----- Employers -----
+          const empSnap = await db.collection('employers').get();
           allEmployers = [];
           empSnap.forEach(doc => {
             const data = doc.data();
             if (!data.status) data.status = 'pending';
             allEmployers.push({ id: doc.id, ...data });
           });
-          console.log('👥 Employers:', allEmployers.length);
+          allEmployers.sort((a, b) => toMillis(b.createdAt) - toMillis(a.createdAt));
+          console.log('👥 Employers loaded:', allEmployers.length);
 
           renderView(currentTab);
           updateStats();
           updateEmployerBadge();
+          bindStaticEvents();
 
         } catch(e) {
           console.error('❌ Error loading data:', e);
-          showToast('Error loading data.', 'error');
+          showToast('Error loading data. Check Firestore rules.', 'error');
           loadDemoData();
         }
       }
 
+      // Safe timestamp → ms
+      function toMillis(ts) {
+        if (!ts) return 0;
+        if (typeof ts.toDate === 'function') return ts.toDate().getTime();
+        const d = new Date(ts);
+        return isNaN(d.getTime()) ? 0 : d.getTime();
+      }
+
+      function formatDate(ts, fallback) {
+        if (!ts) return fallback || 'Recently';
+        if (typeof ts.toDate === 'function') return ts.toDate().toLocaleDateString();
+        const d = new Date(ts);
+        return isNaN(d.getTime()) ? (fallback || 'Recently') : d.toLocaleDateString();
+      }
+
       // ============================================================
-      // 6. DEMO DATA
+      // 6. DEMO DATA (fallback)
       // ============================================================
       function loadDemoData() {
-        allJobs = [
-          { id: 'demo1', jobTitle: 'Executive Chef', companyName: '4T Luxury Hotel', jobLocation: 'Osogbo', jobType: 'Full-time', jobSalary: '₦8-12M/year', jobTags: ['Fine Dining'], jobDescription: 'Seeking a visionary Executive Chef.', status: 'pending', postedDate: new Date(), contactName: 'John Doe', companyEmail: 'hr@4tluxury.com' },
-          { id: 'demo2', jobTitle: 'Hotel Manager', companyName: 'Calmcity Hotel', jobLocation: 'Ilorin', jobType: 'Full-time', jobSalary: '₦10-15M/year', jobTags: ['Management'], jobDescription: 'Looking for an experienced Hotel Manager.', status: 'approved', postedDate: new Date(Date.now()-86400000), contactName: 'Jane Smith', companyEmail: 'hr@calmcity.com' }
-        ];
-        allEmployers = [
-          { id: 'emp1', companyName: '4T Luxury Hotel', contactName: 'John Doe', contactEmail: 'john@4tluxury.com', plan: 'executive', status: 'pending', createdAt: new Date() }
-        ];
+        allJobs = [{
+          id: 'demo1', jobTitle: 'Executive Chef', companyName: '4T Luxury Hotel',
+          jobLocation: 'Osogbo', jobType: 'Full-time', jobSalary: '₦8-12M/year',
+          jobTags: ['Fine Dining'], jobDescription: 'Seeking a visionary Executive Chef.',
+          status: 'pending', postedDate: new Date(), contactName: 'John Doe', companyEmail: 'hr@4tluxury.com'
+        }];
+        allEmployers = [{
+          id: 'emp1', companyName: '4T Luxury Hotel', contactName: 'John Doe',
+          contactEmail: 'john@4tluxury.com', plan: 'executive', status: 'pending', createdAt: new Date()
+        }];
         renderView(currentTab);
         updateStats();
         updateEmployerBadge();
-        showToast('Demo mode – sample data loaded.', 'info');
+        bindStaticEvents();
       }
 
       // ============================================================
       // 7. RENDER VIEW
       // ============================================================
       function renderView(tab) {
-        if (tab === 'jobs') {
-          renderJobs(currentFilter);
-        } else {
-          renderEmployers(currentFilter);
-        }
+        if (tab === 'jobs') renderJobs(currentFilter);
+        else renderEmployers(currentFilter);
       }
 
       // ============================================================
-      // 8. RENDER JOBS
+      // 8. RENDER JOBS (ADMIN ONLY)
       // ============================================================
       function renderJobs(filter) {
         const filtered = filter === 'all' ? allJobs : allJobs.filter(j => j.status === filter);
@@ -288,12 +356,9 @@
         cardList.innerHTML = filtered.map(job => {
           const statusClass = job.status || 'pending';
           const statusLabel = statusClass.charAt(0).toUpperCase() + statusClass.slice(1);
-          let postedDate = 'Recently';
-          if (job.postedDate) {
-            if (job.postedDate.toDate) postedDate = job.postedDate.toDate().toLocaleDateString();
-            else postedDate = new Date(job.postedDate).toLocaleDateString();
-          }
+          const postedDate = formatDate(job.postedDate);
           const tags = (job.jobTags || []).map(t => `<span class="card-tag">${t}</span>`).join('');
+
           let actions = '';
           if (job.status === 'pending') {
             actions = `
@@ -307,7 +372,10 @@
           return `
             <div class="card" data-id="${job.id}">
               <div class="header">
-                <div><div class="title">${job.jobTitle || 'Untitled'}</div><div class="sub"><i class="fas fa-building"></i> ${job.companyName || 'N/A'}</div></div>
+                <div>
+                  <div class="title">${job.jobTitle || 'Untitled'}</div>
+                  <div class="sub"><i class="fas fa-building"></i> ${job.companyName || 'N/A'}</div>
+                </div>
                 <span class="status-badge ${statusClass}">${statusLabel}</span>
               </div>
               <div class="meta">
@@ -319,18 +387,24 @@
               ${job.jobDescription ? `<div class="desc">${job.jobDescription}</div>` : ''}
               ${tags ? `<div style="margin:6px 0;">${tags}</div>` : ''}
               <div class="card-actions">${actions}</div>
-              <div style="font-size:0.75rem;color:#8A8580;margin-top:6px;"><i class="fas fa-user"></i> ${job.contactName || 'N/A'} (${job.companyEmail || 'N/A'})</div>
+              <div style="font-size:0.75rem;color:#8A8580;margin-top:6px;">
+                <i class="fas fa-user"></i> ${job.contactName || 'N/A'} (${job.companyEmail || 'N/A'})
+              </div>
             </div>
           `;
         }).join('');
 
-        // Attach approve/reject
-        document.querySelectorAll('.approve-btn').forEach(btn => btn.addEventListener('click', function() { updateJobStatus(this.dataset.id, 'approved'); }));
-        document.querySelectorAll('.reject-btn').forEach(btn => btn.addEventListener('click', function() { updateJobStatus(this.dataset.id, 'rejected'); }));
+        // Bind action buttons (scoped to current render, no duplicates)
+        cardList.querySelectorAll('.approve-btn').forEach(btn =>
+          btn.addEventListener('click', function() { updateJobStatus(this.dataset.id, 'approved'); })
+        );
+        cardList.querySelectorAll('.reject-btn').forEach(btn =>
+          btn.addEventListener('click', function() { updateJobStatus(this.dataset.id, 'rejected'); })
+        );
       }
 
       // ============================================================
-      // 9. RENDER EMPLOYERS
+      // 9. RENDER EMPLOYERS (ADMIN ONLY)
       // ============================================================
       function renderEmployers(filter) {
         const filtered = filter === 'all' ? allEmployers : allEmployers.filter(e => e.status === filter);
@@ -343,11 +417,7 @@
           const statusClass = emp.status || 'pending';
           const statusLabel = statusClass.charAt(0).toUpperCase() + statusClass.slice(1);
           const planLabel = emp.plan ? emp.plan.charAt(0).toUpperCase() + emp.plan.slice(1) : 'None';
-          let createdAt = 'Recently';
-          if (emp.createdAt) {
-            if (emp.createdAt.toDate) createdAt = emp.createdAt.toDate().toLocaleDateString();
-            else createdAt = new Date(emp.createdAt).toLocaleDateString();
-          }
+          const createdAt = formatDate(emp.createdAt);
 
           let actions = '';
           if (emp.status === 'pending') {
@@ -362,7 +432,10 @@
           return `
             <div class="card" data-id="${emp.id}">
               <div class="header">
-                <div><div class="title">${emp.companyName || 'Unnamed Company'}</div><div class="sub"><i class="fas fa-user"></i> ${emp.contactName || 'N/A'}</div></div>
+                <div>
+                  <div class="title">${emp.companyName || 'Unnamed Company'}</div>
+                  <div class="sub"><i class="fas fa-user"></i> ${emp.contactName || 'N/A'}</div>
+                </div>
                 <span class="status-badge ${statusClass}">${statusLabel}</span>
               </div>
               <div class="meta">
@@ -375,54 +448,116 @@
           `;
         }).join('');
 
-        document.querySelectorAll('.approve-emp-btn').forEach(btn => btn.addEventListener('click', function() { updateEmployerStatus(this.dataset.id, 'approved'); }));
-        document.querySelectorAll('.reject-emp-btn').forEach(btn => btn.addEventListener('click', function() { updateEmployerStatus(this.dataset.id, 'rejected'); }));
+        cardList.querySelectorAll('.approve-emp-btn').forEach(btn =>
+          btn.addEventListener('click', function() { updateEmployerStatus(this.dataset.id, 'approved'); })
+        );
+        cardList.querySelectorAll('.reject-emp-btn').forEach(btn =>
+          btn.addEventListener('click', function() { updateEmployerStatus(this.dataset.id, 'rejected'); })
+        );
       }
 
       // ============================================================
-      // 10. UPDATE JOB STATUS
+      // 10. UPDATE JOB STATUS (ADMIN ONLY)
       // ============================================================
       async function updateJobStatus(jobId, newStatus) {
-        if (!db) { const job = allJobs.find(j => j.id === jobId); if (job) { job.status = newStatus; renderView(currentTab); updateStats(); showToast('Job ' + newStatus + '!', 'success'); } return; }
+        if (!db) {
+          const job = allJobs.find(j => j.id === jobId);
+          if (job) {
+            job.status = newStatus;
+            renderView(currentTab);
+            updateStats();
+            showToast('Job ' + newStatus + '!', 'success');
+          }
+          return;
+        }
         try {
-          await db.collection('jobs').doc(jobId).update({ status: newStatus, approvedDate: firebase.firestore.FieldValue.serverTimestamp() });
+          const update = {
+            status: newStatus,
+            reviewedDate: firebase.firestore.FieldValue.serverTimestamp()
+          };
+          if (newStatus === 'approved') {
+            update.approvedDate = firebase.firestore.FieldValue.serverTimestamp();
+          }
+          await db.collection('jobs').doc(jobId).update(update);
+
           const job = allJobs.find(j => j.id === jobId);
           if (job) job.status = newStatus;
-          renderView(currentTab); updateStats(); showToast('Job ' + newStatus + '!', 'success');
-        } catch(e) { showToast('Error updating job.', 'error'); }
+          renderView(currentTab);
+          updateStats();
+          showToast('Job ' + newStatus + '!', 'success');
+        } catch(e) {
+          console.error(e);
+          showToast('Error updating job.', 'error');
+        }
       }
 
       // ============================================================
-      // 11. UPDATE EMPLOYER STATUS
+      // 11. UPDATE EMPLOYER STATUS (ADMIN ONLY)
       // ============================================================
       async function updateEmployerStatus(empId, newStatus) {
-        if (!db) { const emp = allEmployers.find(e => e.id === empId); if (emp) { emp.status = newStatus; renderView(currentTab); updateEmployerBadge(); showToast('Employer ' + newStatus + '!', 'success'); } return; }
+        if (!db) {
+          const emp = allEmployers.find(e => e.id === empId);
+          if (emp) {
+            emp.status = newStatus;
+            renderView(currentTab);
+            updateEmployerBadge();
+            showToast('Employer ' + newStatus + '!', 'success');
+          }
+          return;
+        }
         try {
-          await db.collection('employers').doc(empId).update({ status: newStatus, approvedDate: firebase.firestore.FieldValue.serverTimestamp() });
+          const update = {
+            status: newStatus,
+            reviewedDate: firebase.firestore.FieldValue.serverTimestamp()
+          };
+          if (newStatus === 'approved') {
+            update.approvedDate = firebase.firestore.FieldValue.serverTimestamp();
+          }
+          await db.collection('employers').doc(empId).update(update);
+
           const emp = allEmployers.find(e => e.id === empId);
           if (emp) emp.status = newStatus;
-          renderView(currentTab); updateEmployerBadge(); showToast('Employer ' + newStatus + '!', 'success');
-        } catch(e) { showToast('Error updating employer.', 'error'); }
+          renderView(currentTab);
+          updateEmployerBadge();
+          showToast('Employer ' + newStatus + '!', 'success');
+        } catch(e) {
+          console.error(e);
+          showToast('Error updating employer.', 'error');
+        }
       }
 
       // ============================================================
-      // 12. STATS
+      // 12. STATS (label + counts follow active tab)
       // ============================================================
       function updateStats() {
-        const total = allJobs.length;
-        const pending = allJobs.filter(j => j.status === 'pending').length;
-        const approved = allJobs.filter(j => j.status === 'approved').length;
-        const rejected = allJobs.filter(j => j.status === 'rejected').length;
-        statTotal.textContent = total;
-        statPending.textContent = pending;
-        statApproved.textContent = approved;
-        statRejected.textContent = rejected;
-        pendingBadge.textContent = pending;
+        if (currentTab === 'jobs') {
+          statTotal.textContent = allJobs.length;
+          statPending.textContent = allJobs.filter(j => j.status === 'pending').length;
+          statApproved.textContent = allJobs.filter(j => j.status === 'approved').length;
+          statRejected.textContent = allJobs.filter(j => j.status === 'rejected').length;
+          statTotalLabel.textContent = 'Total Jobs';
+          statPendingLabel.textContent = 'Pending Jobs';
+          statApprovedLabel.textContent = 'Approved Jobs';
+          statRejectedLabel.textContent = 'Rejected Jobs';
+          pendingBadge.textContent = allJobs.filter(j => j.status === 'pending').length;
+          pendingJobBadge.textContent = allJobs.filter(j => j.status === 'pending').length;
+        } else {
+          statTotal.textContent = allEmployers.length;
+          statPending.textContent = allEmployers.filter(e => e.status === 'pending').length;
+          statApproved.textContent = allEmployers.filter(e => e.status === 'approved').length;
+          statRejected.textContent = allEmployers.filter(e => e.status === 'rejected').length;
+          statTotalLabel.textContent = 'Total Employers';
+          statPendingLabel.textContent = 'Pending Employers';
+          statApprovedLabel.textContent = 'Approved Employers';
+          statRejectedLabel.textContent = 'Rejected Employers';
+          pendingBadge.textContent = allEmployers.filter(e => e.status === 'pending').length;
+        }
       }
 
       function updateEmployerBadge() {
-        const pending = allEmployers.filter(e => e.status === 'pending').length;
-        pendingEmployerBadge.textContent = pending;
+        pendingEmployerBadge.textContent = allEmployers.filter(e => e.status === 'pending').length;
+        // keep job badge accurate too
+        pendingJobBadge.textContent = allJobs.filter(j => j.status === 'pending').length;
       }
 
       // ============================================================
@@ -447,27 +582,37 @@
       }
 
       // ============================================================
-      // 15. FILTERS & TABS
+      // 15. FILTERS & TABS (bound once)
       // ============================================================
-      filterBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
-          filterBtns.forEach(b => b.classList.remove('active'));
-          this.classList.add('active');
-          currentFilter = this.dataset.filter;
-          renderView(currentTab);
-        });
-      });
+      function bindStaticEvents() {
+        if (listenersBound) return;
+        listenersBound = true;
 
-      tabBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
-          tabBtns.forEach(b => b.classList.remove('active'));
-          this.classList.add('active');
-          currentTab = this.dataset.tab;
-          // Reset filter visibility
-          document.getElementById('filterContainer').style.display = currentTab === 'jobs' ? 'flex' : 'none';
-          renderView(currentTab);
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+          btn.addEventListener('click', function() {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            currentFilter = this.dataset.filter;
+            renderView(currentTab);
+          });
         });
-      });
+
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+          btn.addEventListener('click', function() {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            currentTab = this.dataset.tab;
+            // reset filter to 'all' when switching tabs to avoid confusion
+            currentFilter = 'all';
+            document.querySelectorAll('.filter-btn').forEach(b => {
+              b.classList.toggle('active', b.dataset.filter === 'all');
+            });
+            filterContainer.style.display = 'flex'; // visible for BOTH tabs
+            renderView(currentTab);
+            updateStats();
+          });
+        });
+      }
 
     });
   </script>
