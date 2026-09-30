@@ -2,37 +2,29 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
     <title>Privacy Policy | HospitalityRecruit – Your Data Privacy</title>
-    <meta
-      name="description"
-      content="AfriLux Hospitality Privacy Policy. Learn how we collect, use, and protect your personal data in compliance with GDPR and Nigerian data protection laws."
-    />
+    <meta name="description" content="HospitalityRecruit Privacy Policy. Learn how we collect, use, and protect your personal data in compliance with the Nigeria Data Protection Act 2023." />
+    <link rel="canonical" href="https://hospitalityrecruit.netlify.app/privacy.html" />
 
-    <!-- Font Awesome -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
+    <!-- Open Graph -->
+    <meta property="og:title" content="Privacy Policy | HospitalityRecruit" />
+    <meta property="og:description" content="How HospitalityRecruit collects, uses, and protects your personal data." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://hospitalityrecruit.netlify.app/privacy.html" />
+    <meta property="og:image" content="https://hospitalityrecruit.netlify.app/img/logo.jpg" />
 
-    <!-- Google Fonts -->
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpeg" href="img/logo.jpg" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700&display=swap" rel="stylesheet" />
 
     <style>
       /* ===== RESET & VARIABLES ===== */
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
 
       :root {
         --color-primary: #0A1628;
@@ -45,10 +37,15 @@
         --color-gray-600: #8A8580;
         --color-gray-700: #5A5550;
         --color-success: #2A9D8F;
+
         --font-serif: 'Playfair Display', Georgia, serif;
-        --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+        --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
         --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.15);
+        --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+
         --radius-lg: 12px;
         --radius-md: 8px;
         --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -64,31 +61,17 @@
         overflow-x: hidden;
       }
 
-      .container {
-        max-width: 1280px;
-        margin: 0 auto;
-        padding: 0 16px;
-      }
-      @media (min-width: 640px) {
-        .container {
-          padding: 0 24px;
-        }
-      }
+      .container { max-width: 1280px; margin: 0 auto; padding: 0 16px; }
+      @media (min-width: 640px) { .container { padding: 0 24px; } }
 
-      h1,
-      h2,
-      h3,
-      h4 {
+      h1, h2, h3, h4 {
         font-family: var(--font-serif);
         font-weight: 800;
         line-height: 1.2;
         color: var(--color-primary);
         letter-spacing: -0.02em;
       }
-
-      h1 {
-        font-size: 2rem;
-      }
+      h1 { font-size: 2rem; }
       h2 {
         font-size: 1.6rem;
         margin: 2rem 0 1rem;
@@ -102,399 +85,201 @@
         margin: 1.25rem 0 0.5rem;
         color: var(--color-primary);
       }
+      @media (min-width: 768px) { h1 { font-size: 2.8rem; } h2 { font-size: 2rem; } }
 
-      @media (min-width: 768px) {
-        h1 {
-          font-size: 2.8rem;
-        }
-        h2 {
-          font-size: 2rem;
-        }
-      }
-
-      .text-gold {
-        color: var(--color-gold);
-      }
+      .text-gold { color: var(--color-gold); }
 
       .btn {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.5rem;
-        padding: 0.75rem 1.5rem;
-        font-weight: 700;
-        font-size: 0.95rem;
+        display: inline-flex; align-items: center; justify-content: center;
+        gap: 0.5rem; padding: 0.75rem 1.5rem;
+        font-weight: 700; font-size: 0.95rem;
         border-radius: 50px;
         transition: all var(--transition-normal);
-        cursor: pointer;
-        border: none;
+        cursor: pointer; border: none;
         font-family: var(--font-sans);
-        min-height: 48px;
-        text-decoration: none;
-        width: 100%;
+        min-height: 48px; text-decoration: none; width: 100%;
       }
-      @media (min-width: 640px) {
-        .btn {
-          width: auto;
-          padding: 1rem 2.25rem;
-        }
-      }
+      @media (min-width: 640px) { .btn { width: auto; padding: 1rem 2.25rem; } }
 
-      .btn-gold {
-        background: var(--color-gold);
-        color: var(--color-primary);
-      }
-      .btn-gold:hover {
-        background: var(--color-gold-light);
-        transform: translateY(-2px);
-        box-shadow: var(--shadow-lg);
-      }
+      .btn-gold { background: var(--color-gold); color: var(--color-primary); }
+      .btn-gold:hover { background: var(--color-gold-light); transform: translateY(-2px); box-shadow: var(--shadow-lg); }
 
       /* ===== HEADER ===== */
       .site-header {
         background: var(--color-white);
         box-shadow: var(--shadow-md);
-        position: sticky;
-        top: 0;
-        z-index: 1000;
+        position: sticky; top: 0; z-index: 1000;
         padding: 0.75rem 0;
         border-bottom: 2px solid var(--color-gold);
       }
       .header-container {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
+        display: flex; align-items: center; justify-content: space-between;
         gap: 1rem;
       }
-      .logo a {
-        text-decoration: none;
-        line-height: 1.2;
-        display: inline-block;
+      .logo { display: flex; align-items: center; flex-shrink: 0; min-width: 0; }
+      .logo a { display: flex; flex-direction: row; align-items: center; gap: 10px; text-decoration: none; min-width: 0; }
+      .logo-img {
+        height: 40px !important; width: 40px !important;
+        border-radius: 50% !important;
+        object-fit: cover !important;
+        border: 2px solid var(--color-gold);
+        display: block; flex-shrink: 0;
+        background-color: var(--color-white); padding: 2px;
       }
-      .logo .brand-name {
+      .brand-name {
         font-family: var(--font-serif);
-        font-size: 1.6rem;
-        font-weight: 800;
+        font-size: 1.4rem; font-weight: 800;
         color: var(--color-primary);
-        letter-spacing: -0.5px;
+        letter-spacing: -0.5px; white-space: nowrap; line-height: 1.1;
       }
-      .logo .brand-name .gold {
-        color: var(--color-gold);
-      }
-      .logo-tagline {
-        display: none;
-        font-size: 0.65rem;
-        color: var(--color-gray-600);
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        font-weight: 600;
-        margin-top: -2px;
-      }
-      @media (min-width: 768px) {
-        .logo .brand-name {
-          font-size: 2rem;
-        }
-        .logo-tagline {
-          display: block;
-        }
+      .brand-name .gold { color: var(--color-gold); }
+
+      @media (max-width: 480px) {
+        .site-header { padding: 0.5rem 0; }
+        .header-container { gap: 0.5rem; }
+        .logo-img { height: 34px !important; width: 34px !important; }
+        .brand-name { font-size: 1.15rem; letter-spacing: -0.3px; }
+        .mobile-menu-toggle { width: 38px; height: 38px; }
+        .mobile-menu-toggle i { font-size: 1.2rem; }
       }
 
       .mobile-menu-toggle {
-        display: block;
-        background: var(--color-gold);
-        border: none;
-        width: 44px;
-        height: 44px;
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        z-index: 1001;
-        transition: all 0.3s ease;
+        display: flex; align-items: center; justify-content: center;
+        background: var(--color-gold); border: none;
+        width: 44px; height: 44px; border-radius: 8px;
+        cursor: pointer; z-index: 1001;
+        transition: all 0.3s ease; flex-shrink: 0;
       }
-      .mobile-menu-toggle i {
-        font-size: 1.5rem;
-        color: var(--color-primary);
-      }
-      .mobile-menu-toggle.active {
-        background: var(--color-primary);
-      }
-      .mobile-menu-toggle.active i {
-        color: var(--color-gold);
-      }
-      @media (min-width: 1024px) {
-        .mobile-menu-toggle {
-          display: none;
-        }
-      }
+      .mobile-menu-toggle i { font-size: 1.5rem; color: var(--color-primary); }
+      .mobile-menu-toggle.active { background: var(--color-primary); }
+      .mobile-menu-toggle.active i { color: var(--color-gold); }
+      @media (min-width: 1024px) { .mobile-menu-toggle { display: none; } }
 
       .mobile-close-btn {
-        display: none;
-        background: var(--color-primary);
+        display: none; background: var(--color-primary);
         color: var(--color-gold);
         border: 2px solid var(--color-gold);
-        padding: 12px 20px;
-        border-radius: 8px;
-        font-size: 1rem;
-        font-weight: 600;
-        cursor: pointer;
-        width: 100%;
-        margin-bottom: 20px;
-        text-align: center;
+        padding: 12px 20px; border-radius: 8px;
+        font-size: 1rem; font-weight: 600;
+        cursor: pointer; width: 100%; margin-bottom: 20px; text-align: center;
       }
-      @media (max-width: 1023px) {
-        .mobile-close-btn {
-          display: block;
-        }
-      }
-      .mobile-close-btn:hover {
-        background: var(--color-gold);
-        color: var(--color-primary);
-      }
+      @media (max-width: 1023px) { .mobile-close-btn { display: block; } }
+      .mobile-close-btn:hover { background: var(--color-gold); color: var(--color-primary); }
 
-      .main-nav {
-        display: flex;
-        align-items: center;
-      }
+      .main-nav { display: flex; align-items: center; }
       @media (max-width: 1023px) {
         .main-nav {
-          position: fixed;
-          top: 0;
-          right: -100%;
-          width: 85%;
-          max-width: 400px;
-          height: 100vh;
+          position: fixed; top: 0; right: -100%;
+          width: 85%; max-width: 400px; height: 100vh;
           background: var(--color-white);
-          flex-direction: column;
-          align-items: flex-start;
-          justify-content: flex-start;
+          flex-direction: column; align-items: flex-start; justify-content: flex-start;
           padding: 80px 20px 30px;
           transition: right 0.3s ease;
           z-index: 1001;
-          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-          overflow-y: auto;
-          gap: 1rem;
+          box-shadow: var(--shadow-2xl);
+          overflow-y: auto; gap: 1rem;
         }
-        .main-nav.active {
-          right: 0;
-        }
+        .main-nav.active { right: 0; }
       }
 
-      .nav-menu {
-        display: flex;
-        list-style: none;
-        gap: 0;
-        margin: 0;
-        padding: 0;
-      }
-      @media (max-width: 1023px) {
-        .nav-menu {
-          flex-direction: column;
-          width: 100%;
-          gap: 0.5rem;
-        }
-      }
+      .nav-menu { display: flex; list-style: none; gap: 0; margin: 0; padding: 0; }
+      @media (max-width: 1023px) { .nav-menu { flex-direction: column; width: 100%; gap: 0.5rem; } }
 
-      .nav-item {
-        position: relative;
-      }
-      @media (max-width: 1023px) {
-        .nav-item {
-          width: 100%;
-        }
-      }
+      .nav-item { position: relative; }
+      @media (max-width: 1023px) { .nav-item { width: 100%; } }
 
       .nav-link {
-        text-decoration: none;
-        color: var(--color-gray-700);
-        font-weight: 600;
-        font-size: 0.9rem;
+        text-decoration: none; color: var(--color-gray-700);
+        font-weight: 600; font-size: 0.9rem;
         padding: 0.5rem 0.75rem;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
+        display: flex; align-items: center; gap: 0.5rem;
         transition: all var(--transition-fast);
-        border-radius: var(--radius-md);
-        white-space: nowrap;
+        border-radius: var(--radius-md); white-space: nowrap;
       }
       @media (max-width: 1023px) {
         .nav-link {
           padding: 0.75rem;
           border-bottom: 1px solid var(--color-gray-200);
-          width: 100%;
-          font-size: 1rem;
-          white-space: normal;
+          width: 100%; font-size: 1rem; white-space: normal;
         }
       }
-      .nav-link:hover {
-        color: var(--color-gold);
-      }
-      .nav-link.active {
-        color: var(--color-gold);
-        font-weight: 700;
-      }
+      .nav-link:hover, .nav-link.active { color: var(--color-gold); }
+      .nav-link.active { font-weight: 700; }
 
-      .dropdown-toggle {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        cursor: pointer;
-      }
-      .dropdown-toggle i {
-        font-size: 0.8rem;
-        transition: transform var(--transition-fast);
-      }
-      .dropdown.active .dropdown-toggle i {
-        transform: rotate(180deg);
-      }
+      .dropdown-toggle { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; }
+      .dropdown-toggle i { font-size: 0.8rem; transition: transform var(--transition-fast); }
+      .dropdown.active .dropdown-toggle i { transform: rotate(180deg); }
 
       .dropdown-menu {
-        position: absolute;
-        top: 100%;
-        left: 0;
+        position: absolute; top: 100%; left: 0;
         background: var(--color-white);
         min-width: 240px;
         border-radius: var(--radius-lg);
-        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        box-shadow: var(--shadow-2xl);
         padding: 0.5rem 0;
-        opacity: 0;
-        visibility: hidden;
-        transform: translateY(10px);
+        opacity: 0; visibility: hidden; transform: translateY(10px);
         transition: all var(--transition-normal);
         z-index: 1000;
         border: 1px solid var(--color-gray-200);
       }
-      .dropdown:hover .dropdown-menu {
-        opacity: 1;
-        visibility: visible;
-        transform: translateY(5px);
-      }
+      .dropdown:hover .dropdown-menu { opacity: 1; visibility: visible; transform: translateY(5px); }
 
       @media (max-width: 1023px) {
         .dropdown-menu {
-          position: static;
-          box-shadow: none;
-          border: none;
+          position: static; box-shadow: none; border: none;
           border-left: 2px solid var(--color-gold);
-          margin-left: 1rem;
-          margin-top: 0.5rem;
+          margin-left: 1rem; margin-top: 0.5rem;
           padding: 0.5rem 0 0.5rem 1rem;
-          opacity: 1;
-          visibility: visible;
-          transform: none;
+          opacity: 1; visibility: visible; transform: none;
           display: none;
           background: var(--color-gray-soft);
           width: calc(100% - 1rem);
         }
-        .dropdown.active .dropdown-menu {
-          display: block;
-        }
-        .dropdown-toggle i {
-          transition: transform 0.3s ease;
-        }
-        .dropdown.active .dropdown-toggle i {
-          transform: rotate(180deg);
-        }
+        .dropdown.active .dropdown-menu { display: block; }
       }
 
       .dropdown-item {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
+        display: flex; align-items: center; gap: 0.75rem;
         padding: 0.75rem 1.25rem;
-        text-decoration: none;
-        color: var(--color-gray-700);
-        font-size: 0.9rem;
-        font-weight: 500;
+        text-decoration: none; color: var(--color-gray-700);
+        font-size: 0.9rem; font-weight: 500;
         transition: all var(--transition-fast);
         white-space: nowrap;
       }
       @media (max-width: 1023px) {
         .dropdown-item {
-          padding: 0.75rem;
-          white-space: normal;
+          padding: 0.75rem; white-space: normal;
           border-bottom: 1px solid var(--color-gray-200);
         }
       }
-      .dropdown-item:hover {
-        background: var(--color-gray-soft);
-        color: var(--color-gold);
-        padding-left: 1.75rem;
-      }
-      .dropdown-divider {
-        height: 1px;
-        background: var(--color-gray-200);
-        margin: 0.5rem 0;
-      }
+      .dropdown-item:hover { background: var(--color-gray-soft); color: var(--color-gold); padding-left: 1.75rem; }
+      .dropdown-divider { height: 1px; background: var(--color-gray-200); margin: 0.5rem 0; }
 
-      .nav-cta-group {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-      }
+      .nav-cta-group { display: flex; align-items: center; gap: 0.75rem; }
       @media (max-width: 1023px) {
-        .nav-cta-group {
-          flex-direction: column;
-          width: 100%;
-          margin-top: 1rem;
-          gap: 0.75rem;
-        }
+        .nav-cta-group { flex-direction: column; width: 100%; margin-top: 1rem; gap: 0.75rem; }
       }
 
       .nav-cta {
-        background: var(--color-gold);
-        color: var(--color-primary) !important;
+        background: var(--color-gold); color: var(--color-primary) !important;
         padding: 0.6rem 1.2rem !important;
-        border-radius: 50px;
-        font-weight: 700 !important;
+        border-radius: 50px; font-weight: 700 !important;
         text-decoration: none;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.5rem;
-        font-size: 0.85rem;
-        border: none;
-        cursor: pointer;
-        white-space: nowrap;
+        display: inline-flex; align-items: center; justify-content: center;
+        gap: 0.5rem; font-size: 0.85rem;
+        border: none; cursor: pointer; white-space: nowrap;
         font-family: var(--font-sans);
       }
-      @media (max-width: 1023px) {
-        .nav-cta {
-          width: 100%;
-          padding: 0.75rem !important;
-          font-size: 1rem;
-        }
-      }
-      .nav-cta:hover {
-        background: var(--color-gold-light);
-        transform: translateY(-2px);
-        box-shadow: var(--shadow-md);
-      }
-      .nav-cta-outline {
-        background: transparent;
-        color: var(--color-gold) !important;
-        border: 2px solid var(--color-gold);
-      }
-      .nav-cta-outline:hover {
-        background: var(--color-gold);
-        color: var(--color-primary) !important;
-      }
+      @media (max-width: 1023px) { .nav-cta { width: 100%; padding: 0.75rem !important; font-size: 1rem; } }
+      .nav-cta:hover { background: var(--color-gold-light); transform: translateY(-2px); box-shadow: var(--shadow-md); }
 
       .mobile-overlay {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+        display: none; position: fixed; top: 0; left: 0;
+        width: 100%; height: 100%;
         background: rgba(10, 22, 40, 0.8);
-        z-index: 999;
-        backdrop-filter: blur(4px);
+        z-index: 999; backdrop-filter: blur(4px);
       }
-      .mobile-overlay.active {
-        display: block;
-      }
+      .mobile-overlay.active { display: block; }
 
       /* ===== LEGAL CONTENT ===== */
       .legal-hero {
@@ -504,59 +289,48 @@
         text-align: center;
         border-bottom: 3px solid var(--color-gold);
       }
-      .legal-hero h1 {
-        color: var(--color-white);
-        margin-bottom: 0.5rem;
-      }
+      .legal-hero h1 { color: var(--color-white); margin-bottom: 0.5rem; }
       .legal-hero .lead {
         color: rgba(255, 255, 255, 0.85);
         font-size: 1.05rem;
-        max-width: 700px;
-        margin: 0 auto;
-        line-height: 1.7;
+        max-width: 700px; margin: 0 auto; line-height: 1.7;
       }
 
-      .legal-content {
-        padding: 3rem 0 4rem;
-        background: var(--color-white);
-      }
+      .legal-content { padding: 3rem 0 4rem; background: var(--color-white); }
       .legal-content .legal-body {
-        max-width: 900px;
-        margin: 0 auto;
+        max-width: 900px; margin: 0 auto;
         background: var(--color-white);
         border-radius: var(--radius-lg);
         padding: 2rem 1.5rem;
         border: 1px solid var(--color-gray-200);
         box-shadow: var(--shadow-md);
       }
-      @media (min-width: 768px) {
-        .legal-content .legal-body {
-          padding: 2.5rem 3rem;
-        }
-      }
+      @media (min-width: 768px) { .legal-content .legal-body { padding: 2.5rem 3rem; } }
+
       .legal-content .legal-body p {
         color: var(--color-gray-700);
-        font-size: 0.95rem;
-        line-height: 1.8;
+        font-size: 0.95rem; line-height: 1.8;
         margin-bottom: 1rem;
       }
+      .legal-content .legal-body a {
+        color: var(--color-gold);
+        text-decoration: none;
+        font-weight: 600;
+      }
+      .legal-content .legal-body a:hover { text-decoration: underline; }
       .legal-content .legal-body ul {
-        margin: 0.5rem 0 1.25rem 1.5rem;
+        margin: 0.5rem 0 1.25rem 0;
         list-style: none;
       }
       .legal-content .legal-body ul li {
         padding: 0.3rem 0;
         color: var(--color-gray-700);
-        font-size: 0.95rem;
-        line-height: 1.7;
-        display: flex;
-        align-items: flex-start;
-        gap: 0.75rem;
+        font-size: 0.95rem; line-height: 1.7;
+        display: flex; align-items: flex-start; gap: 0.75rem;
       }
       .legal-content .legal-body ul li i {
         color: var(--color-gold);
-        font-size: 0.8rem;
-        margin-top: 0.3rem;
+        font-size: 0.8rem; margin-top: 0.35rem;
         min-width: 16px;
       }
       .legal-content .legal-body .last-updated {
@@ -575,14 +349,9 @@
         border-radius: var(--radius-md);
         margin: 1.25rem 0;
       }
-      .legal-content .legal-body .highlight-box p {
-        margin-bottom: 0;
-      }
+      .legal-content .legal-body .highlight-box p { margin-bottom: 0; }
 
-      .back-to-top {
-        text-align: center;
-        margin-top: 2rem;
-      }
+      .back-to-top { text-align: center; margin-top: 2rem; }
 
       /* ===== FOOTER ===== */
       .footer {
@@ -591,162 +360,75 @@
         padding: 3rem 0 1.5rem;
       }
       .footer-grid {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 2rem;
-        margin-bottom: 2rem;
+        display: grid; grid-template-columns: 1fr;
+        gap: 2rem; margin-bottom: 2rem;
       }
-      @media (min-width: 640px) {
-        .footer-grid {
-          grid-template-columns: repeat(2, 1fr);
-        }
-      }
-      @media (min-width: 1024px) {
-        .footer-grid {
-          grid-template-columns: repeat(4, 1fr);
-          gap: 2.5rem;
-        }
-      }
+      @media (min-width: 640px) { .footer-grid { grid-template-columns: repeat(2, 1fr); } }
+      @media (min-width: 1024px) { .footer-grid { grid-template-columns: repeat(4, 1fr); gap: 2.5rem; } }
+
       .footer-column h3 {
         font-family: var(--font-serif);
         color: var(--color-white);
-        font-size: 1.1rem;
-        margin-bottom: 1rem;
+        font-size: 1.1rem; margin-bottom: 1rem;
       }
       .footer-column p {
         color: rgba(255, 255, 255, 0.7);
-        font-size: 0.9rem;
-        line-height: 1.6;
+        font-size: 0.9rem; line-height: 1.6;
       }
-      .footer-links {
-        list-style: none;
-      }
-      .footer-links li {
-        margin-bottom: 0.75rem;
-      }
+      .footer-links { list-style: none; }
+      .footer-links li { margin-bottom: 0.75rem; }
       .footer-links a {
         color: rgba(255, 255, 255, 0.7);
         text-decoration: none;
         transition: color 0.3s;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
+        display: flex; align-items: center; gap: 0.5rem;
         font-size: 0.9rem;
       }
-      .footer-links a:hover {
-        color: var(--color-gold);
-      }
+      .footer-links a:hover { color: var(--color-gold); }
       .footer-contact {
         color: rgba(255, 255, 255, 0.7);
         font-size: 0.9rem;
       }
       .footer-contact p {
         margin-bottom: 0.5rem;
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
+        display: flex; align-items: center; gap: 0.75rem;
       }
       .footer-bottom {
-        text-align: center;
-        padding-top: 1.5rem;
+        text-align: center; padding-top: 1.5rem;
         border-top: 1px solid rgba(255, 255, 255, 0.1);
         color: rgba(255, 255, 255, 0.4);
         font-size: 0.8rem;
       }
       .footer-bottom-links {
-        display: flex;
-        justify-content: center;
-        gap: 1.5rem;
-        margin-top: 0.5rem;
-        flex-wrap: wrap;
+        display: flex; justify-content: center;
+        gap: 1.5rem; margin-top: 0.5rem; flex-wrap: wrap;
       }
       .footer-bottom-links a {
         color: rgba(255, 255, 255, 0.4);
         text-decoration: none;
       }
-      .footer-bottom-links a:hover {
-        color: var(--color-gold);
-      }
-
-      .whatsapp-desktop {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.75rem;
-        background: #25d366;
-        color: white;
-        padding: 0.75rem 1.5rem;
-        border-radius: 50px;
-        text-decoration: none;
-        font-weight: 600;
-        transition: all 0.3s;
-      }
-      .whatsapp-desktop:hover {
-        background: #128c7e;
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
-      }
-      .whatsapp-desktop i {
-        font-size: 1.25rem;
-      }
-      @media (max-width: 768px) {
-        .whatsapp-desktop {
-          display: none;
-        }
-      }
+      .footer-bottom-links a:hover { color: var(--color-gold); }
 
       .whatsapp-float {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        background-color: #25d366;
-        color: white;
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 30px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-        z-index: 1000;
-        transition: all 0.3s;
-        text-decoration: none;
+        position: fixed; bottom: 20px; right: 20px;
+        background-color: #25d366; color: white;
+        width: 60px; height: 60px; border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 30px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        z-index: 1000; transition: all 0.3s; text-decoration: none;
       }
-      .whatsapp-float:hover {
-        transform: scale(1.1);
-        background-color: #128c7e;
-      }
-      @media (min-width: 769px) {
-        .whatsapp-float {
-          display: none;
-        }
-      }
+      .whatsapp-float:hover { transform: scale(1.1); background-color: #128c7e; }
 
       /* ===== RESPONSIVE ===== */
       @media (max-width: 768px) {
-        .legal-hero h1 {
-          font-size: 2rem;
-        }
-        .legal-content .legal-body {
-          padding: 1.25rem;
-        }
-        .legal-content .legal-body h2 {
-          font-size: 1.3rem;
-        }
+        .legal-hero h1 { font-size: 2rem; }
+        .legal-content .legal-body { padding: 1.25rem; }
+        .legal-content .legal-body h2 { font-size: 1.3rem; }
       }
       @media (max-width: 480px) {
-        .legal-hero h1 {
-          font-size: 1.6rem;
-        }
-        .logo .brand-name {
-          font-size: 1.3rem;
-        }
-        .legal-content .legal-body {
-          padding: 1rem;
-        }
-        .legal-content .legal-body ul {
-          margin-left: 0;
-        }
+        .legal-hero h1 { font-size: 1.6rem; }
+        .legal-content .legal-body { padding: 1rem; }
+        .legal-content .legal-body ul { margin-left: 0; }
       }
     </style>
   </head>
@@ -756,76 +438,67 @@
     <header class="site-header">
       <div class="container">
         <div class="header-container">
+
           <div class="logo">
-            <a href="/" aria-label="AfriLux Hospitality Home">
+            <a href="index.html" aria-label="HospitalityRecruit Home">
+              <img src="img/logo.jpg" alt="HospitalityRecruit Logo" class="logo-img" />
               <span class="brand-name">Hospitality<span class="gold">Recruit</span></span>
-              <div class="logo-tagline">Precision Talent for Luxury Hospitality</div>
             </a>
           </div>
-          <button
-            class="mobile-menu-toggle"
-            id="mobileMenuToggle"
-            aria-label="Menu"
-            aria-expanded="false"
-          >
+
+          <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Open Menu" aria-expanded="false">
             <i class="fas fa-bars"></i>
           </button>
+
           <nav class="main-nav" id="mainNav" aria-label="Main navigation">
-            <button class="mobile-close-btn" id="mobileCloseBtn">
+            <button class="mobile-close-btn" id="mobileCloseBtn" aria-label="Close Menu">
               <i class="fas fa-times"></i> Close
             </button>
+
             <ul class="nav-menu">
               <li class="nav-item">
-                <a href="/" class="nav-link"><i class="fas fa-home"></i> Home</a>
+                <a href="index.html" class="nav-link"><i class="fas fa-home"></i> Home</a>
               </li>
               <li class="nav-item">
-                <a href="/services/" class="nav-link"><i class="fas fa-crosshairs"></i> Services</a>
+                <a href="services.html" class="nav-link"><i class="fas fa-concierge-bell"></i> Services</a>
               </li>
+
               <li class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle">
-                  <i class="fas fa-building"></i> Employers
-                  <i class="fas fa-chevron-down"></i>
+                <a href="#" class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+                  <i class="fas fa-building"></i> Employers <i class="fas fa-chevron-down"></i>
                 </a>
                 <div class="dropdown-menu">
-                  <a href="/employers/post-job/" class="dropdown-item"><i class="fas fa-plus-circle"></i> Post a Job</a>
-                  <a href="/employers/search-talent/" class="dropdown-item"><i class="fas fa-search"></i> Search Talent</a>
-                  <a href="/employers/pricing/" class="dropdown-item"><i class="fas fa-tag"></i> Pricing</a>
-                  <div class="dropdown-divider"></div>
-                  <a href="/employers/start-search/" class="dropdown-item"><i class="fas fa-rocket"></i> Start a Search</a>
+                  <a href="contact.html" class="dropdown-item"><i class="fas fa-user-plus"></i> Post a Job</a>
+                  <a href="contact.html" class="dropdown-item"><i class="fas fa-search"></i> Search Talent</a>
+                  <a href="contact.html" class="dropdown-item"><i class="fas fa-tag"></i> Pricing</a>
+                  <a href="contact.html" class="dropdown-item"><i class="fas fa-rocket"></i> Start a Search</a>
                 </div>
               </li>
+
               <li class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle">
-                  <i class="fas fa-user-tie"></i> Candidates
-                  <i class="fas fa-chevron-down"></i>
+                <a href="#" class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+                  <i class="fas fa-user-tie"></i> Candidates <i class="fas fa-chevron-down"></i>
                 </a>
                 <div class="dropdown-menu">
-                  <a href="/candidates/job-board/" class="dropdown-item"><i class="fas fa-briefcase"></i> Job Board</a>
-                  <a href="/candidates/submit-profile/" class="dropdown-item"><i class="fas fa-file-upload"></i> Submit Profile</a>
-                  <a href="/candidates/career-strategy/" class="dropdown-item"><i class="fas fa-graduation-cap"></i> Career Strategy</a>
-                  <div class="dropdown-divider"></div>
-                  <a href="/candidates/confidentiality/" class="dropdown-item"><i class="fas fa-user-secret"></i> Confidential Process</a>
+                  <a href="contact.html" class="dropdown-item"><i class="fas fa-briefcase"></i> Submit Your CV</a>
+                  <a href="contact.html" class="dropdown-item"><i class="fas fa-file-upload"></i> Job Alerts</a>
+                  <a href="contact.html" class="dropdown-item"><i class="fas fa-graduation-cap"></i> Career Advice</a>
                 </div>
               </li>
+
               <li class="nav-item">
-                <a href="/about/" class="nav-link"><i class="fas fa-info-circle"></i> About</a>
+                <a href="about.html" class="nav-link"><i class="fas fa-info-circle"></i> About</a>
               </li>
               <li class="nav-item">
-                <a href="/case-studies/" class="nav-link"><i class="fas fa-chart-line"></i> Case Studies</a>
-              </li>
-              <li class="nav-item">
-                <a href="/contact/" class="nav-link"><i class="fas fa-envelope"></i> Contact</a>
+                <a href="contact.html" class="nav-link"><i class="fas fa-envelope"></i> Contact</a>
               </li>
             </ul>
+
             <div class="nav-cta-group">
-              <a href="tel:+2348039661354" class="nav-cta">
-                <i class="fas fa-phone"></i> +234 803 966 1354
-              </a>
-              <a href="/contact/" class="nav-cta nav-cta-outline">
-                <i class="fas fa-handshake"></i> Partner With Us
-              </a>
+              <a href="contact.html" class="nav-cta"><i class="fas fa-handshake"></i> Partner With Us</a>
             </div>
           </nav>
+
           <div class="mobile-overlay" id="mobileOverlay"></div>
         </div>
       </div>
@@ -845,62 +518,58 @@
         <div class="legal-body">
 
           <div class="last-updated">
-            <i class="fas fa-clock"></i> <strong>Last Updated:</strong> <span id="currentDate"></span>
+            <i class="fas fa-clock"></i> <strong>Effective:</strong> 1 January 2025 &nbsp;·&nbsp; <strong>Last Updated:</strong> 30 September 2026
           </div>
 
           <p>
-            At AfriLux Hospitality ("we," "us," or "our"), we are committed to
+            At HospitalityRecruit ("we," "us," or "our"), we are committed to
             protecting your privacy. This Privacy Policy explains how we collect,
             use, disclose, and safeguard your personal information when you visit
             our website, use our services, or interact with us.
           </p>
 
           <p>
-            We comply with the <strong>Nigeria Data Protection Act (NDPA) 2023</strong>
-            and the <strong>General Data Protection Regulation (GDPR)</strong>
-            where applicable. Please read this policy carefully to understand our
-            practices regarding your personal data.
+            We comply with the <strong>Nigeria Data Protection Act (NDPA) 2023</strong>.
+            Please read this policy carefully to understand our practices
+            regarding your personal data.
           </p>
 
           <h2>1. Information We Collect</h2>
 
-          <h3>1.1 Personal Information You Provide</h3>
+          <h3>1.1 Information You Provide</h3>
           <p>We collect information you voluntarily provide to us:</p>
           <ul>
             <li><i class="fas fa-check-circle"></i> <strong>Contact Details:</strong> Name, email address, phone number, location</li>
             <li><i class="fas fa-check-circle"></i> <strong>Professional Information:</strong> CV, employment history, skills, qualifications, job preferences</li>
             <li><i class="fas fa-check-circle"></i> <strong>Employer Information:</strong> Company name, job titles, hiring needs</li>
-            <li><i class="fas fa-check-circle"></i> <strong>Communication Data:</strong> Messages sent through our contact forms</li>
-            <li><i class="fas fa-check-circle"></i> <strong>Account Information:</strong> Login credentials (if you create an account)</li>
+            <li><i class="fas fa-check-circle"></i> <strong>Communication Data:</strong> Messages sent through our contact forms or WhatsApp</li>
           </ul>
 
           <h3>1.2 Information Collected Automatically</h3>
-          <p>When you visit our website, we may automatically collect:</p>
+          <p>When you visit our website, our hosting provider may automatically log:</p>
           <ul>
             <li><i class="fas fa-check-circle"></i> <strong>Device Information:</strong> IP address, browser type, operating system</li>
             <li><i class="fas fa-check-circle"></i> <strong>Usage Data:</strong> Pages visited, time spent, referring URLs</li>
-            <li><i class="fas fa-check-circle"></i> <strong>Cookies:</strong> Small data files stored on your device</li>
           </ul>
 
           <h2>2. How We Use Your Information</h2>
           <p>We use your personal data for the following purposes:</p>
           <ul>
             <li><i class="fas fa-check-circle"></i> <strong>Service Delivery:</strong> To connect candidates with employers, process job applications, and manage placements</li>
-            <li><i class="fas fa-check-circle"></i> <strong>Communication:</strong> To respond to inquiries, send job alerts, and provide updates</li>
+            <li><i class="fas fa-check-circle"></i> <strong>Communication:</strong> To respond to inquiries and provide updates on your enquiries</li>
             <li><i class="fas fa-check-circle"></i> <strong>Improvement:</strong> To enhance our website and services</li>
             <li><i class="fas fa-check-circle"></i> <strong>Legal Compliance:</strong> To comply with applicable laws and regulations</li>
-            <li><i class="fas fa-check-circle"></i> <strong>Marketing:</strong> With your consent, to send promotional materials (you can opt out anytime)</li>
           </ul>
 
           <div class="highlight-box">
-            <p><strong>Important:</strong> We only share your personal information with employers when you have provided explicit consent. We never sell your data to third parties.</p>
+            <p><strong>Our commitment:</strong> We only share your personal information with employers when you have provided explicit consent. We never sell your data to third parties.</p>
           </div>
 
           <h2>3. How We Share Your Information</h2>
           <p>We may share your information with:</p>
           <ul>
             <li><i class="fas fa-check-circle"></i> <strong>Employers:</strong> When you apply for a job or give us permission to present your profile</li>
-            <li><i class="fas fa-check-circle"></i> <strong>Service Providers:</strong> Third parties who assist with website hosting, email delivery, and analytics</li>
+            <li><i class="fas fa-check-circle"></i> <strong>Service Providers:</strong> Third parties who assist with website hosting and email delivery</li>
             <li><i class="fas fa-check-circle"></i> <strong>Legal Authorities:</strong> When required by law or to protect our rights</li>
           </ul>
           <p>
@@ -910,76 +579,62 @@
 
           <h2>4. Data Security</h2>
           <p>
-            We implement appropriate technical and organizational measures to
-            protect your personal data against unauthorized access, alteration,
+            We implement appropriate technical and organisational measures to
+            protect your personal data against unauthorised access, alteration,
             disclosure, or destruction. These include:
           </p>
           <ul>
-            <li><i class="fas fa-check-circle"></i> <strong>Encryption:</strong> All data is encrypted during transmission (SSL/TLS)</li>
+            <li><i class="fas fa-check-circle"></i> <strong>Encryption:</strong> Our website is served over HTTPS (SSL/TLS)</li>
             <li><i class="fas fa-check-circle"></i> <strong>Access Controls:</strong> Only authorised personnel have access to personal data</li>
-            <li><i class="fas fa-check-circle"></i> <strong>Secure Storage:</strong> Data is stored on secure servers with regular backups</li>
-            <li><i class="fas fa-check-circle"></i> <strong>Monitoring:</strong> Regular security audits and vulnerability assessments</li>
+            <li><i class="fas fa-check-circle"></i> <strong>Secure Storage:</strong> Data is stored on secure, reputable hosting infrastructure</li>
           </ul>
           <p>
             While we strive to protect your personal data, no transmission over
             the internet is 100% secure. We cannot guarantee absolute security
-            but are committed to maintaining the highest standards.
+            but are committed to maintaining high standards.
           </p>
 
           <h2>5. Data Retention</h2>
           <p>
             We retain your personal data for as long as necessary to provide our
             services, comply with legal obligations, resolve disputes, and enforce
-            our agreements. Specifically:
-          </p>
-          <ul>
-            <li><i class="fas fa-check-circle"></i> <strong>Candidate Profiles:</strong> Retained for up to 2 years after last activity</li>
-            <li><i class="fas fa-check-circle"></i> <strong>Application Records:</strong> Retained for up to 1 year after job closure</li>
-            <li><i class="fas fa-check-circle"></i> <strong>Transactional Data:</strong> Retained as required for legal and tax purposes</li>
-          </ul>
-          <p>
-            You may request deletion of your data at any time (see Section 7 below).
+            our agreements. Candidate profiles are kept for as long as they remain
+            useful for matching you to roles, and you can request deletion at any
+            time.
           </p>
 
           <h2>6. Your Rights</h2>
           <p>
-            Under the Nigeria Data Protection Act and GDPR, you have the
-            following rights regarding your personal data:
+            Under the Nigeria Data Protection Act, you have the following rights
+            regarding your personal data:
           </p>
           <ul>
             <li><i class="fas fa-check-circle"></i> <strong>Right to Access:</strong> Request a copy of your personal data</li>
             <li><i class="fas fa-check-circle"></i> <strong>Right to Rectification:</strong> Request correction of inaccurate data</li>
-            <li><i class="fas fa-check-circle"></i> <strong>Right to Erasure:</strong> Request deletion of your data ("right to be forgotten")</li>
+            <li><i class="fas fa-check-circle"></i> <strong>Right to Erasure:</strong> Request deletion of your data</li>
             <li><i class="fas fa-check-circle"></i> <strong>Right to Restrict Processing:</strong> Request limitation of how we use your data</li>
-            <li><i class="fas fa-check-circle"></i> <strong>Right to Data Portability:</strong> Request transfer of your data to another provider</li>
             <li><i class="fas fa-check-circle"></i> <strong>Right to Object:</strong> Object to processing for marketing purposes</li>
             <li><i class="fas fa-check-circle"></i> <strong>Right to Withdraw Consent:</strong> Withdraw consent at any time</li>
           </ul>
           <p>
             To exercise any of these rights, please contact us at
-            <a href="mailto:acquire@afriluxhospitality.com" style="color: var(--color-gold);">acquire@afriluxhospitality.com</a>.
+            <a href="mailto:hello@hospitalityrecruit.com">hello@hospitalityrecruit.com</a>.
           </p>
 
           <h2>7. Cookies</h2>
           <p>
-            We use cookies to enhance your experience on our website. Cookies are
-            small text files stored on your device. We use the following types:
-          </p>
-          <ul>
-            <li><i class="fas fa-check-circle"></i> <strong>Essential Cookies:</strong> Required for basic site functionality</li>
-            <li><i class="fas fa-check-circle"></i> <strong>Analytical Cookies:</strong> To understand how visitors use our site</li>
-            <li><i class="fas fa-check-circle"></i> <strong>Preference Cookies:</strong> To remember your preferences</li>
-          </ul>
-          <p>
-            You can control cookie preferences in your browser settings. However,
-            disabling certain cookies may affect site functionality.
+            Our website does not currently use tracking, advertising, or
+            analytics cookies. Our hosting provider may set essential session
+            cookies required for the site to function. You can control cookies
+            through your browser settings at any time.
           </p>
 
           <h2>8. Third-Party Links</h2>
           <p>
-            Our website may contain links to third-party websites. We are not
-            responsible for the privacy practices of these external sites. We
-            encourage you to review their privacy policies separately.
+            Our website may contain links to third-party websites (such as
+            WhatsApp). We are not responsible for the privacy practices of these
+            external sites. We encourage you to review their privacy policies
+            separately.
           </p>
 
           <h2>9. Children's Privacy</h2>
@@ -1002,9 +657,9 @@
             Privacy Policy or our data practices, please contact us:
           </p>
           <ul>
-            <li><i class="fas fa-check-circle"></i> <strong>Email:</strong> <a href="mailto:acquire@afriluxhospitality.com" style="color: var(--color-gold);">acquire@afriluxhospitality.com</a></li>
-            <li><i class="fas fa-check-circle"></i> <strong>Phone:</strong> <a href="tel:+2348039661354" style="color: var(--color-gold);">+234 803 966 1354</a></li>
-            <li><i class="fas fa-check-circle"></i> <strong>Address:</strong> Ilorin, Kwara, Nigeria</li>
+            <li><i class="fas fa-check-circle"></i> <strong>Email:</strong> <a href="mailto:hello@hospitalityrecruit.com">hello@hospitalityrecruit.com</a></li>
+            <li><i class="fas fa-check-circle"></i> <strong>Phone / WhatsApp:</strong> <a href="tel:+2348039661354">+234 803 966 1354</a></li>
+            <li><i class="fas fa-check-circle"></i> <strong>Location:</strong> Osogbo, Nigeria</li>
           </ul>
 
           <div class="back-to-top">
@@ -1023,65 +678,52 @@
         <div class="footer-grid">
           <div class="footer-column">
             <h3>Hospitality<span style="color: var(--color-gold);">Recruit</span></h3>
-            <p>Precision talent for luxury hospitality. Executive search, operational management, and HR consulting across Africa.</p>
+            <p>Precision talent for luxury hospitality. Executive search, operational management, and HR consulting across Nigeria.</p>
             <div class="footer-contact" style="margin-top: 1rem;">
               <p><i class="fas fa-phone"></i> +234 803 966 1354</p>
-              <p><i class="fas fa-envelope"></i> acquire@hospitalityrecruit.com</p>
-              <p><i class="fas fa-map-marker-alt"></i> Ilorin • Osogbo • Abuja • Lagos</p>
+              <p><i class="fas fa-envelope"></i> hello@hospitalityrecruit.com</p>
+              <p><i class="fas fa-map-marker-alt"></i> Osogbo • Ilorin • Abuja • Lagos</p>
             </div>
           </div>
           <div class="footer-column">
             <h3>For Candidates</h3>
             <ul class="footer-links">
-              <li><a href="/candidates/job-board/"><i class="fas fa-chevron-right"></i> Browse Jobs</a></li>
-              <li><a href="/candidates/submit-profile/"><i class="fas fa-chevron-right"></i> Submit Profile</a></li>
-              <li><a href="/candidates/career-strategy/"><i class="fas fa-chevron-right"></i> Career Strategy</a></li>
+              <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Submit Your CV</a></li>
+              <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Job Alerts</a></li>
+              <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Career Advice</a></li>
             </ul>
           </div>
           <div class="footer-column">
             <h3>For Employers</h3>
             <ul class="footer-links">
-              <li><a href="/employers/post-job/"><i class="fas fa-chevron-right"></i> Post a Job</a></li>
-              <li><a href="/employers/search-talent/"><i class="fas fa-chevron-right"></i> Search Talent</a></li>
-              <li><a href="/employers/pricing/"><i class="fas fa-chevron-right"></i> Pricing</a></li>
-              <li><a href="/employers/start-search/"><i class="fas fa-chevron-right"></i> Start a Search</a></li>
+              <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Post a Job</a></li>
+              <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Search Talent</a></li>
+              <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Pricing</a></li>
+              <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Start a Search</a></li>
             </ul>
           </div>
           <div class="footer-column">
             <h3>Company</h3>
             <ul class="footer-links">
-              <li><a href="/about/"><i class="fas fa-chevron-right"></i> About Us</a></li>
-              <li><a href="/case-studies/" style="color: var(--color-gold); font-weight: 700;"><i class="fas fa-chevron-right"></i> Case Studies</a></li>
-              <li><a href="/contact/"><i class="fas fa-chevron-right"></i> Contact Us</a></li>
-              <li><a href="/blog/"><i class="fas fa-chevron-right"></i> Insights Blog</a></li>
+              <li><a href="about.html"><i class="fas fa-chevron-right"></i> About Us</a></li>
+              <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact Us</a></li>
+              <li><a href="privacy.html"><i class="fas fa-chevron-right"></i> Privacy Policy</a></li>
+              <li><a href="terms.html"><i class="fas fa-chevron-right"></i> Terms of Service</a></li>
             </ul>
           </div>
         </div>
         <div class="footer-bottom">
           <p>&copy; <span id="currentYear"></span> HospitalityRecruit. All rights reserved.</p>
-          <div class="footer-bottom-links">
-            <a href="/privacy.html">Privacy Policy</a>
-            <a href="/terms.html">Terms of Service</a>
-          </div>
         </div>
-        <a
-          href="https://wa.me/2348039661354?text=Hello%20AfriLux%20Hospitality%2C%20I%27m%20interested%20in%20your%20services"
-          target="_blank"
-          class="whatsapp-desktop"
-          rel="noopener noreferrer"
-          style="margin-top: 1.5rem;"
-        >
-          <i class="fab fa-whatsapp"></i>
-          <span>Chat with us on WhatsApp</span>
-        </a>
       </div>
     </footer>
 
     <a
-      href="https://wa.me/2348039661354?text=Hello%20AfriLux%20Hospitality%2C%20I%20have%20a%20question"
+      href="https://wa.me/2348039661354?text=Hello%20HospitalityRecruit%2C%20I%20have%20a%20question"
       class="whatsapp-float"
       target="_blank"
       rel="noopener noreferrer"
+      aria-label="Chat on WhatsApp"
     >
       <i class="fab fa-whatsapp"></i>
     </a>
@@ -1089,23 +731,16 @@
     <!-- ===== JAVASCRIPT ===== -->
     <script>
       document.addEventListener('DOMContentLoaded', function() {
-        // Current year
-        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        const yearEl = document.getElementById('currentYear');
+        if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-        // Current date for last updated
-        const today = new Date();
-        const options = { year: 'numeric', month: 'long', day: 'numeric' };
-        document.getElementById('currentDate').textContent = today.toLocaleDateString('en-US', options);
-
-        // ============================================================
-        // MOBILE MENU
-        // ============================================================
         const mobileToggle = document.getElementById('mobileMenuToggle');
         const mainNav = document.getElementById('mainNav');
         const overlay = document.getElementById('mobileOverlay');
         const closeBtn = document.getElementById('mobileCloseBtn');
 
         function toggleMenu(force) {
+          if (!mainNav || !overlay || !mobileToggle) return;
           const active = (typeof force === 'boolean') ? force : !mainNav.classList.contains('active');
           mainNav.classList.toggle('active', active);
           overlay.classList.toggle('active', active);
@@ -1122,11 +757,10 @@
 
         document.querySelectorAll('.nav-link:not(.dropdown-toggle), .dropdown-item').forEach(link => {
           link.addEventListener('click', function() {
-            if (window.innerWidth <= 1024 && mainNav.classList.contains('active')) toggleMenu(false);
+            if (window.innerWidth <= 1024 && mainNav?.classList.contains('active')) toggleMenu(false);
           });
         });
 
-        // --- Dropdowns (mobile) ---
         document.querySelectorAll('.dropdown-toggle').forEach(t => {
           t.addEventListener('click', function(e) {
             if (window.innerWidth <= 1024) {
