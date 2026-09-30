@@ -2,20 +2,19 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Submit Profile | Hospitality Recruit – Join Our Talent Network</title>
   <meta name="description" content="Submit your profile to Hospitality Recruit and get matched with elite luxury hospitality roles across Nigeria and Africa." />
 
-  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-
-  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700&display=swap" rel="stylesheet" />
 
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
+
   <style>
-    /* ===== RESET & VARIABLES ===== */
     * { margin:0; padding:0; box-sizing:border-box; }
     :root {
       --color-primary: #0A1628;
@@ -54,7 +53,6 @@
     @media (min-width:1024px) { h1 { font-size:4.5rem; } h2 { font-size:3.2rem; } }
     .text-gold { color:var(--color-gold); }
 
-    /* ===== BUTTONS ===== */
     .btn {
       display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
       padding: 0.75rem 1.5rem; font-weight: 700; font-size: 0.95rem;
@@ -65,6 +63,7 @@
     @media (min-width:640px) { .btn { width:auto; padding:1rem 2.5rem; } }
     .btn-gold { background:var(--color-gold); color:var(--color-primary); }
     .btn-gold:hover { background:var(--color-gold-light); transform:translateY(-2px); box-shadow:var(--shadow-lg); }
+    .btn-gold:disabled { opacity:0.7; cursor:not-allowed; transform:none; }
     .btn-outline-gold { background:transparent; color:var(--color-gold); border:2px solid var(--color-gold); }
     .btn-outline-gold:hover { background:var(--color-gold); color:var(--color-primary); transform:translateY(-2px); }
     .btn-outline-white { background:transparent; color:var(--color-white); border:2px solid var(--color-white); }
@@ -73,7 +72,6 @@
     .btn-large { padding:1.25rem 3rem; font-size:1.1rem; }
     .btn-sm { padding:0.5rem 1.25rem; font-size:0.85rem; min-height:40px; }
 
-    /* ===== WHATSAPP ===== */
     .whatsapp-desktop {
       display: inline-flex; align-items: center; gap:0.75rem;
       background:#25d366; color:white; padding:0.75rem 1.5rem;
@@ -91,7 +89,6 @@
     .whatsapp-float:hover { transform:scale(1.1); background:#128c7e; }
     @media (min-width:769px) { .whatsapp-float { display:none; } }
 
-    /* ===== HEADER ===== */
     .site-header {
       background:var(--color-white); box-shadow:var(--shadow-md);
       position:sticky; top:0; z-index:1000; padding:0.75rem 0;
@@ -163,8 +160,6 @@
         transform:none; display:none; background:var(--color-gray-soft); width:calc(100% - 1rem);
       }
       .dropdown.active .dropdown-menu { display:block; }
-      .dropdown-toggle i { transition:transform 0.3s ease; }
-      .dropdown.active .dropdown-toggle i { transform:rotate(180deg); }
     }
     .dropdown-item {
       display:flex; align-items:center; gap:0.75rem; padding:0.75rem 1.25rem;
@@ -196,10 +191,9 @@
     }
     .mobile-overlay.active { display:block; }
 
-    /* ===== SUBMIT PROFILE HERO ===== */
     .submit-hero {
       padding:3rem 0 4rem; background:linear-gradient(135deg, var(--color-primary) 0%, #0F2844 100%);
-      color:var(--color-white); text-align:center;
+      color:var(--color-white); text-align:center; position:relative; overflow:hidden;
     }
     .submit-hero::after { content:'✦'; position:absolute; bottom:-50px; right:-50px; font-size:300px; color:rgba(201,168,76,0.04); pointer-events:none; }
     .submit-hero-content { position:relative; z-index:2; max-width:900px; margin:0 auto; }
@@ -212,33 +206,21 @@
     .submit-hero h1 .gold { color:var(--color-gold); }
     .submit-hero .lead { font-size:1.15rem; color:rgba(255,255,255,0.85); max-width:700px; margin:0 auto; line-height:1.7; }
 
-    /* ===== BENEFITS ===== */
     .benefits-section { padding:4rem 0; background:var(--color-white); border-bottom:1px solid var(--color-gray-200); }
     .section-header { text-align:center; margin-bottom:2.5rem; }
     .section-header h2 { margin-bottom:0.5rem; }
     .section-header p { color:var(--color-gray-600); max-width:700px; margin:0 auto; font-size:1.05rem; }
-    .benefits-grid {
-      display:grid; grid-template-columns:1fr; gap:1.5rem; margin-top:1.5rem;
-    }
+    .benefits-grid { display:grid; grid-template-columns:1fr; gap:1.5rem; margin-top:1.5rem; }
     @media (min-width:640px) { .benefits-grid { grid-template-columns:repeat(2,1fr); gap:2rem; } }
     @media (min-width:1024px) { .benefits-grid { grid-template-columns:repeat(3,1fr); gap:2rem; } }
-    .benefit-card {
-      text-align:center; padding:2rem 1.5rem; border-radius:var(--radius-lg);
-      border:1px solid var(--color-gray-200); transition:all var(--transition-normal);
-      background:var(--color-white);
-    }
+    .benefit-card { text-align:center; padding:2rem 1.5rem; border-radius:var(--radius-lg); border:1px solid var(--color-gray-200); transition:all var(--transition-normal); background:var(--color-white); }
     .benefit-card:hover { transform:translateY(-4px); box-shadow:var(--shadow-md); border-color:var(--color-gold); }
     .benefit-card .benefit-icon { font-size:2.5rem; color:var(--color-gold); margin-bottom:0.75rem; }
     .benefit-card h3 { font-family:var(--font-serif); font-size:1.1rem; margin-bottom:0.5rem; }
     .benefit-card p { color:var(--color-gray-600); font-size:0.9rem; line-height:1.6; margin-bottom:0; }
 
-    /* ===== FORM SECTION ===== */
     .form-section { padding:4rem 0; background:var(--color-gray-soft); }
-    .form-wrapper {
-      max-width:900px; margin:0 auto; background:var(--color-white);
-      border-radius:var(--radius-lg); padding:2rem 1.5rem;
-      border:1px solid var(--color-gray-200); box-shadow:var(--shadow-md);
-    }
+    .form-wrapper { max-width:900px; margin:0 auto; background:var(--color-white); border-radius:var(--radius-lg); padding:2rem 1.5rem; border:1px solid var(--color-gray-200); box-shadow:var(--shadow-md); }
     @media (min-width:768px) { .form-wrapper { padding:2.5rem; } }
     .form-wrapper h2 { text-align:center; margin-bottom:0.5rem; }
     .form-wrapper .form-subtitle { text-align:center; color:var(--color-gray-600); margin-bottom:2rem; font-size:1.05rem; }
@@ -254,44 +236,40 @@
     .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
       outline:none; border-color:var(--color-gold); box-shadow:0 0 0 3px rgba(201,168,76,0.1);
     }
+    .form-group input[type="file"] { padding:0.6rem 1rem; }
     .form-group textarea { resize:vertical; min-height:100px; }
     .form-row { display:grid; grid-template-columns:1fr; gap:1.25rem; }
     @media (min-width:640px) { .form-row { grid-template-columns:1fr 1fr; } }
     .form-group .helper-text { font-size:0.8rem; color:var(--color-gray-600); margin-top:0.3rem; }
+    .form-group .error-text { font-size:0.8rem; color:var(--color-emergency); margin-top:0.3rem; display:none; }
+    .form-group.has-error input, .form-group.has-error select, .form-group.has-error textarea { border-color:var(--color-emergency); }
+    .form-group.has-error .error-text { display:block; }
+
+    .upload-progress { display:none; margin-top:0.5rem; background:var(--color-gray-200); border-radius:50px; height:6px; overflow:hidden; }
+    .upload-progress.active { display:block; }
+    .upload-progress-bar { height:100%; background:var(--color-gold); width:0%; transition:width 0.3s; }
 
     .form-success { display:none; text-align:center; padding:2rem 1rem; }
     .form-success .success-icon { font-size:4rem; color:var(--color-success); margin-bottom:1rem; }
     .form-success h3 { font-family:var(--font-serif); color:var(--color-success); margin-bottom:0.5rem; }
     .form-success p { color:var(--color-gray-600); max-width:500px; margin:0 auto; }
 
-    /* ===== CONFIDENTIALITY ===== */
-    .confidentiality-section {
-      padding:4rem 0; background:var(--color-primary); color:var(--color-white);
-      text-align:center; border-top:3px solid var(--color-gold); border-bottom:3px solid var(--color-gold);
-    }
+    .confidentiality-section { padding:4rem 0; background:var(--color-primary); color:var(--color-white); text-align:center; border-top:3px solid var(--color-gold); border-bottom:3px solid var(--color-gold); }
     .confidentiality-section h2 { color:var(--color-white); margin-bottom:0.5rem; }
     .confidentiality-section .lead { color:rgba(255,255,255,0.85); max-width:700px; margin:0 auto 1.5rem; font-size:1.05rem; }
     .confidentiality-grid { display:grid; grid-template-columns:1fr; gap:1.5rem; max-width:800px; margin:0 auto; text-align:left; }
     @media (min-width:640px) { .confidentiality-grid { grid-template-columns:repeat(2,1fr); gap:2rem; } }
-    .confidentiality-item {
-      display:flex; align-items:flex-start; gap:1rem; background:rgba(255,255,255,0.05);
-      padding:1.25rem; border-radius:var(--radius-md); border:1px solid rgba(255,255,255,0.1);
-    }
+    .confidentiality-item { display:flex; align-items:flex-start; gap:1rem; background:rgba(255,255,255,0.05); padding:1.25rem; border-radius:var(--radius-md); border:1px solid rgba(255,255,255,0.1); }
     .confidentiality-item .conf-icon { color:var(--color-gold); font-size:1.5rem; min-width:30px; margin-top:0.1rem; }
     .confidentiality-item .conf-text h3 { color:var(--color-white); font-size:1rem; font-family:var(--font-sans); font-weight:700; margin-bottom:0.2rem; }
     .confidentiality-item .conf-text p { color:rgba(255,255,255,0.7); font-size:0.9rem; line-height:1.6; margin-bottom:0; }
 
-    /* ===== CTA ===== */
-    .submit-cta {
-      padding:4rem 0; background:linear-gradient(135deg, var(--color-primary) 0%, #0F2844 100%);
-      color:var(--color-white); text-align:center; border-top:3px solid var(--color-gold); border-bottom:3px solid var(--color-gold);
-    }
+    .submit-cta { padding:4rem 0; background:linear-gradient(135deg, var(--color-primary) 0%, #0F2844 100%); color:var(--color-white); text-align:center; border-top:3px solid var(--color-gold); border-bottom:3px solid var(--color-gold); }
     .submit-cta h2 { color:var(--color-white); margin-bottom:0.5rem; }
     .submit-cta .lead { color:rgba(255,255,255,0.85); max-width:700px; margin:0 auto 2rem; font-size:1.05rem; }
     .cta-buttons { display:flex; flex-direction:column; gap:1rem; justify-content:center; align-items:center; }
     @media (min-width:640px) { .cta-buttons { flex-direction:row; gap:1.5rem; } }
 
-    /* ===== FOOTER ===== */
     .footer { background:var(--color-primary); color:var(--color-white); padding:3rem 0 1.5rem; }
     .footer-grid { display:grid; grid-template-columns:1fr; gap:2rem; margin-bottom:2rem; }
     @media (min-width:640px) { .footer-grid { grid-template-columns:repeat(2,1fr); } }
@@ -308,7 +286,6 @@
     .footer-bottom-links a { color:rgba(255,255,255,0.4); text-decoration:none; }
     .footer-bottom-links a:hover { color:var(--color-gold); }
 
-    /* ===== RESPONSIVE ===== */
     @media (max-width:768px) {
       .submit-hero h1 { font-size:2.5rem; }
       .submit-hero .lead { font-size:1rem; }
@@ -327,116 +304,59 @@
 
   <!-- ===== HEADER ===== -->
   <header class="site-header">
-      <div class="container">
-        <div class="header-container">
-          <div class="logo">
-            <a href="/" aria-label="HospitalityRecruit Home">
-              <span class="brand-name">Hospitality<span class="gold">Recruit</span></span>
-              <div class="logo-tagline">Precision Talent for Luxury Hospitality</div>
-            </a>
-          </div>
-          <button
-            class="mobile-menu-toggle"
-            id="mobileMenuToggle"
-            aria-label="Menu"
-            aria-expanded="false"
-          >
-            <i class="fas fa-bars"></i>
-          </button>
-          <nav class="main-nav" id="mainNav" aria-label="Main navigation">
-            <button class="mobile-close-btn" id="mobileCloseBtn">
-              <i class="fas fa-times"></i> Close
-            </button>
-            <ul class="nav-menu">
-               <li class="nav-item">
-                <a href="/" class="nav-link active"
-                  ><i class="fas fa-home"></i> Home</a
-                >
-              </li>
-              <li class="nav-item">
-                <a
-                  href="/admin/dashboard/"
-                  class="nav-link"
-                  style="color: var(--color-emergency); font-weight: 700"
-                >
-                  <i class="fas fa-user-shield"></i> Admin
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/services/index.html" class="nav-link"
-                  ><i class="fas fa-info-circle"></i> Services</a
-                >
-              </li>
-
-              <li class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle">
-                  <i class="fas fa-building"></i> Employers
-                  <i class="fas fa-chevron-down"></i>
-                </a>
-                <div class="dropdown-menu">
-                  <a
-                    href="/employers/dashboard/"
-                    class="dropdown-item"
-                    style="color: var(--color-gold); font-weight: 700"
-                  >
-                    <i class="fas fa-tachometer-alt"></i> Employer Dashboard
-                  </a>
-                  <div class="dropdown-divider"></div>
-                  <a href="/employers/register/" class="dropdown-item">
-                    <i class="fas fa-user-plus"></i> Register as Employer
-                  </a>
-                  <a href="/employers/login/" class="dropdown-item">
-                    <i class="fas fa-sign-in-alt"></i> Login
-                  </a>
-                  <div class="dropdown-divider"></div>
-                  <a href="/employers/search-talent/" class="dropdown-item">
-                    <i class="fas fa-search"></i> Search Talent
-                  </a>
-                  <a href="/employers/pricing/" class="dropdown-item">
-                    <i class="fas fa-tag"></i> Pricing
-                  </a>
-                  <a href="/employers/start-search/" class="dropdown-item">
-                    <i class="fas fa-rocket"></i> Start a Search
-                  </a>
-                </div>
-              </li>
-
-              <li class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle">
-                  <i class="fas fa-user-tie"></i> Candidates
-                  <i class="fas fa-chevron-down"></i>
-                </a>
-                <div class="dropdown-menu">
-                  <a href="/candidates/job-board/" class="dropdown-item"><i class="fas fa-briefcase"></i> Job Board</a>
-                  <a href="/candidates/submit-profile/" class="dropdown-item"><i class="fas fa-file-upload"></i> Submit Profile</a>
-                  <a href="/candidates/career-strategy/" class="dropdown-item"><i class="fas fa-graduation-cap"></i> Career Strategy</a>
-                  <div class="dropdown-divider"></div>
-                  <a href="/candidates/confidentiality/" class="dropdown-item"><i class="fas fa-user-secret"></i> Confidential Process</a>
-                </div>
-              </li>
-              <li class="nav-item">
-                <a href="/about/" class="nav-link"><i class="fas fa-info-circle"></i> About</a>
-              </li>
-              <li class="nav-item">
-                <a href="/case-studies/" class="nav-link"><i class="fas fa-chart-line"></i> Case Studies</a>
-              </li>
-              <li class="nav-item">
-                <a href="/contact/" class="nav-link"><i class="fas fa-envelope"></i> Contact</a>
-              </li>
-            </ul>
-            <div class="nav-cta-group">
-              <!-- <a href="tel:+2348039661354" class="nav-cta">
-                <i class="fas fa-phone"></i> +234 803 966 1354
-              </a> -->
-              <a href="/contact/" class="nav-cta nav-cta-outline">
-                <i class="fas fa-handshake"></i> Partner With Us
-              </a>
-            </div>
-          </nav>
-          <div class="mobile-overlay" id="mobileOverlay"></div>
+    <div class="container">
+      <div class="header-container">
+        <div class="logo">
+          <a href="/" aria-label="HospitalityRecruit Home">
+            <span class="brand-name">Hospitality<span class="gold">Recruit</span></span>
+            <div class="logo-tagline">Precision Talent for Luxury Hospitality</div>
+          </a>
         </div>
+        <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Menu" aria-expanded="false">
+          <i class="fas fa-bars"></i>
+        </button>
+        <nav class="main-nav" id="mainNav" aria-label="Main navigation">
+          <button class="mobile-close-btn" id="mobileCloseBtn">
+            <i class="fas fa-times"></i> Close
+          </button>
+          <ul class="nav-menu">
+            <li class="nav-item"><a href="/" class="nav-link active"><i class="fas fa-home"></i> Home</a></li>
+            <li class="nav-item"><a href="/services/index.html" class="nav-link"><i class="fas fa-concierge-bell"></i> Services</a></li>
+            <li class="nav-item dropdown">
+              <a href="#" class="nav-link dropdown-toggle"><i class="fas fa-building"></i> Employers <i class="fas fa-chevron-down"></i></a>
+              <div class="dropdown-menu">
+                <a href="/employers/dashboard/" class="dropdown-item" style="color:var(--color-gold);font-weight:700;"><i class="fas fa-tachometer-alt"></i> Employer Dashboard</a>
+                <div class="dropdown-divider"></div>
+                <a href="/employers/register/" class="dropdown-item"><i class="fas fa-user-plus"></i> Register as Employer</a>
+                <a href="/employers/login/" class="dropdown-item"><i class="fas fa-sign-in-alt"></i> Login</a>
+                <div class="dropdown-divider"></div>
+                <a href="/employers/search-talent/" class="dropdown-item"><i class="fas fa-search"></i> Search Talent</a>
+                <a href="/employers/pricing/" class="dropdown-item"><i class="fas fa-tag"></i> Pricing</a>
+                <a href="/employers/start-search/" class="dropdown-item"><i class="fas fa-rocket"></i> Start a Search</a>
+              </div>
+            </li>
+            <li class="nav-item dropdown">
+              <a href="#" class="nav-link dropdown-toggle"><i class="fas fa-user-tie"></i> Candidates <i class="fas fa-chevron-down"></i></a>
+              <div class="dropdown-menu">
+                <a href="/candidates/job-board/" class="dropdown-item"><i class="fas fa-briefcase"></i> Job Board</a>
+                <a href="/candidates/submit-profile/" class="dropdown-item"><i class="fas fa-file-upload"></i> Submit Profile</a>
+                <a href="/candidates/career-strategy/" class="dropdown-item"><i class="fas fa-graduation-cap"></i> Career Strategy</a>
+                <div class="dropdown-divider"></div>
+                <a href="/candidates/confidentiality/" class="dropdown-item"><i class="fas fa-user-secret"></i> Confidential Process</a>
+              </div>
+            </li>
+            <li class="nav-item"><a href="/about/" class="nav-link"><i class="fas fa-users"></i> About</a></li>
+            <li class="nav-item"><a href="/case-studies/" class="nav-link"><i class="fas fa-chart-line"></i> Case Studies</a></li>
+            <li class="nav-item"><a href="/contact/" class="nav-link"><i class="fas fa-envelope"></i> Contact</a></li>
+          </ul>
+          <div class="nav-cta-group">
+            <a href="/contact/" class="nav-cta nav-cta-outline"><i class="fas fa-handshake"></i> Partner With Us</a>
+          </div>
+        </nav>
+        <div class="mobile-overlay" id="mobileOverlay"></div>
       </div>
-    </header>
+    </div>
+  </header>
 
   <!-- ===== HERO ===== -->
   <section class="submit-hero">
@@ -467,23 +387,33 @@
     </div>
   </section>
 
-  <!-- ===== FORM SECTION (NETLIFY) ===== -->
+  <!-- ===== FORM SECTION ===== -->
   <section id="submit-form" class="form-section">
     <div class="container">
       <div class="form-wrapper">
         <h2>Submit Your <span class="text-gold">Profile</span></h2>
         <p class="form-subtitle">Fill in your details. We'll be in touch within 48 hours.</p>
 
-        <!-- NETLIFY FORM -->
-        <form id="submitProfileForm" name="submit-profile" method="POST" data-netlify="true">
+        <form
+          id="submitProfileForm"
+          name="submit-profile"
+          method="POST"
+          data-netlify="true"
+          netlify-honeypot="bot-field"
+          enctype="multipart/form-data"
+        >
           <input type="hidden" name="form-name" value="submit-profile" />
-          <input type="hidden" name="_redirect" value="https://hospitalityrecruit.netlify.app/candidates/submit-profile/?success=true" />
+          <input type="hidden" name="_redirect" value="/candidates/submit-profile/?success=true" />
+          <input type="hidden" name="cvUrl" id="cvUrl" value="" />
 
-          <!-- Personal Details -->
+          <p style="display:none;">
+            <label>Don't fill this out: <input name="bot-field" /></label>
+          </p>
+
           <div class="form-row">
             <div class="form-group">
               <label for="fullName">Full Name <span class="required">*</span></label>
-              <input type="text" id="fullName" name="fullName" placeholder="e.g. John Doe" required />
+              <input type="text" id="fullName" name="fullName" placeholder="e.g. John Doe" required minlength="2" />
             </div>
             <div class="form-group">
               <label for="email">Email Address <span class="required">*</span></label>
@@ -494,15 +424,17 @@
           <div class="form-row">
             <div class="form-group">
               <label for="phone">Phone Number <span class="required">*</span></label>
-              <input type="tel" id="phone" name="phone" placeholder="+234 800 000 0000" required />
+              <input type="tel" id="phone" name="phone" placeholder="+234 800 000 0000"
+                     pattern="[+0-9 ()\-]{7,20}"
+                     title="Enter a valid phone number (e.g. +234 803 966 1354)"
+                     required />
             </div>
             <div class="form-group">
               <label for="location">Current Location <span class="required">*</span></label>
-              <input type="text" id="location" name="location" placeholder="e.g. Lagos, Nigeria" required />
+              <input type="text" id="location" name="location" placeholder="e.g. Lagos, Nigeria" required minlength="2" />
             </div>
           </div>
 
-          <!-- Professional Details -->
           <div class="form-row">
             <div class="form-group">
               <label for="experience">Years of Experience <span class="required">*</span></label>
@@ -557,16 +489,26 @@
 
           <div class="form-group">
             <label for="skills">Key Skills &amp; Strengths <span class="required">*</span></label>
-            <textarea id="skills" name="skills" rows="3" placeholder="e.g. Leadership, Revenue Management, Fine Dining, Team Building, Guest Service Excellence" required></textarea>
+            <textarea id="skills" name="skills" rows="3" placeholder="e.g. Leadership, Revenue Management, Fine Dining, Team Building, Guest Service Excellence" required minlength="10"></textarea>
             <div class="helper-text">List your top 5-10 skills</div>
           </div>
 
           <div class="form-group">
             <label for="bio">Professional Summary <span class="required">*</span></label>
-            <textarea id="bio" name="bio" rows="4" placeholder="Tell us about yourself, your career highlights, and what you're looking for..." required></textarea>
+            <textarea id="bio" name="bio" rows="4" placeholder="Tell us about yourself, your career highlights, and what you're looking for..." required minlength="50"></textarea>
+            <div class="error-text" id="bioError">Please write at least 50 characters.</div>
           </div>
 
-          <!-- Consent -->
+          <div class="form-group">
+            <label for="cv">Upload CV / Résumé <span class="required">*</span></label>
+            <input type="file" id="cv" name="cv" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" required />
+            <div class="helper-text">PDF or Word document, max 5 MB</div>
+            <div class="error-text" id="cvError">Please upload a PDF or Word file under 5 MB.</div>
+            <div class="upload-progress" id="uploadProgress">
+              <div class="upload-progress-bar" id="uploadProgressBar"></div>
+            </div>
+          </div>
+
           <div class="form-group" style="display:flex; align-items:flex-start; gap:0.75rem;">
             <input type="checkbox" id="consent" name="consent" style="width:auto; margin-top:0.3rem; min-width:18px; height:18px;" required />
             <label for="consent" style="font-weight:400; font-size:0.9rem; color:var(--color-gray-700);">
@@ -575,7 +517,7 @@
             </label>
           </div>
 
-          <button type="submit" class="btn btn-gold btn-block btn-large">
+          <button type="submit" class="btn btn-gold btn-block btn-large" id="submitBtn">
             <i class="fas fa-paper-plane"></i> Submit Profile
           </button>
 
@@ -584,7 +526,6 @@
           </p>
         </form>
 
-        <!-- Success Message -->
         <div class="form-success" id="formSuccess">
           <div class="success-icon"><i class="fas fa-check-circle"></i></div>
           <h3>Profile Submitted Successfully!</h3>
@@ -601,7 +542,7 @@
       <h2>Your Privacy is <span style="color:var(--color-gold);">Our Priority</span></h2>
       <p class="lead">We handle your data with the same discretion you expect from a luxury partner.</p>
       <div class="confidentiality-grid">
-        <div class="confidentiality-item"><div class="conf-icon"><i class="fas fa-shield-alt"></i></div><div class="conf-text"><h3>GDPR Compliant</h3><p>Your data is stored securely and never shared without your explicit consent.</p></div></div>
+        <div class="confidentiality-item"><div class="conf-icon"><i class="fas fa-shield-alt"></i></div><div class="conf-text"><h3>NDPA Compliant</h3><p>Your data is stored securely in line with Nigeria's Data Protection Act 2023 and is never shared without your explicit consent.</p></div></div>
         <div class="confidentiality-item"><div class="conf-icon"><i class="fas fa-user-secret"></i></div><div class="conf-text"><h3>Discreet Search</h3><p>We only share your profile with employers when you give us the green light.</p></div></div>
         <div class="confidentiality-item"><div class="conf-icon"><i class="fas fa-file-contract"></i></div><div class="conf-text"><h3>NDA Protected</h3><p>All our client engagements are covered by strict non-disclosure agreements.</p></div></div>
         <div class="confidentiality-item"><div class="conf-icon"><i class="fas fa-trash-alt"></i></div><div class="conf-text"><h3>Right to Erasure</h3><p>You can request to have your profile deleted at any time – no questions asked.</p></div></div>
@@ -622,71 +563,85 @@
   </section>
 
   <!-- ===== FOOTER ===== -->
- <footer class="footer">
-      <div class="container">
-        <div class="footer-grid">
-          <div class="footer-column">
-            <h3>Hospitality<span style="color: var(--color-gold);">Recruit</span></h3>
-            <p>Precision talent for luxury hospitality. Executive search, operational management, and HR consulting across Africa.</p>
-            <div class="footer-contact" style="margin-top: 1rem;">
-              <p><i class="fas fa-phone"></i> +234 803 966 1354</p>
-              <p><i class="fas fa-envelope"></i> acquire@hospitalityrecruit.com</p>
-              <p><i class="fas fa-map-marker-alt"></i> Ilorin • Osogbo • Abuja • Lagos</p>
-            </div>
-          </div>
-          <div class="footer-column">
-            <h3>For Candidates</h3>
-            <ul class="footer-links">
-              <li><a href="/candidates/job-board/"><i class="fas fa-chevron-right"></i> Browse Jobs</a></li>
-              <li><a href="/candidates/submit-profile/"><i class="fas fa-chevron-right"></i> Submit Profile</a></li>
-              <li><a href="/candidates/career-strategy/"><i class="fas fa-chevron-right"></i> Career Strategy</a></li>
-            </ul>
-          </div>
-          <div class="footer-column">
-            <h3>For Employers</h3>
-            <ul class="footer-links">
-              <li><a href="/employers/post-job/"><i class="fas fa-chevron-right"></i> Post a Job</a></li>
-              <li><a href="/employers/search-talent/"><i class="fas fa-chevron-right"></i> Search Talent</a></li>
-              <li><a href="/employers/pricing/"><i class="fas fa-chevron-right"></i> Pricing</a></li>
-              <li><a href="/employers/start-search/"><i class="fas fa-chevron-right"></i> Start a Search</a></li>
-            </ul>
-          </div>
-          <div class="footer-column">
-            <h3>Company</h3>
-            <ul class="footer-links">
-              <li><a href="/about/"><i class="fas fa-chevron-right"></i> About Us</a></li>
-              <li><a href="/case-studies/" style="color: var(--color-gold); font-weight: 700;"><i class="fas fa-chevron-right"></i> Case Studies</a></li>
-              <li><a href="/contact/"><i class="fas fa-chevron-right"></i> Contact Us</a></li>
-              <li><a href="/blog/"><i class="fas fa-chevron-right"></i> Insights Blog</a></li>
-            </ul>
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-column">
+          <h3>Hospitality<span style="color: var(--color-gold);">Recruit</span></h3>
+          <p>Precision talent for luxury hospitality. Executive search, operational management, and HR consulting across Africa.</p>
+          <div class="footer-contact" style="margin-top: 1rem;">
+            <p><i class="fas fa-phone"></i> +234 803 966 1354</p>
+            <p><i class="fas fa-envelope"></i> acquire@hospitalityrecruit.com</p>
+            <p><i class="fas fa-map-marker-alt"></i> Ilorin • Osogbo • Abuja • Lagos</p>
           </div>
         </div>
-        <div class="footer-bottom">
-          <p>&copy; <span id="currentYear"></span> HospitalityRecruit. All rights reserved.</p>
-          <div class="footer-bottom-links">
-            <a href="/privacy.html">Privacy Policy</a>
-            <a href="/terms.html">Terms of Service</a>
-          </div>
+        <div class="footer-column">
+          <h3>For Candidates</h3>
+          <ul class="footer-links">
+            <li><a href="/candidates/job-board/"><i class="fas fa-chevron-right"></i> Browse Jobs</a></li>
+            <li><a href="/candidates/submit-profile/"><i class="fas fa-chevron-right"></i> Submit Profile</a></li>
+            <li><a href="/candidates/career-strategy/"><i class="fas fa-chevron-right"></i> Career Strategy</a></li>
+          </ul>
         </div>
-        <a
-          href="https://wa.me/2348039661354?text=Hello%20AfriLux%20Hospitality%2C%20I%27m%20interested%20in%20your%20services"
-          target="_blank"
-          class="whatsapp-desktop"
-          rel="noopener noreferrer"
-          style="margin-top: 1.5rem;"
-        >
-          <i class="fab fa-whatsapp"></i>
-          <span>Chat with us on WhatsApp</span>
-        </a>
+        <div class="footer-column">
+          <h3>For Employers</h3>
+          <ul class="footer-links">
+            <li><a href="/employers/post-job/"><i class="fas fa-chevron-right"></i> Post a Job</a></li>
+            <li><a href="/employers/search-talent/"><i class="fas fa-chevron-right"></i> Search Talent</a></li>
+            <li><a href="/employers/pricing/"><i class="fas fa-chevron-right"></i> Pricing</a></li>
+            <li><a href="/employers/start-search/"><i class="fas fa-chevron-right"></i> Start a Search</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Company</h3>
+          <ul class="footer-links">
+            <li><a href="/about/"><i class="fas fa-chevron-right"></i> About Us</a></li>
+            <li><a href="/case-studies/" style="color: var(--color-gold); font-weight: 700;"><i class="fas fa-chevron-right"></i> Case Studies</a></li>
+            <li><a href="/contact/"><i class="fas fa-chevron-right"></i> Contact Us</a></li>
+            <li><a href="/blog/"><i class="fas fa-chevron-right"></i> Insights Blog</a></li>
+          </ul>
+        </div>
       </div>
-    </footer>
+      <div class="footer-bottom">
+        <p>&copy; <span id="currentYear"></span> HospitalityRecruit. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="/privacy.html">Privacy Policy</a>
+          <a href="/terms.html">Terms of Service</a>
+        </div>
+      </div>
+      <a href="https://wa.me/2348039661354?text=Hello%20Hospitality%20Recruit%2C%20I%27m%20interested%20in%20your%20services"
+         target="_blank" class="whatsapp-desktop" rel="noopener noreferrer" style="margin-top: 1.5rem;">
+        <i class="fab fa-whatsapp"></i>
+        <span>Chat with us on WhatsApp</span>
+      </a>
+    </div>
+  </footer>
 
-  <a href="https://wa.me/2348039661354?text=Hello%20Hospitality%20Recruit%2C%20I%20need%20assistance%20submitting%20my%20profile" class="whatsapp-float" target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp"></i></a>
+  <a href="https://wa.me/2348039661354?text=Hello%20Hospitality%20Recruit%2C%20I%20need%20assistance%20submitting%20my%20profile"
+     class="whatsapp-float" target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp"></i></a>
 
-  <!-- ===== JAVASCRIPT ===== -->
   <script>
+    // ============================================================
+    // FIREBASE (Storage only on this page)
+    // ============================================================
+    const firebaseConfig = {
+      apiKey: "AIzaSyBxeiG78oHv8wSLGRK_GAAD_mqvZKJtu30",
+      authDomain: "jobpitality-1cfb2.firebaseapp.com",
+      projectId: "jobpitality-1cfb2",
+      storageBucket: "jobpitality-1cfb2.firebasestorage.app",
+      messagingSenderId: "185191165097",
+      appId: "1:185191165097:web:e0aeab622e8d89ef9a8db8"
+    };
+    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+
+    const MAX_CV_BYTES = 5 * 1024 * 1024; // 5 MB
+    const ALLOWED_TYPES = [
+      'application/pdf',
+      'application/msword',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+    ];
+
     document.addEventListener('DOMContentLoaded', function() {
-      // Current year
       document.getElementById('currentYear').textContent = new Date().getFullYear();
 
       // ============================================================
@@ -707,25 +662,16 @@
         const icon = mobileToggle.querySelector('i');
         if (icon) icon.className = active ? 'fas fa-times' : 'fas fa-bars';
       }
-
-      if (mobileToggle) {
-        mobileToggle.addEventListener('click', function(e) {
-          e.preventDefault();
-          toggleMenu();
-        });
-      }
+      if (mobileToggle) mobileToggle.addEventListener('click', function(e) { e.preventDefault(); toggleMenu(); });
       if (overlay) overlay.addEventListener('click', function() { toggleMenu(false); });
       if (closeBtn) closeBtn.addEventListener('click', function() { toggleMenu(false); });
 
       document.querySelectorAll('.nav-link:not(.dropdown-toggle), .dropdown-item').forEach(function(link) {
         link.addEventListener('click', function() {
-          if (window.innerWidth <= 1024 && mainNav.classList.contains('active')) {
-            toggleMenu(false);
-          }
+          if (window.innerWidth <= 1024 && mainNav.classList.contains('active')) toggleMenu(false);
         });
       });
 
-      // Dropdowns (mobile)
       document.querySelectorAll('.dropdown-toggle').forEach(function(t) {
         t.addEventListener('click', function(e) {
           if (window.innerWidth <= 1024) {
@@ -745,49 +691,178 @@
       });
 
       // ============================================================
-      // FORM HANDLING (Netlify)
+      // FORM HANDLING
       // ============================================================
       const form = document.getElementById('submitProfileForm');
       const successDiv = document.getElementById('formSuccess');
+      const submitBtn = document.getElementById('submitBtn');
+      const cvInput = document.getElementById('cv');
+      const cvUrlInput = document.getElementById('cvUrl');
+      const cvError = document.getElementById('cvError');
+      const bioError = document.getElementById('bioError');
+      const uploadProgress = document.getElementById('uploadProgress');
+      const uploadProgressBar = document.getElementById('uploadProgressBar');
 
-      if (form) {
-        // Check for success parameter
-        const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.get('success') === 'true') {
-          form.style.display = 'none';
-          if (successDiv) successDiv.style.display = 'block';
-        }
+      if (!form) return;
 
-        // Show loading state
-        form.addEventListener('submit', function() {
-          const submitBtn = this.querySelector('button[type="submit"]');
-          if (submitBtn) {
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
-          }
-        });
+      // Success state via query string
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('success') === 'true') {
+        form.style.display = 'none';
+        if (successDiv) successDiv.style.display = 'block';
+        // Clean the URL so it can't be shared/reloaded into a false success state
+        const cleanUrl = new URL(window.location.href);
+        cleanUrl.searchParams.delete('success');
+        window.history.replaceState({}, document.title, cleanUrl.pathname);
       }
 
-      // Reset function for "Submit Another Profile" button
-      window.resetForm = function() {
-        const form = document.getElementById('submitProfileForm');
-        const successDiv = document.getElementById('formSuccess');
-        const url = new URL(window.location.href);
-        url.searchParams.delete('success');
-        window.history.replaceState({}, document.title, url.pathname);
-        if (form) {
-          form.style.display = 'block';
-          form.reset();
-          const submitBtn = form.querySelector('button[type="submit"]');
-          if (submitBtn) {
+      // Validate CV file on change
+      function validateCv(file) {
+        if (!file) return 'Please select a CV file.';
+        if (!ALLOWED_TYPES.includes(file.type)) return 'Only PDF, DOC, or DOCX files are allowed.';
+        if (file.size > MAX_CV_BYTES) return 'File must be under 5 MB.';
+        return null;
+      }
+
+      cvInput.addEventListener('change', function() {
+        const file = this.files && this.files[0];
+        const err = validateCv(file);
+        const group = this.closest('.form-group');
+        if (err) {
+          cvError.textContent = err;
+          group.classList.add('has-error');
+        } else {
+          group.classList.remove('has-error');
+        }
+      });
+
+      // Show bio error text on invalid
+      const bioInput = document.getElementById('bio');
+      bioInput.addEventListener('input', function() {
+        const group = this.closest('.form-group');
+        if (this.value.length > 0 && this.value.length < 50) {
+          group.classList.add('has-error');
+        } else {
+          group.classList.remove('has-error');
+        }
+      });
+
+      // ============================================================
+      // SUBMIT: upload CV to Firebase, then post form to Netlify
+      // ============================================================
+      form.addEventListener('submit', async function(e) {
+        // Client-side file validation first
+        const file = cvInput.files && cvInput.files[0];
+        const cvErr = validateCv(file);
+        if (cvErr) {
+          e.preventDefault();
+          cvError.textContent = cvErr;
+          cvInput.closest('.form-group').classList.add('has-error');
+          cvInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          return;
+        }
+
+        // Prevent double submit & show progress
+        e.preventDefault();
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading CV…';
+        uploadProgress.classList.add('active');
+        uploadProgressBar.style.width = '0%';
+
+        try {
+          // Build a safe unique filename
+          const ext = (file.name.split('.').pop() || 'pdf').toLowerCase();
+          const safeName = 'cv-' + Date.now() + '-' + Math.random().toString(36).slice(2, 8) + '.' + ext;
+          const ref = firebase.storage().ref().child('cvs/' + safeName);
+
+          // Upload with progress
+          const uploadTask = ref.put(file);
+          await new Promise((resolve, reject) => {
+            uploadTask.on('state_changed',
+              (snapshot) => {
+                const pct = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                uploadProgressBar.style.width = pct + '%';
+              },
+              reject,
+              resolve
+            );
+          });
+
+          const downloadUrl = await ref.getDownloadURL();
+          cvUrlInput.value = downloadUrl;
+
+          submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting…';
+
+          // Now submit the Netlify form for real.
+          // Build a hidden iframe so the browser doesn't navigate away abruptly.
+          const iframeName = 'netlify-submit-target-' + Date.now();
+          const iframe = document.createElement('iframe');
+          iframe.name = iframeName;
+          iframe.style.display = 'none';
+          document.body.appendChild(iframe);
+
+          // Clone the form so we don't disturb the visible one
+          const clone = form.cloneNode(true);
+          clone.target = iframeName;
+          clone.style.display = 'none';
+          document.body.appendChild(clone);
+
+          clone.submit();
+
+          // Optimistically show success after a short delay
+          setTimeout(() => {
+            form.style.display = 'none';
+            successDiv.style.display = 'block';
+            form.reset();
             submitBtn.disabled = false;
             submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Profile';
-          }
+            uploadProgress.classList.remove('active');
+            document.getElementById('submit-form').scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 1500);
+
+        } catch (err) {
+          console.error('Upload/submit error:', err);
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Profile';
+          uploadProgress.classList.remove('active');
+          cvError.textContent = 'Upload failed: ' + (err.message || 'Please try again.');
+          cvInput.closest('.form-group').classList.add('has-error');
         }
-        if (successDiv) successDiv.style.display = 'none';
-        window.scrollTo({ top: form ? form.offsetTop - 100 : 0, behavior: 'smooth' });
-      };
+      });
+
+      // Reset button if user comes back via bfcache
+      window.addEventListener('pageshow', function(e) {
+        if (e.persisted) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Profile';
+          uploadProgress.classList.remove('active');
+        }
+      });
     });
+
+    // Reset for "Submit Another Profile"
+    window.resetForm = function() {
+      const profileForm = document.getElementById('submitProfileForm');
+      const successBox = document.getElementById('formSuccess');
+      const btn = document.getElementById('submitBtn');
+      const prog = document.getElementById('uploadProgress');
+      const url = new URL(window.location.href);
+      url.searchParams.delete('success');
+      window.history.replaceState({}, document.title, url.pathname);
+      if (profileForm) {
+        profileForm.style.display = 'block';
+        profileForm.reset();
+        document.getElementById('cvUrl').value = '';
+      }
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Profile';
+      }
+      if (prog) prog.classList.remove('active');
+      if (successBox) successBox.style.display = 'none';
+      const target = document.getElementById('submit-form');
+      window.scrollTo({ top: target ? target.offsetTop - 100 : 0, behavior: 'smooth' });
+    };
   </script>
 </body>
 </html>
