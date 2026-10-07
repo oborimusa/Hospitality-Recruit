@@ -47,7 +47,6 @@
     .form-row { display:grid; grid-template-columns:1fr; gap:1rem; }
     @media (min-width:480px) { .form-row { grid-template-columns:1fr 1fr; } }
 
-    /* Plan Selection */
     .plan-selection { margin:1.5rem 0; }
     .plan-selection h3 { font-size:1rem; margin-bottom:0.75rem; color:#0A1628; }
     .plan-options { display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; }
@@ -67,7 +66,6 @@
     .plan-option.selected .plan-check { display:block; }
     .plan-option .plan-badge { display:inline-block; font-size:0.6rem; font-weight:700; text-transform:uppercase; background:#C9A84C; color:#0A1628; padding:0.1rem 0.5rem; border-radius:50px; margin-bottom:0.25rem; }
 
-    /* Terms */
     .terms-group { display:flex; align-items:flex-start; gap:0.75rem; margin:1rem 0; }
     .terms-group input[type="checkbox"] { width:auto; margin-top:0.25rem; min-width:18px; height:18px; cursor:pointer; }
     .terms-group label { font-weight:400; font-size:0.85rem; color:#5A5550; cursor:pointer; }
@@ -82,6 +80,7 @@
       font-weight:700; font-size:1rem;
       cursor:pointer; transition:all 0.2s;
       font-family:'Inter',sans-serif;
+      text-decoration:none;
     }
     .btn:hover { background:#E8C84A; transform:translateY(-2px); }
     .btn:disabled { opacity:0.6; cursor:not-allowed; transform:none; }
@@ -93,14 +92,33 @@
       margin-bottom:1rem; font-size:0.9rem;
     }
     .form-success {
-      display:none; text-align:center; padding:1.5rem;
+      display:none; text-align:center; padding:2rem 1.5rem;
       background:rgba(42,157,143,0.08); border-radius:8px;
       border:1px solid #2A9D8F; color:#2A9D8F;
       margin-bottom:1rem;
     }
-    .form-success .icon { font-size:3rem; color:#2A9D8F; margin-bottom:0.5rem; }
-    .form-success h3 { font-family:'Playfair Display',serif; color:#2A9D8F; font-size:1.2rem; margin-bottom:0.25rem; }
-    .form-success p { color:#8A8580; font-size:0.95rem; }
+    .form-success .icon { font-size:3.5rem; color:#2A9D8F; margin-bottom:0.75rem; }
+    .form-success h3 { font-family:'Playfair Display',serif; color:#2A9D8F; font-size:1.35rem; margin-bottom:0.5rem; }
+    .form-success p { color:#5A5550; font-size:0.95rem; line-height:1.5; margin-bottom:0.5rem; }
+    .form-success .hint {
+      background:white;
+      border-radius:8px;
+      padding:0.75rem;
+      margin-top:1rem;
+      font-size:0.85rem;
+      color:#5A5550;
+      text-align:left;
+    }
+    .form-success .hint i { color:#C9A84C; margin-right:0.4rem; }
+    .form-success .btn-gold {
+      margin-top:1.25rem;
+      background:#C9A84C;
+      color:#0A1628;
+      display:inline-flex;
+      padding:0.75rem 1.5rem;
+      width:auto;
+    }
+    .form-success .btn-gold:hover { background:#E8C84A; }
 
     .divider { display:flex; align-items:center; gap:1rem; margin:1.5rem 0; color:#8A8580; font-size:0.85rem; }
     .divider::before, .divider::after { content:''; flex:1; height:1px; background:#E8E5DF; }
@@ -122,8 +140,24 @@
       <p>Join HospitalityRecruit and start posting jobs today</p>
     </div>
 
-    <div class="form-error" id="formError"><i class="fas fa-exclamation-circle"></i> <span id="errorMessage">Please correct the errors below.</span></div>
-    <div class="form-success" id="formSuccess"><div class="icon"><i class="fas fa-check-circle"></i></div><h3>Account Created!</h3><p>Your employer account has been created. You will receive a confirmation email once approved.</p></div>
+    <div class="form-error" id="formError">
+      <i class="fas fa-exclamation-circle"></i>
+      <span id="errorMessage">Please correct the errors below.</span>
+    </div>
+
+    <!-- SUCCESS STATE -->
+    <div class="form-success" id="formSuccess">
+      <div class="icon"><i class="fas fa-check-circle"></i></div>
+      <h3>Registration Successful!</h3>
+      <p>Your employer account has been created.</p>
+      <div class="hint">
+        <p><i class="fas fa-envelope"></i> <strong>Check your email</strong> — we've sent you a verification link. Please verify your address before signing in.</p>
+        <p style="margin-top:0.5rem;"><i class="fas fa-clock"></i> <strong>Pending approval</strong> — our team reviews new accounts within 24–48 hours. You'll be notified once approved.</p>
+      </div>
+      <a href="/employers/login/" class="btn btn-gold">
+        <i class="fas fa-sign-in-alt"></i> Go to Login
+      </a>
+    </div>
 
     <form id="registerForm" novalidate>
       <div class="form-row">
@@ -140,7 +174,6 @@
       <div class="form-group"><label>Password <span class="required">*</span></label><input type="password" id="password" placeholder="Min 6 characters" minlength="6" required /></div>
       <div class="form-group"><label>Confirm Password <span class="required">*</span></label><input type="password" id="confirmPassword" placeholder="Re-enter your password" required /></div>
 
-      <!-- PLAN SELECTION -->
       <div class="plan-selection">
         <h3>Select Your Plan <span style="color:#E63946;">*</span></h3>
         <div class="plan-options">
@@ -162,7 +195,6 @@
         </p>
       </div>
 
-      <!-- TERMS -->
       <div class="terms-group">
         <input type="checkbox" id="terms" required />
         <label for="terms">I agree to the <a href="/terms.html">Terms of Service</a> and <a href="/privacy.html">Privacy Policy</a>. <span style="color:#E63946;">*</span></label>
@@ -220,6 +252,7 @@
       const formSuccess = document.getElementById('formSuccess');
 
       let selectedPlan = null;
+      let submitting = false;
 
       // ============================================================
       // PLAN SELECTION
@@ -233,19 +266,21 @@
       });
 
       // ============================================================
-      // AUTH CHECK – Redirect if already logged in
+      // AUTH CHECK — Redirect only if approved AND not currently submitting
       // ============================================================
       if (auth) {
         auth.onAuthStateChanged(function(user) {
-          if (user) {
-            // Check if user is approved
-            if (db) {
-              db.collection('employers').doc(user.uid).get().then(doc => {
+          if (!user) return;
+          if (submitting) return; // don't redirect mid-registration
+
+          if (db) {
+            db.collection('employers').doc(user.uid).get()
+              .then(doc => {
                 if (doc.exists && doc.data().status === 'approved') {
                   window.location.href = '/employers/dashboard/';
                 }
-              }).catch(() => {});
-            }
+              })
+              .catch(() => {});
           }
         });
       }
@@ -257,19 +292,16 @@
         form.addEventListener('submit', async function(e) {
           e.preventDefault();
 
-          // Hide previous messages
           formError.style.display = 'none';
           formSuccess.style.display = 'none';
 
-          // ============================================================
-          // VALIDATE
-          // ============================================================
+          // ---------- VALIDATE ----------
           const data = {
             companyName: document.getElementById('companyName').value.trim(),
             industry: document.getElementById('industry').value,
             contactName: document.getElementById('contactName').value.trim(),
             contactPhone: document.getElementById('contactPhone').value.trim(),
-            email: document.getElementById('email').value.trim(),
+            email: document.getElementById('email').value.trim().toLowerCase(),
             password: document.getElementById('password').value,
             confirmPassword: document.getElementById('confirmPassword').value,
             plan: selectedPlan,
@@ -278,6 +310,10 @@
 
           if (!data.companyName || !data.industry || !data.contactName || !data.contactPhone || !data.email || !data.password || !data.confirmPassword) {
             showError('Please fill in all required fields.');
+            return;
+          }
+          if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+            showError('Please enter a valid email address.');
             return;
           }
           if (data.password.length < 6) {
@@ -296,31 +332,39 @@
             showError('You must agree to the Terms of Service and Privacy Policy.');
             return;
           }
-
-          // ============================================================
-          // CHECK FIREBASE
-          // ============================================================
           if (!firebaseReady || !auth || !db) {
             showError('Firebase is not available. Please check your internet connection.');
             return;
           }
 
-          // ============================================================
-          // SUBMIT
-          // ============================================================
+          // ---------- SUBMIT ----------
+          submitting = true;
           registerBtn.disabled = true;
           registerBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating account...';
 
+          let createdUser = null;
+
           try {
-            // Create user with email and password
+            // 1. Create the auth user
             const userCredential = await auth.createUserWithEmailAndPassword(data.email, data.password);
-            const user = userCredential.user;
+            createdUser = userCredential.user;
 
-            // Update profile with company name
-            await user.updateProfile({ displayName: data.companyName });
+            // 2. Update display name
+            try {
+              await createdUser.updateProfile({ displayName: data.companyName });
+            } catch (profileErr) {
+              console.warn('Could not update display name:', profileErr);
+            }
 
-            // Save employer data to Firestore
-            await db.collection('employers').doc(user.uid).set({
+            // 3. Send email verification (non-blocking — don't fail registration if this fails)
+            try {
+              await createdUser.sendEmailVerification();
+            } catch (verifyErr) {
+              console.warn('Could not send verification email:', verifyErr);
+            }
+
+            // 4. Save employer record to Firestore
+            await db.collection('employers').doc(createdUser.uid).set({
               companyName: data.companyName,
               industry: data.industry,
               contactName: data.contactName,
@@ -328,40 +372,65 @@
               contactEmail: data.email,
               plan: data.plan,
               status: 'pending',
+              emailVerified: false,
               createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-              uid: user.uid
+              uid: createdUser.uid
             });
 
-            // Show success
-            formSuccess.style.display = 'block';
+            // 5. Show success state
             form.style.display = 'none';
+            formSuccess.style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
 
-            // Redirect to login page after 3 seconds
-            setTimeout(function() {
-              window.location.href = '/employers/login/';
-            }, 3000);
+            // Note: no auto-redirect. User clicks "Go to Login" when ready.
 
           } catch (error) {
             console.error('Registration error:', error);
 
-            let msg = 'Registration failed. ';
-            if (error.code === 'auth/email-already-in-use') {
-              msg = 'This email is already registered. Please sign in.';
-            } else if (error.code === 'auth/weak-password') {
-              msg = 'Password is too weak. Use at least 6 characters.';
-            } else if (error.code === 'auth/invalid-email') {
-              msg = 'Please enter a valid email address.';
-            } else if (error.code === 'auth/network-request-failed') {
-              msg = 'Network error. Please check your internet connection.';
-            } else {
-              msg += error.message;
+            // Cleanup: if auth user was created but Firestore save failed,
+            // delete the auth user so the email isn't stuck.
+            if (createdUser && (error.code === 'permission-denied' || error.code === 'unavailable')) {
+              try {
+                await createdUser.delete();
+                console.log('Cleaned up orphaned auth user');
+              } catch (cleanupErr) {
+                console.warn('Could not clean up auth user:', cleanupErr);
+              }
+            }
+
+            // Also: if the user already exists, sign them out so they don't
+            // get auto-redirected.
+            if (error.code === 'auth/email-already-in-use' && auth.currentUser) {
+              try { await auth.signOut(); } catch (e) {}
+            }
+
+            let msg = 'Registration failed. Please try again.';
+            switch (error.code) {
+              case 'auth/email-already-in-use':
+                msg = 'This email is already registered. Please sign in instead.';
+                break;
+              case 'auth/weak-password':
+                msg = 'Password is too weak. Use at least 6 characters.';
+                break;
+              case 'auth/invalid-email':
+                msg = 'Please enter a valid email address.';
+                break;
+              case 'auth/network-request-failed':
+                msg = 'Network error. Please check your internet connection.';
+                break;
+              case 'permission-denied':
+                msg = 'Could not save your data. Please try again or contact support.';
+                break;
+              default:
+                msg = 'Registration failed: ' + (error.message || 'Unknown error');
             }
             showError(msg);
-          }
 
-          // Reset button
-          registerBtn.disabled = false;
-          registerBtn.innerHTML = '<i class="fas fa-user-plus"></i> Create Account';
+          } finally {
+            submitting = false;
+            registerBtn.disabled = false;
+            registerBtn.innerHTML = '<i class="fas fa-user-plus"></i> Create Account';
+          }
         });
       }
 
@@ -371,9 +440,10 @@
       function showError(msg) {
         errorMessage.textContent = msg;
         formError.style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         setTimeout(function() {
           formError.style.display = 'none';
-        }, 5000);
+        }, 6000);
       }
 
     });

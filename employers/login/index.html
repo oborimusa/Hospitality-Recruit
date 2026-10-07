@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
-  <title>Employer Login | HospitalityRecruit</title>
+  <title>Login | HospitalityRecruit</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -18,6 +18,7 @@
       --color-primary: #0A1628;
       --color-gold: #C9A84C;
       --color-gold-light: #E8C84A;
+      --color-gold-dark: #A8873A;
       --color-white: #FFFFFF;
       --color-charcoal: #2D2D2D;
       --color-gray-soft: #F4F2EE;
@@ -204,8 +205,8 @@
         <a href="/" class="logo">
           <span class="brand-name">Hospitality<span class="gold">Recruit</span></span>
         </a>
-        <h1>Employer Login</h1>
-        <p>Sign in to post jobs and manage your listings</p>
+        <h1>Sign In</h1>
+        <p>Access your employer, admin, or super admin dashboard</p>
       </div>
 
       <div class="form-error" id="formError"><i class="fas fa-exclamation-circle"></i> <span id="errorMessage">Invalid email or password.</span></div>
@@ -266,12 +267,14 @@
       };
 
       let auth = null;
+      let db = null;
 
       try {
         if (!firebase.apps.length) {
           firebase.initializeApp(firebaseConfig);
         }
         auth = firebase.auth();
+        db = firebase.firestore();
       } catch (e) {
         console.warn('Firebase init error:', e);
       }
@@ -289,20 +292,83 @@
       const formSuccess = document.getElementById('formSuccess');
       const successMessage = document.getElementById('successMessage');
 
+      // Track whether we're mid-login (suppresses onAuthStateChanged redirects)
+      let loggingIn = false;
+
       // ============================================================
-      // 3. CHECK IF ALREADY LOGGED IN
+      // 3. DASHBOARD ROUTING — determines where to send each user
+      // ============================================================
+      const DASHBOARDS = {
+        superAdmin: '/super-admin/dashboard/index.html',
+        admin: '/admin/dashboard/index.html',
+        employer: '/employers/dashboard/'
+      };
+
+      /**
+       * Decides the correct dashboard for a signed-in user.
+       * Priority: superAdmin > admin > employer > null
+       */
+      async function getDashboardFor(user) {
+        if (!user) return null;
+
+        try {
+          const token = await user.getIdTokenResult(true);
+          if (token.claims.superAdmin === true) return DASHBOARDS.superAdmin;
+          if (token.claims.admin === true) return DASHBOARDS.admin;
+
+          // No admin claim — check if they're an employer
+          if (db) {
+            const empDoc = await db.collection('employers').doc(user.uid).get();
+            if (empDoc.exists) return DASHBOARDS.employer;
+          }
+        } catch (e) {
+          console.warn('Could not resolve dashboard for user:', e);
+        }
+
+        // Signed in, but no dashboard belongs to them
+        return null;
+      }
+
+      /**
+       * Reads ?redirect= from URL, validating it's a safe same-site path.
+       * Returns null if missing or unsafe.
+       */
+      function getSafeRedirect() {
+        const params = new URLSearchParams(window.location.search);
+        const redirect = params.get('redirect');
+        if (!redirect) return null;
+        // Only allow same-site paths
+        if (!redirect.startsWith('/')) return null;
+        if (redirect.startsWith('//')) return null;
+        return redirect;
+      }
+
+      // ============================================================
+      // 4. AUTO-REDIRECT IF ALREADY SIGNED IN
       // ============================================================
       if (auth) {
-        auth.onAuthStateChanged(function(user) {
-          if (user) {
-            // If already logged in, go to dashboard
-            window.location.href = '/employers/dashboard/';
+        auth.onAuthStateChanged(async function(user) {
+          if (!user) return;
+          if (loggingIn) return; // don't interrupt active login flow
+
+          // Honour explicit ?redirect= first
+          const explicit = getSafeRedirect();
+          if (explicit) {
+            window.location.href = explicit;
+            return;
           }
+
+          // Otherwise route based on role
+          const destination = await getDashboardFor(user);
+          if (destination) {
+            window.location.href = destination;
+          }
+          // If no destination: stay on the page.
         });
       }
 
       // ============================================================
-      // 4. SAVED EMAIL (Remember Me)
+      // 5. SAVED EMAIL (Remember Me)
       // ============================================================
       const savedEmail = localStorage.getItem('hr_employer_email');
       if (savedEmail) {
@@ -311,13 +377,12 @@
       }
 
       // ============================================================
-      // 5. LOGIN FORM SUBMIT
+      // 6. LOGIN FORM SUBMIT
       // ============================================================
       if (form) {
         form.addEventListener('submit', async function(e) {
           e.preventDefault();
 
-          // Hide previous messages
           formError.style.display = 'none';
           formSuccess.style.display = 'none';
 
@@ -329,6 +394,7 @@
             return;
           }
 
+          loggingIn = true;
           loginBtn.disabled = true;
           loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing in...';
 
@@ -336,7 +402,13 @@
             if (!auth) {
               await simulateLogin(email, password);
             } else {
-              const userCredential = await auth.signInWithEmailAndPassword(email, password);
+              // Honour "Remember me" via Firebase persistence
+              const persistence = rememberMe.checked
+                ? firebase.auth.Auth.Persistence.LOCAL
+                : firebase.auth.Auth.Persistence.SESSION;
+              await auth.setPersistence(persistence);
+
+              await auth.signInWithEmailAndPassword(email, password);
 
               if (rememberMe.checked) {
                 localStorage.setItem('hr_employer_email', email);
@@ -344,31 +416,53 @@
                 localStorage.removeItem('hr_employer_email');
               }
 
+              // Decide where to go
+              const user = auth.currentUser;
+              const explicitRedirect = getSafeRedirect();
+              const destination = explicitRedirect || (await getDashboardFor(user));
+
+              if (!destination) {
+                showError('Signed in, but no dashboard is assigned to this account. Please contact support.');
+                loggingIn = false;
+                loginBtn.disabled = false;
+                loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign In';
+                return;
+              }
+
               showSuccess('Login successful! Redirecting...');
 
               setTimeout(function() {
-                window.location.href = '/employers/dashboard/';
-              }, 1500);
+                window.location.href = destination;
+              }, 900);
             }
           } catch (error) {
+            console.error('Login error:', error);
+
             let msg = 'Invalid email or password. Please try again.';
             if (error.code === 'auth/user-not-found') {
               msg = 'No account found with this email. Please create an account first.';
-            } else if (error.code === 'auth/wrong-password') {
+            } else if (error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
               msg = 'Incorrect password. Please try again.';
             } else if (error.code === 'auth/too-many-requests') {
               msg = 'Too many failed attempts. Please try again later.';
+            } else if (error.code === 'auth/invalid-email') {
+              msg = 'Please enter a valid email address.';
+            } else if (error.code === 'auth/network-request-failed') {
+              msg = 'Network error. Please check your internet connection.';
             }
             showError(msg);
-          }
 
-          loginBtn.disabled = false;
-          loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign In';
+            loggingIn = false;
+            loginBtn.disabled = false;
+            loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign In';
+          }
+          // Note: on success we redirect, so no cleanup needed here.
+          // On failure, cleanup is done in the catch block.
         });
       }
 
       // ============================================================
-      // 6. DEMO LOGIN
+      // 7. DEMO LOGIN (fallback when Firebase is unavailable)
       // ============================================================
       async function simulateLogin(email, password) {
         return new Promise(function(resolve, reject) {
@@ -377,7 +471,7 @@
             localStorage.setItem('hr_demo_user', 'true');
             setTimeout(function() {
               window.location.href = '/employers/dashboard/';
-            }, 1500);
+            }, 900);
             resolve();
           } else {
             reject({ code: 'auth/wrong-password', message: 'Invalid credentials' });
@@ -386,14 +480,14 @@
       }
 
       // ============================================================
-      // 7. HELPERS
+      // 8. HELPERS
       // ============================================================
       function showError(msg) {
         errorMessage.textContent = msg;
         formError.style.display = 'block';
         setTimeout(function() {
           formError.style.display = 'none';
-        }, 5000);
+        }, 6000);
       }
 
       function showSuccess(msg) {
