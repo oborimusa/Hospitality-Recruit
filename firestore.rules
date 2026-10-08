@@ -1,0 +1,86 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ============================================================
+    // HELPERS
+    // ============================================================
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && request.auth.token.admin == true;
+    }
+
+    function isSuperAdmin() {
+      return isSignedIn() && request.auth.token.superAdmin == true;
+    }
+
+    function isAdminOrSuper() {
+      return isAdmin() || isSuperAdmin();
+    }
+
+    function isOwner(uid) {
+      return isSignedIn() && request.auth.uid == uid;
+    }
+
+    // ============================================================
+    // EMPLOYERS
+    // ============================================================
+    match /employers/{employerId} {
+
+      allow create: if isOwner(employerId)
+                    && request.resource.data.uid == employerId
+                    && request.resource.data.status == 'pending';
+
+      allow read: if isOwner(employerId)
+                  || isAdminOrSuper()
+                  || (resource.data.status == 'approved');
+
+      allow update: if isAdminOrSuper()
+                    || (isOwner(employerId)
+                        && request.resource.data.status == resource.data.status);
+
+      allow delete: if isSuperAdmin();
+    }
+
+    // ============================================================
+    // JOBS
+    // ============================================================
+    match /jobs/{jobId} {
+
+      allow read: if resource.data.status == 'approved'
+                  || isAdminOrSuper()
+                  || (isSignedIn() && resource.data.employerId == request.auth.uid);
+
+      allow create: if isSignedIn()
+                    && request.resource.data.employerId == request.auth.uid
+                    && request.resource.data.status == 'pending';
+
+      allow update: if isAdminOrSuper()
+                    || (isSignedIn()
+                        && resource.data.employerId == request.auth.uid
+                        && request.resource.data.status == resource.data.status);
+
+      allow delete: if isSuperAdmin()
+                    || (isSignedIn() && resource.data.employerId == request.auth.uid);
+    }
+
+    // ============================================================
+    // ADMINS LIST
+    // ============================================================
+    match /admins/{adminId} {
+      allow read: if isAdminOrSuper();
+      allow write: if isSuperAdmin();
+    }
+
+    // ============================================================
+    // CATCH-ALL — deny everything else
+    // ============================================================
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
