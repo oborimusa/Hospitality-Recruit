@@ -105,15 +105,59 @@
       .btn-large { padding: 1.25rem 3rem; font-size: 1.1rem; }
 
       /* ===== WHATSAPP ===== */
-      .whatsapp-float {
-        position: fixed; bottom: 20px; right: 20px;
-        background-color: #25d366; color: white;
-        width: 60px; height: 60px; border-radius: 50%;
-        display: flex; align-items: center; justify-content: center;
-        font-size: 30px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-        z-index: 1000; transition: all 0.3s; text-decoration: none;
+      .whatsapp-desktop {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        background: #25d366;
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s;
       }
-      .whatsapp-float:hover { transform: scale(1.1); background-color: #128c7e; }
+      .whatsapp-desktop:hover {
+        background: #128c7e;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+      }
+      .whatsapp-desktop i {
+        font-size: 1.25rem;
+      }
+      @media (max-width: 768px) {
+        .whatsapp-desktop {
+          display: none;
+        }
+      }
+
+      .whatsapp-float {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #25d366;
+        color: white;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 30px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        z-index: 1000;
+        transition: all 0.3s;
+        text-decoration: none;
+      }
+      .whatsapp-float:hover {
+        transform: scale(1.1);
+        background-color: #128c7e;
+      }
+      @media (min-width: 769px) {
+        .whatsapp-float {
+          display: none;
+        }
+      }
 
       /* ===== HEADER ===== */
       .site-header {
@@ -586,10 +630,10 @@
                   <i class="fas fa-building"></i> Employers <i class="fas fa-chevron-down"></i>
                 </a>
                 <div class="dropdown-menu">
-                  <a href="contact.html" class="dropdown-item"><i class="fas fa-user-plus"></i> Post a Job</a>
-                  <a href="contact.html" class="dropdown-item"><i class="fas fa-search"></i> Search Talent</a>
-                  <a href="contact.html" class="dropdown-item"><i class="fas fa-tag"></i> Pricing</a>
-                  <a href="contact.html" class="dropdown-item"><i class="fas fa-rocket"></i> Start a Search</a>
+                  <a href="/employers/post-job/index.html" class="dropdown-item"><i class="fas fa-user-plus"></i> Post a Job</a>
+                  <a href="/employers/search-talent/index.html" class="dropdown-item"><i class="fas fa-search"></i> Search Talent</a>
+                  <a href="/employers/pricing/index.html" class="dropdown-item"><i class="fas fa-tag"></i> Pricing</a>
+                  <a href="/employers/start-search/index.html" class="dropdown-item"><i class="fas fa-rocket"></i> Start a Search</a>
                 </div>
               </li>
 
@@ -598,22 +642,22 @@
                   <i class="fas fa-user-tie"></i> Candidates <i class="fas fa-chevron-down"></i>
                 </a>
                 <div class="dropdown-menu">
-                  <a href="contact.html" class="dropdown-item"><i class="fas fa-briefcase"></i> Submit Your CV</a>
-                  <a href="contact.html" class="dropdown-item"><i class="fas fa-file-upload"></i> Job Alerts</a>
-                  <a href="contact.html" class="dropdown-item"><i class="fas fa-graduation-cap"></i> Career Advice</a>
+                  <a href="/candidates/submit-profile/index.html" class="dropdown-item"><i class="fas fa-briefcase"></i> Submit Profile</a>
+                  <a href="/candidates/job-board/index.html" class="dropdown-item"><i class="fas fa-file-upload"></i> Job Alerts</a>
+                  <a href="/candidates/job-board/contact.html" class="dropdown-item"><i class="fas fa-graduation-cap"></i> Submit CV</a>
                 </div>
               </li>
 
               <li class="nav-item">
-                <a href="about.html" class="nav-link"><i class="fas fa-info-circle"></i> About</a>
+                <a href="/about/index.html" class="nav-link"><i class="fas fa-info-circle"></i> About</a>
               </li>
               <li class="nav-item">
-                <a href="contact.html" class="nav-link"><i class="fas fa-envelope"></i> Contact</a>
+                <a href="/contact/index.html" class="nav-link"><i class="fas fa-envelope"></i> Contact</a>
               </li>
             </ul>
 
             <div class="nav-cta-group">
-              <a href="contact.html" class="nav-cta"><i class="fas fa-handshake"></i> Partner With Us</a>
+              <a href="/contact/index.html" class="nav-cta"><i class="fas fa-handshake"></i> Partner With Us</a>
             </div>
           </nav>
 
@@ -653,7 +697,7 @@
               resorts. We don't make a big show of it, and we only bring you
               people who are truly qualified to lead.
             </p>
-            <a href="contact.html" class="btn btn-gold btn-sm">
+            <a href="/employers/search-talent/index.html" class="btn btn-gold btn-sm">
               <i class="fas fa-arrow-right"></i> Get Started
             </a>
           </div>
@@ -668,7 +712,7 @@
               to understand exactly what each one needs and find someone who
               fits perfectly.
             </p>
-            <a href="contact.html" class="btn btn-gold btn-sm">
+            <a href="/employers/search-talent/index.html" class="btn btn-gold btn-sm">
               <i class="fas fa-arrow-right"></i> Get Started
             </a>
           </div>
@@ -682,7 +726,7 @@
               finding ways to increase your profits — so you don't have to worry
               about the details.
             </p>
-            <a href="contact.html" class="btn btn-gold btn-sm">
+            <a href="/employers/search-talent/index.html" class="btn btn-gold btn-sm">
               <i class="fas fa-arrow-right"></i> Get Started
             </a>
           </div>
@@ -696,7 +740,7 @@
               people, and build a steady flow of good candidates so you're never
               scrambling to fill a position.
             </p>
-            <a href="contact.html" class="btn btn-gold btn-sm">
+            <a href="/employers/search-talent/index.html" class="btn btn-gold btn-sm">
               <i class="fas fa-arrow-right"></i> Get Started
             </a>
           </div>
@@ -775,7 +819,7 @@
           HospitalityRecruit delivers precision talent for luxury hospitality.
         </p>
         <div class="cta-buttons">
-          <a href="contact.html" class="btn btn-gold btn-large">
+          <a href="/contact/index.html" class="btn btn-gold btn-large">
             <i class="fas fa-handshake"></i> Partner With Us
           </a>
           <a href="tel:+2348039661354" class="btn btn-outline-white btn-large">
@@ -786,50 +830,59 @@
     </section>
 
     <!-- ===== FOOTER ===== -->
-    <footer class="footer">
-      <div class="container">
-        <div class="footer-grid">
-          <div class="footer-column">
-            <h3>Hospitality<span style="color: var(--color-gold);">Recruit</span></h3>
-            <p>Precision talent for luxury hospitality. Executive search, operational management, and HR consulting across Nigeria.</p>
-            <div class="footer-contact" style="margin-top: 1rem;">
-              <p><i class="fas fa-phone"></i> +234 812 770 6378</p>
-              <p><i class="fas fa-envelope"></i> hospitalityrecruit@gmail.com</p>
-              <p><i class="fas fa-map-marker-alt"></i> Osogbo • Ilorin • Abuja • Lagos</p>
-            </div>
-          </div>
-          <div class="footer-column">
-            <h3>For Candidates</h3>
-            <ul class="footer-links">
-              <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Submit Your CV</a></li>
-              <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Job Alerts</a></li>
-              <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Career Advice</a></li>
-            </ul>
-          </div>
-          <div class="footer-column">
-            <h3>For Employers</h3>
-            <ul class="footer-links">
-              <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Post a Job</a></li>
-              <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Search Talent</a></li>
-              <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Pricing</a></li>
-              <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Start a Search</a></li>
-            </ul>
-          </div>
-          <div class="footer-column">
-            <h3>Company</h3>
-            <ul class="footer-links">
-              <li><a href="about.html"><i class="fas fa-chevron-right"></i> About Us</a></li>
-              <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact Us</a></li>
-              <li><a href="privacy.html"><i class="fas fa-chevron-right"></i> Privacy Policy</a></li>
-              <li><a href="terms.html"><i class="fas fa-chevron-right"></i> Terms of Service</a></li>
-            </ul>
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-column">
+          <h3>Hospitality<span style="color: var(--color-gold);">Recruit</span></h3>
+          <p>Precision talent for luxury hospitality. Executive search, operational management, and HR consulting across Africa.</p>
+          <div class="footer-contact" style="margin-top: 1rem;">
+            <p><i class="fas fa-phone"></i> +234 803 966 1354</p>
+            <p><i class="fas fa-envelope"></i> acquire@hospitalityrecruit.com</p>
+            <p><i class="fas fa-map-marker-alt"></i> Ilorin • Osogbo • Abuja • Lagos</p>
           </div>
         </div>
-        <div class="footer-bottom">
-          <p>&copy; <span id="currentYear"></span> HospitalityRecruit. All rights reserved.</p>
+        <div class="footer-column">
+          <h3>For Candidates</h3>
+          <ul class="footer-links">
+            <li><a href="/candidates/job-board/"><i class="fas fa-chevron-right"></i> Browse Jobs</a></li>
+            <li><a href="/candidates/submit-profile/"><i class="fas fa-chevron-right"></i> Submit Profile</a></li>
+            <li><a href="/candidates/career-strategy/"><i class="fas fa-chevron-right"></i> Career Strategy</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>For Employers</h3>
+          <ul class="footer-links">
+            <li><a href="/employers/post-job/"><i class="fas fa-chevron-right"></i> Post a Job</a></li>
+            <li><a href="/employers/search-talent/"><i class="fas fa-chevron-right"></i> Search Talent</a></li>
+            <li><a href="/employers/pricing/"><i class="fas fa-chevron-right"></i> Pricing</a></li>
+            <li><a href="/employers/start-search/"><i class="fas fa-chevron-right"></i> Start a Search</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Company</h3>
+          <ul class="footer-links">
+            <li><a href="/about/"><i class="fas fa-chevron-right"></i> About Us</a></li>
+            <li><a href="/case-studies/" style="color: var(--color-gold); font-weight: 700;"><i class="fas fa-chevron-right"></i> Case Studies</a></li>
+            <li><a href="/contact/"><i class="fas fa-chevron-right"></i> Contact Us</a></li>
+            <li><a href="/blog/"><i class="fas fa-chevron-right"></i> Insights Blog</a></li>
+          </ul>
         </div>
       </div>
-    </footer>
+      <div class="footer-bottom">
+        <p>&copy; <span id="currentYear"></span> HospitalityRecruit. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="/privacy.html">Privacy Policy</a>
+          <a href="/terms.html">Terms of Service</a>
+        </div>
+      </div>
+      <a href="https://wa.me/2348039661354?text=Hello%20Hospitality%20Recruit%2C%20I%27m%20interested%20in%20your%20services"
+         target="_blank" class="whatsapp-desktop" rel="noopener noreferrer" style="margin-top: 1.5rem;">
+        <i class="fab fa-whatsapp"></i>
+        <span>Chat with us on WhatsApp</span>
+      </a>
+    </div>
+  </footer>
 
     <a
       href="https://wa.me/2348039661354?text=Hello%20HospitalityRecruit%2C%20I%20need%20assistance"
