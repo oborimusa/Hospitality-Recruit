@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin Dashboard | HospitalityRecruit</title>
+  <title>Employer Dashboard | HospitalityRecruit</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -15,8 +15,9 @@
   <style>
     * { margin:0; padding:0; box-sizing:border-box; }
     body { font-family:'Inter',sans-serif; background:#f4f2ee; color:#2d2d2d; }
-    .container { max-width:1280px; margin:0 auto; padding:0 20px; }
+    .container { max-width:1100px; margin:0 auto; padding:0 20px; }
 
+    /* HEADER */
     header { background:#0A1628; color:white; padding:15px 0; border-bottom:3px solid #C9A84C; position:sticky; top:0; z-index:1000; }
     .header-flex { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; }
     .brand { font-family:'Playfair Display',serif; font-size:1.6rem; font-weight:800; color:white; text-decoration:none; }
@@ -24,59 +25,185 @@
     .user-badge { background:rgba(255,255,255,0.1); padding:8px 16px; border-radius:50px; font-weight:600; font-size:0.85rem; display:inline-flex; align-items:center; gap:8px; }
     .user-badge i { color:#C9A84C; }
 
-    .btn { padding:8px 20px; border-radius:50px; border:2px solid #C9A84C; background:transparent; color:#C9A84C; font-weight:600; cursor:pointer; transition:0.2s; font-size:0.85rem; font-family:'Inter',sans-serif; }
+    /* BUTTONS */
+    .btn { padding:9px 20px; border-radius:50px; border:2px solid #C9A84C; background:transparent; color:#C9A84C; font-weight:600; cursor:pointer; transition:0.2s; font-size:0.85rem; font-family:'Inter',sans-serif; display:inline-flex; align-items:center; gap:6px; text-decoration:none; }
     .btn:hover { background:#C9A84C; color:#0A1628; }
-    .btn-success { background:#2A9D8F; border-color:#2A9D8F; color:white; }
-    .btn-success:hover { background:#21867a; border-color:#21867a; }
-    .btn-danger { background:#E63946; border-color:#E63946; color:white; }
-    .btn-danger:hover { background:#c1121f; border-color:#c1121f; }
-    .btn-sm { padding:5px 14px; font-size:0.75rem; }
+    .btn-sm { padding:6px 14px; font-size:0.78rem; }
     .btn-gold { background:#C9A84C; border-color:#C9A84C; color:#0A1628; }
-    .btn-gold:hover { background:#E8C84A; border-color:#E8C84A; }
+    .btn-gold:hover { background:#E8C84A; border-color:#E8C84A; color:#0A1628; }
+    .btn-danger { background:#E63946; border-color:#E63946; color:white; }
+    .btn-danger:hover { background:#c1121f; border-color:#c1121f; color:white; }
+    .btn-outline { border-color:#ddd; color:#5A5550; }
+    .btn-outline:hover { border-color:#C9A84C; background:rgba(201,168,76,0.05); color:#0A1628; }
+    .btn:disabled { opacity:0.6; cursor:not-allowed; }
 
-    .tabs { display:flex; gap:5px; margin:25px 0 15px; border-bottom:2px solid #ddd; overflow-x:auto; }
-    .tab-btn { padding:12px 28px; border:none; background:transparent; font-weight:700; font-size:0.95rem; color:#8A8580; cursor:pointer; border-bottom:3px solid transparent; transition:0.2s; white-space:nowrap; font-family:'Inter',sans-serif; }
-    .tab-btn.active { color:#0A1628; border-bottom-color:#C9A84C; }
-    .tab-btn .badge { background:#E63946; color:white; padding:0 8px; border-radius:50px; font-size:0.7rem; margin-left:6px; }
+    /* WELCOME PANEL */
+    .welcome-panel {
+      background:linear-gradient(135deg, #0A1628 0%, #0F2844 100%);
+      color:white;
+      border-radius:16px;
+      padding:2rem 1.75rem;
+      margin:25px 0 20px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.08);
+    }
+    .welcome-panel h1 {
+      font-family:'Playfair Display',serif;
+      font-size:1.75rem;
+      margin-bottom:0.4rem;
+    }
+    .welcome-panel p { color:rgba(255,255,255,0.75); font-size:0.95rem; }
 
+    /* STATUS BANNER */
+    .status-banner {
+      padding:14px 20px;
+      border-radius:12px;
+      margin-bottom:20px;
+      display:flex;
+      align-items:flex-start;
+      gap:12px;
+      font-size:0.92rem;
+      line-height:1.5;
+    }
+    .status-banner i { font-size:1.25rem; margin-top:2px; flex-shrink:0; }
+    .status-banner.pending { background:rgba(230,168,50,0.1); border-left:4px solid #E6A832; color:#8A6D1F; }
+    .status-banner.pending i { color:#E6A832; }
+    .status-banner.approved { background:rgba(42,157,143,0.1); border-left:4px solid #2A9D8F; color:#1F7168; }
+    .status-banner.approved i { color:#2A9D8F; }
+    .status-banner.rejected { background:rgba(230,57,70,0.08); border-left:4px solid #E63946; color:#A02030; }
+    .status-banner.rejected i { color:#E63946; }
+    .status-banner strong { display:block; margin-bottom:2px; }
+
+    /* STATS */
     .stats { display:grid; grid-template-columns:repeat(4,1fr); gap:15px; margin:20px 0; }
-    .stat-card { background:white; padding:22px 18px; border-radius:12px; text-align:center; box-shadow:0 2px 8px rgba(0,0,0,0.05); border:1px solid #eee; }
-    .stat-number { font-size:2rem; font-weight:800; color:#0A1628; display:block; }
-    .stat-label { font-size:0.75rem; color:#8A8580; text-transform:uppercase; letter-spacing:0.5px; margin-top:4px; font-weight:600; }
+    .stat-card { background:white; padding:20px 16px; border-radius:12px; text-align:center; box-shadow:0 2px 8px rgba(0,0,0,0.05); border:1px solid #eee; }
+    .stat-number { font-size:1.9rem; font-weight:800; color:#0A1628; display:block; line-height:1.1; }
+    .stat-label { font-size:0.72rem; color:#8A8580; text-transform:uppercase; letter-spacing:0.5px; margin-top:6px; font-weight:600; }
 
-    .filters { display:flex; gap:10px; margin:15px 0; flex-wrap:wrap; }
-    .filter-btn { padding:6px 16px; border:2px solid #ddd; border-radius:50px; background:white; font-weight:600; cursor:pointer; transition:0.2s; font-size:0.85rem; font-family:'Inter',sans-serif; }
-    .filter-btn.active { background:#C9A84C; border-color:#C9A84C; color:#0A1628; }
+    /* SECTION HEADER */
+    .section-header {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin:30px 0 15px;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+    .section-header h2 {
+      font-family:'Playfair Display',serif;
+      font-size:1.4rem;
+      color:#0A1628;
+    }
+    .section-actions { display:flex; gap:8px; flex-wrap:wrap; }
 
-    .card-list { display:grid; gap:15px; margin-top:15px; }
-    .card { background:white; padding:20px; border-radius:12px; border:1px solid #ddd; box-shadow:0 2px 8px rgba(0,0,0,0.05); transition:0.2s; }
-    .card:hover { border-color:#C9A84C; box-shadow:0 4px 12px rgba(0,0,0,0.1); }
+    /* CARD LIST */
+    .card-list { display:grid; gap:15px; }
+    .card {
+      background:white;
+      padding:18px 20px;
+      border-radius:12px;
+      border:1px solid #e8e5df;
+      box-shadow:0 2px 8px rgba(0,0,0,0.04);
+      transition:0.2s;
+    }
+    .card:hover { border-color:#C9A84C; box-shadow:0 4px 12px rgba(0,0,0,0.08); }
     .card .header { display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:10px; }
-    .card .title { font-size:1.15rem; font-weight:800; color:#0A1628; font-family:'Playfair Display',serif; }
-    .card .sub { color:#5A5550; font-weight:600; font-size:0.95rem; }
-    .card .meta { display:flex; gap:15px 25px; flex-wrap:wrap; margin:8px 0; font-size:0.85rem; color:#8A8580; }
-    .card .meta i { color:#C9A84C; width:16px; }
-    .card .desc { color:#5A5550; font-size:0.9rem; margin:8px 0; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
-    .card-tag { background:#f4f2ee; padding:3px 12px; border-radius:50px; font-size:0.7rem; border:1px solid #ddd; display:inline-block; margin:2px; }
-    .card-actions { display:flex; gap:10px; margin-top:12px; flex-wrap:wrap; }
+    .card .title { font-size:1.1rem; font-weight:800; color:#0A1628; font-family:'Playfair Display',serif; }
+    .card .sub { color:#5A5550; font-weight:600; font-size:0.9rem; margin-top:2px; }
+    .card .meta { display:flex; gap:15px 22px; flex-wrap:wrap; margin:8px 0; font-size:0.82rem; color:#8A8580; }
+    .card .meta i { color:#C9A84C; width:14px; margin-right:4px; }
+    .card .desc { color:#5A5550; font-size:0.88rem; margin:8px 0; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
+    .card-tag { background:#f4f2ee; padding:3px 10px; border-radius:50px; font-size:0.68rem; border:1px solid #ddd; display:inline-block; margin:2px 2px 0 0; }
+    .card-actions { display:flex; gap:8px; margin-top:12px; flex-wrap:wrap; }
 
-    .status-badge { padding:4px 14px; border-radius:50px; font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; }
-    .status-badge.pending { background:rgba(230,57,70,0.1); color:#E63946; border:1px solid rgba(230,57,70,0.2); }
-    .status-badge.approved { background:rgba(42,157,143,0.1); color:#2A9D8F; border:1px solid rgba(42,157,143,0.2); }
-    .status-badge.rejected { background:rgba(230,57,70,0.05); color:#8A8580; border:1px solid #ddd; }
-    .plan-badge { background:rgba(201,168,76,0.15); color:#A8873A; padding:3px 12px; border-radius:50px; font-size:0.7rem; font-weight:700; }
+    /* STATUS BADGES */
+    .status-badge { padding:4px 12px; border-radius:50px; font-size:0.68rem; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; white-space:nowrap; }
+    .status-badge.pending { background:rgba(230,168,50,0.15); color:#8A6D1F; border:1px solid rgba(230,168,50,0.3); }
+    .status-badge.approved { background:rgba(42,157,143,0.12); color:#1F7168; border:1px solid rgba(42,157,143,0.25); }
+    .status-badge.rejected { background:rgba(230,57,70,0.08); color:#A02030; border:1px solid rgba(230,57,70,0.2); }
 
-    .empty { text-align:center; padding:60px 20px; background:white; border-radius:12px; border:1px solid #ddd; }
-    .empty i { font-size:3.5rem; color:#ddd; margin-bottom:15px; display:block; }
-    .empty h3 { font-family:'Playfair Display',serif; color:#0A1628; margin-bottom:8px; }
-    .empty p { color:#8A8580; }
+    /* EMPTY */
+    .empty { text-align:center; padding:50px 20px; background:white; border-radius:12px; border:1px dashed #ddd; }
+    .empty i { font-size:2.75rem; color:#ddd; margin-bottom:14px; display:block; }
+    .empty h3 { font-family:'Playfair Display',serif; color:#0A1628; margin-bottom:6px; font-size:1.15rem; }
+    .empty p { color:#8A8580; font-size:0.9rem; margin-bottom:14px; }
 
-    .access-denied { text-align:center; padding:60px 30px; background:white; border-radius:16px; border:1px solid #ddd; max-width:500px; margin:60px auto; box-shadow:0 10px 30px rgba(0,0,0,0.05); }
-    .access-denied i { font-size:3.5rem; color:#E63946; margin-bottom:15px; display:block; }
-    .access-denied h3 { font-family:'Playfair Display',serif; font-size:1.5rem; margin-bottom:8px; }
-    .access-denied p { color:#8A8580; margin-bottom:20px; }
+    /* MODAL */
+    .modal-overlay {
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(10,22,40,0.6);
+      z-index:2000;
+      align-items:flex-start;
+      justify-content:center;
+      padding:2rem 1rem;
+      overflow-y:auto;
+    }
+    .modal-overlay.active { display:flex; }
+    .modal {
+      background:white;
+      border-radius:16px;
+      max-width:560px;
+      width:100%;
+      box-shadow:0 30px 60px rgba(0,0,0,0.3);
+      border-top:4px solid #C9A84C;
+      margin:auto;
+    }
+    .modal-header {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:1.25rem 1.5rem;
+      border-bottom:1px solid #e8e5df;
+    }
+    .modal-header h3 { font-family:'Playfair Display',serif; font-size:1.25rem; color:#0A1628; }
+    .modal-close { background:transparent; border:none; font-size:1.2rem; color:#8A8580; cursor:pointer; padding:6px; }
+    .modal-close:hover { color:#E63946; }
+    .modal-body { padding:1.5rem; }
+    .modal-footer {
+      padding:1rem 1.5rem;
+      border-top:1px solid #e8e5df;
+      display:flex;
+      gap:10px;
+      justify-content:flex-end;
+      flex-wrap:wrap;
+    }
 
-    .toast { position:fixed; bottom:20px; right:20px; padding:14px 22px; border-radius:10px; color:white; font-weight:600; z-index:99999; transform:translateY(100px); opacity:0; transition:all 0.4s; max-width:400px; font-size:0.9rem; box-shadow:0 10px 30px rgba(0,0,0,0.2); }
+    /* FORM */
+    .form-group { margin-bottom:1rem; }
+    .form-group label { display:block; font-weight:600; font-size:0.85rem; margin-bottom:0.35rem; color:#0A1628; }
+    .form-group label .required { color:#E63946; }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width:100%;
+      padding:0.75rem 1rem;
+      border:2px solid #E8E5DF;
+      border-radius:8px;
+      font-family:'Inter',sans-serif;
+      font-size:0.95rem;
+      color:#2d2d2d;
+      background:white;
+      transition:border-color 0.15s;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { outline:none; border-color:#C9A84C; box-shadow:0 0 0 3px rgba(201,168,76,0.1); }
+    .form-group textarea { resize:vertical; min-height:100px; }
+    .form-row { display:grid; grid-template-columns:1fr; gap:1rem; }
+    @media (min-width:520px) { .form-row { grid-template-columns:1fr 1fr; } }
+
+    /* ACCESS DENIED / SIGNIN */
+    .gate { text-align:center; padding:60px 30px; background:white; border-radius:16px; border:1px solid #ddd; max-width:500px; margin:60px auto; box-shadow:0 10px 30px rgba(0,0,0,0.05); }
+    .gate i { font-size:3.5rem; margin-bottom:15px; display:block; }
+    .gate h3 { font-family:'Playfair Display',serif; font-size:1.5rem; margin-bottom:8px; color:#0A1628; }
+    .gate p { color:#8A8580; margin-bottom:20px; }
+    .gate.loading i { color:#C9A84C; }
+    .gate.denied i { color:#E63946; }
+    .gate.signin i { color:#C9A84C; }
+
+    /* TOAST */
+    .toast { position:fixed; bottom:20px; right:20px; padding:14px 22px; border-radius:10px; color:white; font-weight:600; z-index:99999; transform:translateY(100px); opacity:0; transition:all 0.35s; max-width:400px; font-size:0.9rem; box-shadow:0 10px 30px rgba(0,0,0,0.2); }
     .toast.show { transform:translateY(0); opacity:1; }
     .toast.success { background:#2A9D8F; }
     .toast.error { background:#E63946; }
@@ -84,13 +211,13 @@
 
     @media (max-width:768px) {
       .stats { grid-template-columns:1fr 1fr; }
-      .tabs { gap:0; }
-      .tab-btn { padding:10px 16px; font-size:0.85rem; }
     }
     @media (max-width:480px) {
-      .stats { grid-template-columns:1fr; }
-      .btn { font-size:0.8rem; padding:6px 14px; }
-      .header-flex { flex-direction:column; align-items:flex-start; }
+      .stats { grid-template-columns:1fr 1fr; }
+      .welcome-panel { padding:1.5rem 1.25rem; }
+      .welcome-panel h1 { font-size:1.4rem; }
+      .btn { font-size:0.8rem; padding:7px 14px; }
+      .section-header h2 { font-size:1.15rem; }
     }
   </style>
 </head>
@@ -106,63 +233,199 @@
     <div class="container">
       <div class="header-flex">
         <a href="/" class="brand">Hospitality<span class="gold">Recruit</span></a>
-        <div style="display:flex;align-items:center;gap:15px;flex-wrap:wrap;">
-          <span class="user-badge"><i class="fas fa-user-shield"></i> <span id="adminName">Loading...</span></span>
-          <button class="btn" id="logoutBtn" style="display:none;"><i class="fas fa-sign-out-alt"></i> Sign Out</button>
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+          <span class="user-badge" id="userBadge" style="display:none;">
+            <i class="fas fa-building"></i>
+            <span id="companyBadge">Loading...</span>
+          </span>
+          <button class="btn" id="logoutBtn" style="display:none;">
+            <i class="fas fa-sign-out-alt"></i> Sign Out
+          </button>
         </div>
       </div>
     </div>
   </header>
 
-  <main class="container" style="padding:20px 0 60px;">
+  <main class="container" style="padding-bottom:60px;">
 
-    <div id="accessDenied" class="access-denied" style="display:none;">
-      <i class="fas fa-ban"></i>
-      <h3>Access Denied</h3>
-      <p>This dashboard is for administrators only.</p>
+    <!-- LOADING GATE -->
+    <div id="loadingGate" class="gate loading">
+      <i class="fas fa-spinner fa-spin"></i>
+      <h3>Loading your dashboard...</h3>
+      <p>Please wait a moment.</p>
     </div>
 
-    <div id="signinPrompt" class="access-denied" style="display:none;">
+    <!-- SIGN IN REQUIRED -->
+    <div id="signinGate" class="gate signin" style="display:none;">
       <i class="fas fa-lock"></i>
       <h3>Sign In Required</h3>
-      <p>Please sign in to access the admin dashboard.</p>
-      <a href="/employers/login/" class="btn btn-gold" style="display:inline-block;padding:12px 30px;font-size:1rem;">
+      <p>Please sign in with your employer account to continue.</p>
+      <a href="/employers/login/" class="btn btn-gold" style="padding:12px 28px;">
         <i class="fas fa-sign-in-alt"></i> Sign In
       </a>
     </div>
 
+    <!-- ACCESS DENIED -->
+    <div id="deniedGate" class="gate denied" style="display:none;">
+      <i class="fas fa-ban"></i>
+      <h3>Not an Employer Account</h3>
+      <p>This page is for employer accounts only. You're signed in with a different role.</p>
+      <a href="/" class="btn btn-outline" style="padding:10px 22px;">
+        <i class="fas fa-home"></i> Go Home
+      </a>
+    </div>
+
+    <!-- MAIN DASHBOARD -->
     <div id="dashboardContent" style="display:none;">
-      <h1 style="font-family:'Playfair Display',serif;font-size:2rem;color:#0A1628;">Admin Dashboard</h1>
-      <p style="color:#8A8580;margin-bottom:10px;">Approve or reject job postings and employer registrations.</p>
 
-      <div class="tabs">
-        <button class="tab-btn active" data-tab="jobs">Jobs <span class="badge" id="pendingJobBadge">0</span></button>
-        <button class="tab-btn" data-tab="employers">Employers <span class="badge" id="pendingEmployerBadge">0</span></button>
+      <!-- WELCOME -->
+      <div class="welcome-panel">
+        <h1 id="welcomeHeading">Welcome</h1>
+        <p id="welcomeSub">Manage your job postings and company profile</p>
       </div>
 
+      <!-- STATUS BANNER -->
+      <div id="statusBanner" class="status-banner" style="display:none;"></div>
+
+      <!-- STATS -->
       <div class="stats">
-        <div class="stat-card"><span class="stat-number" id="statTotal">0</span><span class="stat-label" id="statTotalLabel">Total Jobs</span></div>
-        <div class="stat-card"><span class="stat-number" id="statPending" style="color:#E63946;">0</span><span class="stat-label" id="statPendingLabel">Pending Jobs</span></div>
-        <div class="stat-card"><span class="stat-number" id="statApproved" style="color:#2A9D8F;">0</span><span class="stat-label" id="statApprovedLabel">Approved Jobs</span></div>
-        <div class="stat-card"><span class="stat-number" id="statRejected">0</span><span class="stat-label" id="statRejectedLabel">Rejected Jobs</span></div>
+        <div class="stat-card"><span class="stat-number" id="statTotalJobs">0</span><span class="stat-label">My Jobs</span></div>
+        <div class="stat-card"><span class="stat-number" id="statPendingJobs" style="color:#E6A832;">0</span><span class="stat-label">Pending</span></div>
+        <div class="stat-card"><span class="stat-number" id="statApprovedJobs" style="color:#2A9D8F;">0</span><span class="stat-label">Approved</span></div>
+        <div class="stat-card"><span class="stat-number" id="statRejectedJobs" style="color:#E63946;">0</span><span class="stat-label">Rejected</span></div>
       </div>
 
-      <div class="filters" id="filterContainer">
-        <button class="filter-btn active" data-filter="all">All</button>
-        <button class="filter-btn" data-filter="pending">Pending</button>
-        <button class="filter-btn" data-filter="approved">Approved</button>
-        <button class="filter-btn" data-filter="rejected">Rejected</button>
+      <!-- JOB POSTINGS SECTION -->
+      <div class="section-header">
+        <h2>My Job Postings</h2>
+        <div class="section-actions">
+          <button class="btn btn-outline" id="editProfileBtn">
+            <i class="fas fa-user-edit"></i> Edit Profile
+          </button>
+          <button class="btn btn-gold" id="postJobBtn">
+            <i class="fas fa-plus-circle"></i> Post a New Job
+          </button>
+        </div>
       </div>
 
-      <div id="cardList" class="card-list"></div>
-      <div id="emptyState" class="empty" style="display:none;">
-        <i class="fas fa-inbox"></i>
-        <h3>Nothing to review</h3>
-        <p>All items have been processed.</p>
+      <div class="card-list" id="jobsList"></div>
+
+      <div class="empty" id="jobsEmpty" style="display:none;">
+        <i class="fas fa-briefcase"></i>
+        <h3>No job postings yet</h3>
+        <p>Click "Post a New Job" to create your first listing.</p>
+        <button class="btn btn-gold" onclick="document.getElementById('postJobBtn').click()">
+          <i class="fas fa-plus-circle"></i> Post a New Job
+        </button>
       </div>
+
     </div>
 
   </main>
+
+  <!-- ============================================================ -->
+  <!-- MODAL: POST A NEW JOB                                        -->
+  <!-- ============================================================ -->
+  <div class="modal-overlay" id="postJobModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3><i class="fas fa-plus-circle" style="color:#C9A84C;"></i> Post a New Job</h3>
+        <button class="modal-close" data-close="postJobModal"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="jobTitle">Job Title <span class="required">*</span></label>
+          <input type="text" id="jobTitle" placeholder="e.g. Executive Chef" />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="jobLocation">Location <span class="required">*</span></label>
+            <input type="text" id="jobLocation" placeholder="e.g. Lagos, Nigeria" />
+          </div>
+          <div class="form-group">
+            <label for="jobType">Job Type <span class="required">*</span></label>
+            <select id="jobType">
+              <option value="">Select</option>
+              <option value="Full-time">Full-time</option>
+              <option value="Part-time">Part-time</option>
+              <option value="Contract">Contract</option>
+              <option value="Temporary">Temporary</option>
+              <option value="Internship">Internship</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="jobSalary">Salary Range</label>
+            <input type="text" id="jobSalary" placeholder="e.g. ₦500,000 - ₦800,000 / month" />
+          </div>
+          <div class="form-group">
+            <label for="jobTags">Tags (comma-separated)</label>
+            <input type="text" id="jobTags" placeholder="e.g. Fine Dining, Leadership" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="jobDescription">Job Description <span class="required">*</span></label>
+          <textarea id="jobDescription" placeholder="Describe the role, responsibilities, and requirements..."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" data-close="postJobModal">Cancel</button>
+        <button class="btn btn-gold" id="submitJobBtn">
+          <i class="fas fa-paper-plane"></i> Submit for Approval
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- MODAL: EDIT PROFILE                                          -->
+  <!-- ============================================================ -->
+  <div class="modal-overlay" id="editProfileModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3><i class="fas fa-user-edit" style="color:#C9A84C;"></i> Edit Company Profile</h3>
+        <button class="modal-close" data-close="editProfileModal"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="editCompanyName">Company Name <span class="required">*</span></label>
+          <input type="text" id="editCompanyName" />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="editContactName">Contact Person <span class="required">*</span></label>
+            <input type="text" id="editContactName" />
+          </div>
+          <div class="form-group">
+            <label for="editContactPhone">Phone Number <span class="required">*</span></label>
+            <input type="tel" id="editContactPhone" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email (cannot be changed)</label>
+          <input type="email" id="editContactEmail" disabled style="background:#f4f2ee;color:#8A8580;" />
+        </div>
+        <div class="form-group">
+          <label for="editIndustry">Industry</label>
+          <select id="editIndustry">
+            <option value="hotel">Hotel & Resort</option>
+            <option value="restaurant">Restaurant</option>
+            <option value="catering">Events & Catering</option>
+            <option value="travel">Travel & Tourism</option>
+            <option value="culinary">Culinary</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" data-close="editProfileModal">Cancel</button>
+        <button class="btn btn-gold" id="saveProfileBtn">
+          <i class="fas fa-save"></i> Save Changes
+        </button>
+      </div>
+    </div>
+  </div>
 
   <div class="toast" id="toast"></div>
 
@@ -170,7 +433,7 @@
     document.addEventListener('DOMContentLoaded', function () {
 
       // ============================================================
-      // FIREBASE CONFIG
+      // 1. FIREBASE CONFIG
       // ============================================================
       const firebaseConfig = {
         apiKey: "AIzaSyBxeiG78oHv8wSLGRK_GAAD_mqvZKJtu30",
@@ -190,154 +453,458 @@
       } catch (e) { console.warn('⚠️ Firebase init error:', e); }
 
       // ============================================================
-      // DOM REFS
+      // 2. DOM REFS
       // ============================================================
-      const signinPrompt = document.getElementById('signinPrompt');
-      const accessDenied = document.getElementById('accessDenied');
+      const loadingGate = document.getElementById('loadingGate');
+      const signinGate = document.getElementById('signinGate');
+      const deniedGate = document.getElementById('deniedGate');
       const dashboardContent = document.getElementById('dashboardContent');
-      const adminNameSpan = document.getElementById('adminName');
+      const userBadge = document.getElementById('userBadge');
+      const companyBadge = document.getElementById('companyBadge');
       const logoutBtn = document.getElementById('logoutBtn');
-      const cardList = document.getElementById('cardList');
-      const emptyState = document.getElementById('emptyState');
-      const filterContainer = document.getElementById('filterContainer');
-      const toast = document.getElementById('toast');
-      const statTotal = document.getElementById('statTotal');
-      const statPending = document.getElementById('statPending');
-      const statApproved = document.getElementById('statApproved');
-      const statRejected = document.getElementById('statRejected');
-      const statTotalLabel = document.getElementById('statTotalLabel');
-      const statPendingLabel = document.getElementById('statPendingLabel');
-      const statApprovedLabel = document.getElementById('statApprovedLabel');
-      const statRejectedLabel = document.getElementById('statRejectedLabel');
-      const pendingJobBadge = document.getElementById('pendingJobBadge');
-      const pendingEmployerBadge = document.getElementById('pendingEmployerBadge');
 
-      // State
-      let allJobs = [];
-      let allEmployers = [];
-      let currentTab = 'jobs';
-      let currentFilter = 'all';
+      const welcomeHeading = document.getElementById('welcomeHeading');
+      const welcomeSub = document.getElementById('welcomeSub');
+      const statusBanner = document.getElementById('statusBanner');
+
+      const statTotalJobs = document.getElementById('statTotalJobs');
+      const statPendingJobs = document.getElementById('statPendingJobs');
+      const statApprovedJobs = document.getElementById('statApprovedJobs');
+      const statRejectedJobs = document.getElementById('statRejectedJobs');
+
+      const jobsList = document.getElementById('jobsList');
+      const jobsEmpty = document.getElementById('jobsEmpty');
+      const postJobBtn = document.getElementById('postJobBtn');
+      const editProfileBtn = document.getElementById('editProfileBtn');
+
+      const postJobModal = document.getElementById('postJobModal');
+      const editProfileModal = document.getElementById('editProfileModal');
+      const submitJobBtn = document.getElementById('submitJobBtn');
+      const saveProfileBtn = document.getElementById('saveProfileBtn');
+
+      const toast = document.getElementById('toast');
+
+      // ============================================================
+      // 3. STATE
+      // ============================================================
+      let currentUser = null;
+      let employerData = null;
+      let myJobs = [];
       let toastTimeout = null;
       let listenersBound = false;
 
       // ============================================================
-      // AUTH STATE — claim-based admin check
+      // 4. AUTH GATE
       // ============================================================
       if (auth) {
         auth.onAuthStateChanged(async function (user) {
           if (!user) {
-            adminNameSpan.textContent = 'Not Signed In';
-            logoutBtn.style.display = 'none';
-            dashboardContent.style.display = 'none';
-            accessDenied.style.display = 'none';
-            signinPrompt.style.display = 'block';
+            showGate('signin');
             return;
           }
 
           try {
-            const tokenResult = await user.getIdTokenResult(true);
-            const isAdmin = tokenResult.claims.admin === true;
+            // Check claims first — redirect admins/super admins to their dashboards
+            const token = await user.getIdTokenResult(true);
 
-            if (!isAdmin) {
-              adminNameSpan.textContent = user.displayName || user.email || 'User';
-              logoutBtn.style.display = 'inline-flex';
-              signinPrompt.style.display = 'none';
-              dashboardContent.style.display = 'none';
-              accessDenied.style.display = 'block';
+            if (token.claims.superAdmin === true) {
+              window.location.href = '/super-admin/dashboard/index.html';
+              return;
+            }
+            if (token.claims.admin === true) {
+              window.location.href = '/admin/dashboard/index.html';
               return;
             }
 
-            adminNameSpan.textContent = user.displayName || user.email || 'Admin';
-            logoutBtn.style.display = 'inline-flex';
-            signinPrompt.style.display = 'none';
-            accessDenied.style.display = 'none';
-            dashboardContent.style.display = 'block';
-            console.log('✅ Admin signed in:', user.email);
-            loadAllData();
+            // Must be an employer — check Firestore
+            const empDoc = await db.collection('employers').doc(user.uid).get();
+            if (!empDoc.exists) {
+              showGate('denied');
+              return;
+            }
+
+            currentUser = user;
+            employerData = empDoc.data();
+            employerData.id = empDoc.id;
+
+            showDashboard();
+            await loadMyJobs();
 
           } catch (err) {
             console.error('❌ Auth check failed:', err);
-            showToast('Could not verify admin access: ' + err.message, 'error');
+            showToast('Could not load your account: ' + err.message, 'error');
+            showGate('denied');
           }
         });
       } else {
-        adminNameSpan.textContent = 'Demo Mode';
-        logoutBtn.style.display = 'none';
-        signinPrompt.style.display = 'none';
-        accessDenied.style.display = 'none';
+        showGate('denied');
+      }
+
+      // ============================================================
+      // 5. GATE SWITCHING
+      // ============================================================
+      function showGate(which) {
+        loadingGate.style.display = 'none';
+        signinGate.style.display = 'none';
+        deniedGate.style.display = 'none';
+        dashboardContent.style.display = 'none';
+
+        if (which === 'loading') loadingGate.style.display = 'block';
+        else if (which === 'signin') signinGate.style.display = 'block';
+        else if (which === 'denied') deniedGate.style.display = 'block';
+      }
+
+      // ============================================================
+      // 6. SHOW DASHBOARD
+      // ============================================================
+      function showDashboard() {
+        loadingGate.style.display = 'none';
+        signinGate.style.display = 'none';
+        deniedGate.style.display = 'none';
         dashboardContent.style.display = 'block';
-        loadDemoData();
+
+        // Header
+        const companyName = employerData.companyName || 'Your Company';
+        companyBadge.textContent = companyName;
+        userBadge.style.display = 'inline-flex';
+        logoutBtn.style.display = 'inline-flex';
+
+        // Welcome
+        welcomeHeading.textContent = 'Welcome, ' + companyName;
+        welcomeSub.textContent = 'Manage your job postings and company profile';
+
+        // Status banner
+        renderStatusBanner();
+
+        // Pre-fill edit profile form
+        document.getElementById('editCompanyName').value = employerData.companyName || '';
+        document.getElementById('editContactName').value = employerData.contactName || '';
+        document.getElementById('editContactPhone').value = employerData.contactPhone || '';
+        document.getElementById('editContactEmail').value = employerData.contactEmail || '';
+        document.getElementById('editIndustry').value = employerData.industry || 'hotel';
+
+        bindEvents();
       }
 
       // ============================================================
-      // LOGOUT
+      // 7. STATUS BANNER
       // ============================================================
-      if (logoutBtn && auth) {
-        logoutBtn.addEventListener('click', function () {
-          auth.signOut().then(() => window.location.href = '/employers/login/');
-        });
-      }
+      function renderStatusBanner() {
+        const status = employerData.status || 'pending';
+        let html = '';
 
-      // ============================================================
-      // LOAD DATA — bind events BEFORE first render
-      // ============================================================
-      async function loadAllData() {
-        if (!db) { loadDemoData(); return; }
-        try {
-          const jobSnap = await db.collection('jobs').get();
-          allJobs = [];
-          jobSnap.forEach(doc => {
-            const data = doc.data();
-            data.id = doc.id;
-            if (!data.status) data.status = 'pending';
-            allJobs.push(data);
-          });
-          allJobs.sort((a, b) => toMillis(b.postedDate) - toMillis(a.postedDate));
+        if (status === 'pending') {
+          html = `
+            <i class="fas fa-clock"></i>
+            <div>
+              <strong>Account Pending Review</strong>
+              Your account is being reviewed by our team. This usually takes 24–48 hours. You can prepare your job postings now — they'll go live once your account is approved.
+            </div>`;
+          statusBanner.className = 'status-banner pending';
+        } else if (status === 'approved') {
+          html = `
+            <i class="fas fa-check-circle"></i>
+            <div>
+              <strong>Account Active</strong>
+              Your account is approved. Job postings you submit will be reviewed and published by our team.
+            </div>`;
+          statusBanner.className = 'status-banner approved';
+        } else if (status === 'rejected') {
+          html = `
+            <i class="fas fa-times-circle"></i>
+            <div>
+              <strong>Account Not Approved</strong>
+              Your account was not approved. Please <a href="/contact/" style="color:inherit;text-decoration:underline;">contact support</a> for more details.
+            </div>`;
+          statusBanner.className = 'status-banner rejected';
+        }
 
-          const empSnap = await db.collection('employers').get();
-          allEmployers = [];
-          empSnap.forEach(doc => {
-            const data = doc.data();
-            data.id = doc.id;
-            if (!data.status) data.status = 'pending';
-            allEmployers.push(data);
-          });
-          allEmployers.sort((a, b) => toMillis(b.createdAt) - toMillis(a.createdAt));
-
-          bindStaticEvents();
-          updateStats();
-          updateBadges();
-          renderView(currentTab);
-
-        } catch (e) {
-          console.error('❌ Error loading data:', e);
-          showToast('Error loading data: ' + e.message, 'error');
-          loadDemoData();
+        if (html) {
+          statusBanner.innerHTML = html;
+          statusBanner.style.display = 'flex';
+        } else {
+          statusBanner.style.display = 'none';
         }
       }
 
       // ============================================================
-      // DEMO DATA
+      // 8. LOAD MY JOBS
       // ============================================================
-      function loadDemoData() {
-        allJobs = [{
-          id: 'demo1', jobTitle: 'Executive Chef', companyName: '4T Luxury Hotel',
-          jobLocation: 'Osogbo', jobType: 'Full-time', jobSalary: '₦8-12M/year',
-          jobTags: ['Fine Dining'], jobDescription: 'Seeking a visionary Executive Chef.',
-          status: 'pending', postedDate: new Date(), contactName: 'John Doe', companyEmail: 'hr@4tluxury.com'
-        }];
-        allEmployers = [{
-          id: 'emp1', companyName: '4T Luxury Hotel', contactName: 'John Doe',
-          contactEmail: 'john@4tluxury.com', plan: 'executive', status: 'pending', createdAt: new Date()
-        }];
-        bindStaticEvents();
-        updateStats();
-        updateBadges();
-        renderView(currentTab);
+      async function loadMyJobs() {
+        if (!db || !currentUser) return;
+
+        try {
+          const snap = await db.collection('jobs')
+            .where('employerId', '==', currentUser.uid)
+            .get();
+
+          myJobs = [];
+          snap.forEach(doc => {
+            const data = doc.data();
+            data.id = doc.id;
+            if (!data.status) data.status = 'pending';
+            myJobs.push(data);
+          });
+
+          // Sort newest first
+          myJobs.sort((a, b) => toMillis(b.postedDate) - toMillis(a.postedDate));
+
+          renderJobs();
+          updateStats();
+
+        } catch (e) {
+          console.error('Error loading jobs:', e);
+          showToast('Could not load jobs: ' + e.message, 'error');
+        }
       }
 
       // ============================================================
-      // HELPERS
+      // 9. RENDER JOBS
+      // ============================================================
+      function renderJobs() {
+        if (myJobs.length === 0) {
+          jobsList.style.display = 'none';
+          jobsEmpty.style.display = 'block';
+          return;
+        }
+
+        jobsEmpty.style.display = 'none';
+        jobsList.style.display = 'grid';
+
+        jobsList.innerHTML = myJobs.map(job => {
+          const statusClass = job.status || 'pending';
+          const statusLabel = statusClass.charAt(0).toUpperCase() + statusClass.slice(1);
+          const postedDate = formatDate(job.postedDate);
+          const tags = (job.jobTags || []).map(t => `<span class="card-tag">${escapeHtml(t)}</span>`).join('');
+
+          const actions = `
+            <button class="btn btn-sm btn-danger delete-job-btn" data-id="${escapeHtml(job.id)}">
+              <i class="fas fa-trash"></i> Delete
+            </button>`;
+
+          return `
+            <div class="card">
+              <div class="header">
+                <div>
+                  <div class="title">${escapeHtml(job.jobTitle || 'Untitled')}</div>
+                  <div class="sub"><i class="fas fa-map-marker-alt" style="color:#C9A84C;"></i> ${escapeHtml(job.jobLocation || 'N/A')}</div>
+                </div>
+                <span class="status-badge ${statusClass}">${statusLabel}</span>
+              </div>
+              <div class="meta">
+                <span><i class="fas fa-briefcase"></i>${escapeHtml(job.jobType || 'N/A')}</span>
+                <span><i class="fas fa-credit-card"></i>${escapeHtml(job.jobSalary || 'Negotiable')}</span>
+                <span><i class="fas fa-clock"></i>${postedDate}</span>
+              </div>
+              ${job.jobDescription ? `<div class="desc">${escapeHtml(job.jobDescription)}</div>` : ''}
+              ${tags ? `<div>${tags}</div>` : ''}
+              <div class="card-actions">${actions}</div>
+            </div>
+          `;
+        }).join('');
+
+        // Bind delete buttons
+        jobsList.querySelectorAll('.delete-job-btn').forEach(btn => {
+          btn.addEventListener('click', function () {
+            deleteJob(this.dataset.id);
+          });
+        });
+      }
+
+      // ============================================================
+      // 10. DELETE JOB
+      // ============================================================
+      async function deleteJob(jobId) {
+        if (!confirm('Delete this job posting? This cannot be undone.')) return;
+
+        try {
+          await db.collection('jobs').doc(jobId).delete();
+          myJobs = myJobs.filter(j => j.id !== jobId);
+          renderJobs();
+          updateStats();
+          showToast('Job deleted successfully.', 'success');
+        } catch (e) {
+          console.error('Delete failed:', e);
+          showToast('Could not delete: ' + e.message, 'error');
+        }
+      }
+
+      // ============================================================
+      // 11. UPDATE STATS
+      // ============================================================
+      function updateStats() {
+        statTotalJobs.textContent = myJobs.length;
+        statPendingJobs.textContent = myJobs.filter(j => j.status === 'pending').length;
+        statApprovedJobs.textContent = myJobs.filter(j => j.status === 'approved').length;
+        statRejectedJobs.textContent = myJobs.filter(j => j.status === 'rejected').length;
+      }
+
+      // ============================================================
+      // 12. BIND EVENTS (once)
+      // ============================================================
+      function bindEvents() {
+        if (listenersBound) return;
+        listenersBound = true;
+
+        // Logout
+        logoutBtn.addEventListener('click', function () {
+          auth.signOut().then(() => window.location.href = '/employers/login/');
+        });
+
+        // Open modals
+        postJobBtn.addEventListener('click', () => openModal('postJobModal'));
+        editProfileBtn.addEventListener('click', () => openModal('editProfileModal'));
+
+        // Close modals
+        document.querySelectorAll('[data-close]').forEach(btn => {
+          btn.addEventListener('click', function () {
+            closeModal(this.dataset.close);
+          });
+        });
+
+        // Close modal when clicking overlay
+        [postJobModal, editProfileModal].forEach(modal => {
+          modal.addEventListener('click', function (e) {
+            if (e.target === modal) closeModal(modal.id);
+          });
+        });
+
+        // Submit new job
+        submitJobBtn.addEventListener('click', submitJob);
+
+        // Save profile
+        saveProfileBtn.addEventListener('click', saveProfile);
+      }
+
+      // ============================================================
+      // 13. MODAL OPEN/CLOSE
+      // ============================================================
+      function openModal(id) {
+        const modal = document.getElementById(id);
+        if (modal) {
+          modal.classList.add('active');
+          document.body.style.overflow = 'hidden';
+        }
+      }
+
+      function closeModal(id) {
+        const modal = document.getElementById(id);
+        if (modal) {
+          modal.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      }
+
+      // ============================================================
+      // 14. SUBMIT NEW JOB
+      // ============================================================
+      async function submitJob() {
+        const jobTitle = document.getElementById('jobTitle').value.trim();
+        const jobLocation = document.getElementById('jobLocation').value.trim();
+        const jobType = document.getElementById('jobType').value;
+        const jobSalary = document.getElementById('jobSalary').value.trim();
+        const jobTagsRaw = document.getElementById('jobTags').value.trim();
+        const jobDescription = document.getElementById('jobDescription').value.trim();
+
+        // Validation
+        if (!jobTitle || !jobLocation || !jobType || !jobDescription) {
+          showToast('Please fill in all required fields.', 'error');
+          return;
+        }
+
+        const jobTags = jobTagsRaw
+          ? jobTagsRaw.split(',').map(t => t.trim()).filter(t => t)
+          : [];
+
+        submitJobBtn.disabled = true;
+        submitJobBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+
+        try {
+          await db.collection('jobs').add({
+            jobTitle: jobTitle,
+            companyName: employerData.companyName,
+            companyEmail: employerData.contactEmail,
+            contactName: employerData.contactName,
+            employerId: currentUser.uid,
+            jobLocation: jobLocation,
+            jobType: jobType,
+            jobSalary: jobSalary || 'Negotiable',
+            jobTags: jobTags,
+            jobDescription: jobDescription,
+            status: 'pending',
+            postedDate: firebase.firestore.FieldValue.serverTimestamp()
+          });
+
+          // Reset form
+          ['jobTitle','jobLocation','jobType','jobSalary','jobTags','jobDescription'].forEach(id => {
+            document.getElementById(id).value = '';
+          });
+
+          closeModal('postJobModal');
+          showToast('Job submitted for review!', 'success');
+
+          // Reload jobs
+          await loadMyJobs();
+
+        } catch (e) {
+          console.error('Submit failed:', e);
+          showToast('Could not submit: ' + e.message, 'error');
+        } finally {
+          submitJobBtn.disabled = false;
+          submitJobBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit for Approval';
+        }
+      }
+
+      // ============================================================
+      // 15. SAVE PROFILE
+      // ============================================================
+      async function saveProfile() {
+        const companyName = document.getElementById('editCompanyName').value.trim();
+        const contactName = document.getElementById('editContactName').value.trim();
+        const contactPhone = document.getElementById('editContactPhone').value.trim();
+        const industry = document.getElementById('editIndustry').value;
+
+        if (!companyName || !contactName || !contactPhone) {
+          showToast('Please fill in all required fields.', 'error');
+          return;
+        }
+
+        saveProfileBtn.disabled = true;
+        saveProfileBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+
+        try {
+          // Update Firestore — but never change status from here (rules prevent it)
+          await db.collection('employers').doc(currentUser.uid).update({
+            companyName: companyName,
+            contactName: contactName,
+            contactPhone: contactPhone,
+            industry: industry
+          });
+
+          // Update local state
+          employerData.companyName = companyName;
+          employerData.contactName = contactName;
+          employerData.contactPhone = contactPhone;
+          employerData.industry = industry;
+
+          // Refresh header
+          companyBadge.textContent = companyName;
+          welcomeHeading.textContent = 'Welcome, ' + companyName;
+
+          closeModal('editProfileModal');
+          showToast('Profile updated successfully.', 'success');
+
+        } catch (e) {
+          console.error('Profile save failed:', e);
+          showToast('Could not save: ' + e.message, 'error');
+        } finally {
+          saveProfileBtn.disabled = false;
+          saveProfileBtn.innerHTML = '<i class="fas fa-save"></i> Save Changes';
+        }
+      }
+
+      // ============================================================
+      // 16. HELPERS
       // ============================================================
       function toMillis(ts) {
         if (!ts) return 0;
@@ -363,221 +930,6 @@
           .replace(/'/g, '&#39;');
       }
 
-      // ============================================================
-      // RENDER — defensive against undefined state
-      // ============================================================
-      function renderView(tab) {
-        currentTab = tab || currentTab || 'jobs';
-        currentFilter = currentFilter || 'all';
-        if (currentTab === 'jobs') renderJobs(currentFilter);
-        else renderEmployers(currentFilter);
-      }
-
-      function renderJobs(filter) {
-        const filtered = filter === 'all' ? allJobs : allJobs.filter(j => j.status === filter);
-        if (filtered.length === 0) { showEmpty('No jobs found.'); return; }
-
-        emptyState.style.display = 'none';
-        cardList.style.display = 'grid';
-
-        cardList.innerHTML = filtered.map(job => {
-          const statusClass = job.status || 'pending';
-          const statusLabel = statusClass.charAt(0).toUpperCase() + statusClass.slice(1);
-          const postedDate = formatDate(job.postedDate);
-          const tags = (job.jobTags || []).map(t => `<span class="card-tag">${escapeHtml(t)}</span>`).join('');
-
-          const actions = job.status === 'pending'
-            ? `<button class="btn btn-success btn-sm approve-btn" data-id="${escapeHtml(job.id)}"><i class="fas fa-check"></i> Approve</button>
-               <button class="btn btn-danger btn-sm reject-btn" data-id="${escapeHtml(job.id)}"><i class="fas fa-times"></i> Reject</button>`
-            : `<span style="font-size:0.8rem;color:#8A8580;padding:5px 15px;background:#f4f2ee;border-radius:50px;"><i class="fas ${job.status === 'approved' ? 'fa-check-circle' : 'fa-times-circle'}"></i> ${statusLabel}</span>`;
-
-          return `
-            <div class="card">
-              <div class="header">
-                <div>
-                  <div class="title">${escapeHtml(job.jobTitle || 'Untitled')}</div>
-                  <div class="sub"><i class="fas fa-building"></i> ${escapeHtml(job.companyName || 'N/A')}</div>
-                </div>
-                <span class="status-badge ${statusClass}">${statusLabel}</span>
-              </div>
-              <div class="meta">
-                <span><i class="fas fa-map-marker-alt"></i> ${escapeHtml(job.jobLocation || 'N/A')}</span>
-                <span><i class="fas fa-briefcase"></i> ${escapeHtml(job.jobType || 'N/A')}</span>
-                <span><i class="fas fa-credit-card"></i> ${escapeHtml(job.jobSalary || 'N/A')}</span>
-                <span><i class="fas fa-clock"></i> ${postedDate}</span>
-              </div>
-              ${job.jobDescription ? `<div class="desc">${escapeHtml(job.jobDescription)}</div>` : ''}
-              ${tags ? `<div style="margin:6px 0;">${tags}</div>` : ''}
-              <div class="card-actions">${actions}</div>
-              <div style="font-size:0.75rem;color:#8A8580;margin-top:8px;">
-                <i class="fas fa-user"></i> ${escapeHtml(job.contactName || 'N/A')} (${escapeHtml(job.companyEmail || 'N/A')})
-              </div>
-            </div>
-          `;
-        }).join('');
-
-        cardList.querySelectorAll('.approve-btn').forEach(btn =>
-          btn.addEventListener('click', function () { updateJobStatus(this.dataset.id, 'approved'); })
-        );
-        cardList.querySelectorAll('.reject-btn').forEach(btn =>
-          btn.addEventListener('click', function () { updateJobStatus(this.dataset.id, 'rejected'); })
-        );
-      }
-
-      function renderEmployers(filter) {
-        const filtered = filter === 'all' ? allEmployers : allEmployers.filter(e => e.status === filter);
-        if (filtered.length === 0) { showEmpty('No employers found.'); return; }
-
-        emptyState.style.display = 'none';
-        cardList.style.display = 'grid';
-
-        cardList.innerHTML = filtered.map(emp => {
-          const statusClass = emp.status || 'pending';
-          const statusLabel = statusClass.charAt(0).toUpperCase() + statusClass.slice(1);
-          const planLabel = emp.plan ? emp.plan.charAt(0).toUpperCase() + emp.plan.slice(1) : 'None';
-          const createdAt = formatDate(emp.createdAt);
-
-          const actions = emp.status === 'pending'
-            ? `<button class="btn btn-success btn-sm approve-emp-btn" data-id="${escapeHtml(emp.id)}"><i class="fas fa-check"></i> Approve</button>
-               <button class="btn btn-danger btn-sm reject-emp-btn" data-id="${escapeHtml(emp.id)}"><i class="fas fa-times"></i> Reject</button>`
-            : `<span style="font-size:0.8rem;color:#8A8580;padding:5px 15px;background:#f4f2ee;border-radius:50px;"><i class="fas ${emp.status === 'approved' ? 'fa-check-circle' : 'fa-times-circle'}"></i> ${statusLabel}</span>`;
-
-          return `
-            <div class="card">
-              <div class="header">
-                <div>
-                  <div class="title">${escapeHtml(emp.companyName || 'Unnamed Company')}</div>
-                  <div class="sub"><i class="fas fa-user"></i> ${escapeHtml(emp.contactName || 'N/A')}</div>
-                </div>
-                <span class="status-badge ${statusClass}">${statusLabel}</span>
-              </div>
-              <div class="meta">
-                <span><i class="fas fa-envelope"></i> ${escapeHtml(emp.contactEmail || 'N/A')}</span>
-                <span><i class="fas fa-phone"></i> ${escapeHtml(emp.contactPhone || 'N/A')}</span>
-                <span><i class="fas fa-credit-card"></i> <span class="plan-badge">${planLabel}</span></span>
-                <span><i class="fas fa-clock"></i> Registered: ${createdAt}</span>
-              </div>
-              <div class="card-actions">${actions}</div>
-            </div>
-          `;
-        }).join('');
-
-        cardList.querySelectorAll('.approve-emp-btn').forEach(btn =>
-          btn.addEventListener('click', function () { updateEmployerStatus(this.dataset.id, 'approved'); })
-        );
-        cardList.querySelectorAll('.reject-emp-btn').forEach(btn =>
-          btn.addEventListener('click', function () { updateEmployerStatus(this.dataset.id, 'rejected'); })
-        );
-      }
-
-      // ============================================================
-      // UPDATE STATUS — approvedDate only on approval
-      // ============================================================
-      async function updateJobStatus(jobId, newStatus) {
-        if (!db) {
-          const job = allJobs.find(j => j.id === jobId);
-          if (job) {
-            job.status = newStatus;
-            renderView(currentTab);
-            updateStats();
-            updateBadges();
-            showToast('Job ' + newStatus + '!', 'success');
-          }
-          return;
-        }
-        try {
-          const update = {
-            status: newStatus,
-            reviewedDate: firebase.firestore.FieldValue.serverTimestamp()
-          };
-          if (newStatus === 'approved') {
-            update.approvedDate = firebase.firestore.FieldValue.serverTimestamp();
-          }
-          await db.collection('jobs').doc(jobId).update(update);
-          const job = allJobs.find(j => j.id === jobId);
-          if (job) job.status = newStatus;
-          renderView(currentTab);
-          updateStats();
-          updateBadges();
-          showToast('Job ' + newStatus + '!', 'success');
-        } catch (e) {
-          console.error(e);
-          showToast('Error updating job: ' + e.message, 'error');
-        }
-      }
-
-      async function updateEmployerStatus(empId, newStatus) {
-        if (!db) {
-          const emp = allEmployers.find(e => e.id === empId);
-          if (emp) {
-            emp.status = newStatus;
-            renderView(currentTab);
-            updateStats();
-            updateBadges();
-            showToast('Employer ' + newStatus + '!', 'success');
-          }
-          return;
-        }
-        try {
-          const update = {
-            status: newStatus,
-            reviewedDate: firebase.firestore.FieldValue.serverTimestamp()
-          };
-          if (newStatus === 'approved') {
-            update.approvedDate = firebase.firestore.FieldValue.serverTimestamp();
-          }
-          await db.collection('employers').doc(empId).update(update);
-          const emp = allEmployers.find(e => e.id === empId);
-          if (emp) emp.status = newStatus;
-          renderView(currentTab);
-          updateStats();
-          updateBadges();
-          showToast('Employer ' + newStatus + '!', 'success');
-        } catch (e) {
-          console.error(e);
-          showToast('Error updating employer: ' + e.message, 'error');
-        }
-      }
-
-      // ============================================================
-      // STATS & BADGES — dynamic per tab
-      // ============================================================
-      function updateStats() {
-        if (currentTab === 'jobs') {
-          statTotal.textContent = allJobs.length;
-          statPending.textContent = allJobs.filter(j => j.status === 'pending').length;
-          statApproved.textContent = allJobs.filter(j => j.status === 'approved').length;
-          statRejected.textContent = allJobs.filter(j => j.status === 'rejected').length;
-          statTotalLabel.textContent = 'Total Jobs';
-          statPendingLabel.textContent = 'Pending Jobs';
-          statApprovedLabel.textContent = 'Approved Jobs';
-          statRejectedLabel.textContent = 'Rejected Jobs';
-        } else {
-          statTotal.textContent = allEmployers.length;
-          statPending.textContent = allEmployers.filter(e => e.status === 'pending').length;
-          statApproved.textContent = allEmployers.filter(e => e.status === 'approved').length;
-          statRejected.textContent = allEmployers.filter(e => e.status === 'rejected').length;
-          statTotalLabel.textContent = 'Total Employers';
-          statPendingLabel.textContent = 'Pending Employers';
-          statApprovedLabel.textContent = 'Approved Employers';
-          statRejectedLabel.textContent = 'Rejected Employers';
-        }
-      }
-
-      function updateBadges() {
-        pendingJobBadge.textContent = allJobs.filter(j => j.status === 'pending').length;
-        pendingEmployerBadge.textContent = allEmployers.filter(e => e.status === 'pending').length;
-      }
-
-      // ============================================================
-      // EMPTY / TOAST
-      // ============================================================
-      function showEmpty(msg) {
-        emptyState.style.display = 'block';
-        cardList.style.display = 'none';
-        emptyState.querySelector('p').textContent = msg;
-      }
-
       function showToast(msg, type) {
         toast.textContent = msg;
         toast.className = 'toast ' + type;
@@ -585,37 +937,6 @@
         toast.classList.add('show');
         if (toastTimeout) clearTimeout(toastTimeout);
         toastTimeout = setTimeout(() => toast.classList.remove('show'), 3500);
-      }
-
-      // ============================================================
-      // TABS & FILTERS — bound once
-      // ============================================================
-      function bindStaticEvents() {
-        if (listenersBound) return;
-        listenersBound = true;
-
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-          btn.addEventListener('click', function () {
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            this.classList.add('active');
-            currentFilter = this.dataset.filter;
-            renderView(currentTab);
-          });
-        });
-
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-          btn.addEventListener('click', function () {
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            this.classList.add('active');
-            currentTab = this.dataset.tab;
-            currentFilter = 'all';
-            document.querySelectorAll('.filter-btn').forEach(b => {
-              b.classList.toggle('active', b.dataset.filter === 'all');
-            });
-            renderView(currentTab);
-            updateStats();
-          });
-        });
       }
 
     });
