@@ -487,16 +487,16 @@
         <h2>Submit Your <span class="text-gold">Profile</span></h2>
         <p class="form-subtitle">Fill in your details. We'll be in touch within 48 hours.</p>
 
+        <!-- FIX: Removed enctype="multipart/form-data" — Netlify free plan drops file uploads,
+             and the file is already uploaded to Firebase. We only send text fields + cvUrl. -->
         <form
           id="submitProfileForm"
           name="submit-profile"
           method="POST"
           data-netlify="true"
           netlify-honeypot="bot-field"
-          enctype="multipart/form-data"
         >
           <input type="hidden" name="form-name" value="submit-profile" />
-          <input type="hidden" name="_redirect" value="/candidates/submit-profile/?success=true" />
           <input type="hidden" name="cvUrl" id="cvUrl" value="" />
 
           <p style="display:none;">
@@ -594,7 +594,9 @@
 
           <div class="form-group">
             <label for="cv">Upload CV / Résumé <span class="required">*</span></label>
-            <input type="file" id="cv" name="cv" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" required />
+            <!-- FIX: Removed name="cv" — the file goes to Firebase Storage, not Netlify.
+                 The Firebase Storage path is sent as cvUrl instead. -->
+            <input type="file" id="cv" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" required />
             <div class="helper-text">PDF or Word document, max 5 MB</div>
             <div class="error-text" id="cvError">Please upload a PDF or Word file under 5 MB.</div>
             <div class="upload-progress" id="uploadProgress">
@@ -619,7 +621,8 @@
           </p>
         </form>
 
-        <div class="form-success" id="formSuccess">
+        <!-- FIX: Added aria-live="polite" so screen readers announce the success state -->
+        <div class="form-success" id="formSuccess" aria-live="polite">
           <div class="success-icon"><i class="fas fa-check-circle"></i></div>
           <h3>Profile Submitted Successfully!</h3>
           <p>Thank you for submitting your profile to Hospitality Recruit. Our team will review your details and get back to you within 48 hours with relevant opportunities.</p>
@@ -793,23 +796,23 @@
       const cvUrlInput = document.getElementById('cvUrl');
       const cvError = document.getElementById('cvError');
       const bioError = document.getElementById('bioError');
+      const bioInput = document.getElementById('bio');
       const uploadProgress = document.getElementById('uploadProgress');
       const uploadProgressBar = document.getElementById('uploadProgressBar');
 
       if (!form) return;
 
-      // Success state via query string
+      // Success state via query string (legacy support for redirected submissions)
       const urlParams = new URLSearchParams(window.location.search);
       if (urlParams.get('success') === 'true') {
         form.style.display = 'none';
         if (successDiv) successDiv.style.display = 'block';
-        // Clean the URL so it can't be shared/reloaded into a false success state
         const cleanUrl = new URL(window.location.href);
         cleanUrl.searchParams.delete('success');
         window.history.replaceState({}, document.title, cleanUrl.pathname);
       }
 
-      // Validate CV file on change
+      // Validate CV file
       function validateCv(file) {
         if (!file) return 'Please select a CV file.';
         if (!ALLOWED_TYPES.includes(file.type)) return 'Only PDF, DOC, or DOCX files are allowed.';
@@ -829,8 +832,7 @@
         }
       });
 
-      // Show bio error text on invalid
-      const bioInput = document.getElementById('bio');
+      // Live bio length feedback
       bioInput.addEventListener('input', function() {
         const group = this.closest('.form-group');
         if (this.value.length > 0 && this.value.length < 50) {
@@ -841,34 +843,42 @@
       });
 
       // ============================================================
-      // SUBMIT: upload CV to Firebase, then post form to Netlify
+      // SUBMIT: upload CV to Firebase Storage, then POST text fields
+      // to Netlify via fetch. Show success only after Netlify confirms.
       // ============================================================
       form.addEventListener('submit', async function(e) {
-        // Client-side file validation first
+        e.preventDefault();
+
+        // --- 1. Validate CV ---
         const file = cvInput.files && cvInput.files[0];
         const cvErr = validateCv(file);
         if (cvErr) {
-          e.preventDefault();
           cvError.textContent = cvErr;
           cvInput.closest('.form-group').classList.add('has-error');
           cvInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
           return;
         }
 
-        // Prevent double submit & show progress
-        e.preventDefault();
+        // --- 2. Validate bio length explicitly (minlength alone isn't enough UX) ---
+        if (bioInput.value.trim().length < 50) {
+          bioError.textContent = 'Please write at least 50 characters.';
+          bioInput.closest('.form-group').classList.add('has-error');
+          bioInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          return;
+        }
+
+        // --- 3. Lock UI ---
         submitBtn.disabled = true;
         submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading CV…';
         uploadProgress.classList.add('active');
         uploadProgressBar.style.width = '0%';
 
         try {
-          // Build a safe unique filename
+          // --- 4. Upload to Firebase Storage ---
           const ext = (file.name.split('.').pop() || 'pdf').toLowerCase();
           const safeName = 'cv-' + Date.now() + '-' + Math.random().toString(36).slice(2, 8) + '.' + ext;
           const ref = firebase.storage().ref().child('cvs/' + safeName);
 
-          // Upload with progress
           const uploadTask = ref.put(file);
           await new Promise((resolve, reject) => {
             uploadTask.on('state_changed',
@@ -881,37 +891,35 @@
             );
           });
 
-          const downloadUrl = await ref.getDownloadURL();
-          cvUrlInput.value = downloadUrl;
+          // --- 5. Store the STORAGE PATH, not a public download URL ---
+          // This keeps the CV private. Use the Firebase Admin SDK on the backend
+          // to generate short-lived signed URLs when you need to view the file.
+          cvUrlInput.value = ref.fullPath;
 
           submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting…';
 
-          // Now submit the Netlify form for real.
-          // Build a hidden iframe so the browser doesn't navigate away abruptly.
-          const iframeName = 'netlify-submit-target-' + Date.now();
-          const iframe = document.createElement('iframe');
-          iframe.name = iframeName;
-          iframe.style.display = 'none';
-          document.body.appendChild(iframe);
+          // --- 6. Submit to Netlify via fetch (no clone, no iframe) ---
+          const formData = new FormData(form);
+          formData.delete('cv');                 // file already uploaded to Firebase
+          formData.set('cvUrl', ref.fullPath);
 
-          // Clone the form so we don't disturb the visible one
-          const clone = form.cloneNode(true);
-          clone.target = iframeName;
-          clone.style.display = 'none';
-          document.body.appendChild(clone);
+          const res = await fetch('/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams(formData).toString()
+          });
 
-          clone.submit();
+          if (!res.ok) throw new Error('Netlify submission failed (' + res.status + ')');
 
-          // Optimistically show success after a short delay
-          setTimeout(() => {
-            form.style.display = 'none';
-            successDiv.style.display = 'block';
-            form.reset();
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Profile';
-            uploadProgress.classList.remove('active');
-            document.getElementById('submit-form').scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }, 1500);
+          // --- 7. Show success ONLY after Netlify confirms ---
+          form.style.display = 'none';
+          successDiv.style.display = 'block';
+          form.reset();
+          document.getElementById('cvUrl').value = '';
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Profile';
+          uploadProgress.classList.remove('active');
+          document.getElementById('submit-form').scrollIntoView({ behavior: 'smooth', block: 'start' });
 
         } catch (err) {
           console.error('Upload/submit error:', err);
@@ -920,10 +928,11 @@
           uploadProgress.classList.remove('active');
           cvError.textContent = 'Upload failed: ' + (err.message || 'Please try again.');
           cvInput.closest('.form-group').classList.add('has-error');
+          cvInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
       });
 
-      // Reset button if user comes back via bfcache
+      // Reset button state if user comes back via bfcache
       window.addEventListener('pageshow', function(e) {
         if (e.persisted) {
           submitBtn.disabled = false;

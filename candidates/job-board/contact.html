@@ -20,6 +20,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700&display=swap" rel="stylesheet" />
 
+    <!-- FIX: Firebase SDK loaded for Storage uploads -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
+
     <style>
       /* ===== RESET & VARIABLES ===== */
       * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -92,6 +96,7 @@
 
       .btn-gold { background: var(--color-gold); color: var(--color-primary); }
       .btn-gold:hover { background: var(--color-gold-light); transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+      .btn-gold:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
 
       .btn-outline-gold { background: transparent; color: var(--color-gold); border: 2px solid var(--color-gold); }
       .btn-outline-gold:hover { background: var(--color-gold); color: var(--color-primary); transform: translateY(-2px); }
@@ -112,6 +117,17 @@
         z-index: 1000; transition: all 0.3s; text-decoration: none;
       }
       .whatsapp-float:hover { transform: scale(1.1); background-color: #128c7e; }
+
+      /* FIX: Added missing .whatsapp-desktop styles (used in footer) */
+      .whatsapp-desktop {
+        display: inline-flex; align-items: center; gap: 0.75rem;
+        background: #25d366; color: white; padding: 0.75rem 1.5rem;
+        border-radius: 50px; text-decoration: none; font-weight: 600;
+        transition: all 0.3s;
+      }
+      .whatsapp-desktop:hover { background: #128c7e; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(37,211,102,0.3); }
+      .whatsapp-desktop i { font-size: 1.25rem; }
+      @media (max-width: 768px) { .whatsapp-desktop { display: none; } }
 
       /* ===== HEADER ===== */
       .site-header {
@@ -444,6 +460,27 @@
         color: var(--color-success);
       }
 
+      /* FIX: Added error + progress styles for CV validation and upload */
+      .form-group.has-error input,
+      .form-group.has-error select,
+      .form-group.has-error textarea { border-color: var(--color-emergency); }
+      .form-group.has-error .file-upload { border-color: var(--color-emergency); }
+      .error-text {
+        font-size: 0.8rem; color: var(--color-emergency);
+        margin-top: 0.4rem; display: none;
+      }
+      .form-group.has-error .error-text { display: block; }
+      .upload-progress {
+        display: none; margin-top: 0.5rem;
+        background: var(--color-gray-200); border-radius: 50px;
+        height: 6px; overflow: hidden;
+      }
+      .upload-progress.active { display: block; }
+      .upload-progress-bar {
+        height: 100%; background: var(--color-gold);
+        width: 0%; transition: width 0.3s;
+      }
+
       .form-note {
         font-size: 0.8rem;
         color: var(--color-gray-600);
@@ -619,6 +656,15 @@
         color: rgba(255, 255, 255, 0.4);
         font-size: 0.8rem;
       }
+      .footer-bottom-links {
+        display: flex; justify-content: center;
+        gap: 1.5rem; margin-top: 0.5rem;
+      }
+      .footer-bottom-links a {
+        color: rgba(255, 255, 255, 0.4);
+        text-decoration: none;
+      }
+      .footer-bottom-links a:hover { color: var(--color-gold); }
 
       /* ===== RESPONSIVE ===== */
       @media (max-width: 768px) {
@@ -682,7 +728,6 @@
                 <div class="dropdown-menu">
                  <a href="/candidates/job-board/contact.html" class="dropdown-item"><i class="fas fa-briefcase"></i> Submit Your CV</a>
                   <a href="/candidates/job-board/index.html" class="dropdown-item"><i class="fas fa-briefcase"></i> Job Alerts</a>
-                  <!-- <a href="/candidates/" class="dropdown-item"><i class="fas fa-graduation-cap"></i> Conta</a> -->
                 </div>
               </li>
 
@@ -708,7 +753,8 @@
     <div class="breadcrumb">
       <div class="container">
         <div class="breadcrumb-inner">
-          <a href="index.html"><i class="fas fa-home"></i> Home</a>
+          <!-- FIX: was href="index.html" (relative) → now absolute -->
+          <a href="/index.html"><i class="fas fa-home"></i> Home</a>
           <i class="fas fa-chevron-right"></i>
           <a href="/candidates/job-board/index.html">Job Board</a>
           <i class="fas fa-chevron-right"></i>
@@ -744,8 +790,11 @@
             <h2>Submit your details</h2>
             <p class="form-subtitle">All fields marked <span style="color: var(--color-emergency);">*</span> are required.</p>
 
-            <form id="candidateForm" name="candidate-application" method="POST" data-netlify="true" enctype="multipart/form-data" netlify-honeypot="bot-field">
+            <!-- FIX: Removed enctype="multipart/form-data" — Netlify free plan drops file uploads.
+                 The file is uploaded to Firebase Storage, and its path is sent as cvPath. -->
+            <form id="candidateForm" name="candidate-application" method="POST" data-netlify="true" netlify-honeypot="bot-field">
               <input type="hidden" name="form-name" value="candidate-application" />
+              <input type="hidden" name="cvPath" id="cvPath" value="" />
               <p style="display: none;">
                 <label>Don't fill this out if you're human: <input name="bot-field" /></label>
               </p>
@@ -816,17 +865,23 @@
                 <textarea id="message" name="message" placeholder="Tell us briefly about your background and what role you're looking for..." required></textarea>
               </div>
 
-              <div class="form-group">
-                <label>Upload CV / Resume</label>
+              <!-- FIX: CV file input no longer named "cv" (not sent to Netlify).
+                   It's uploaded to Firebase Storage, and the storage path is sent as cvPath. -->
+              <div class="form-group" id="cvGroup">
+                <label>Upload CV / Resume <span class="required">*</span></label>
                 <div class="file-upload" id="fileUploadBox">
-                  <input type="file" id="cvFile" name="cv" accept=".pdf,.doc,.docx" />
+                  <input type="file" id="cvFile" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" required />
                   <i class="fas fa-cloud-upload-alt"></i>
                   <div class="file-label" id="fileName">Click to upload your CV</div>
                   <div class="file-hint">PDF or Word · Max 5 MB</div>
                 </div>
+                <div class="error-text" id="cvError">Please upload a valid PDF or Word file under 5 MB.</div>
+                <div class="upload-progress" id="uploadProgress">
+                  <div class="upload-progress-bar" id="uploadProgressBar"></div>
+                </div>
               </div>
 
-              <button type="submit" class="btn btn-gold btn-block btn-large">
+              <button type="submit" class="btn btn-gold btn-block btn-large" id="submitBtn">
                 <i class="fas fa-paper-plane"></i> Submit Application
               </button>
 
@@ -836,7 +891,8 @@
             </form>
 
             <!-- SUCCESS -->
-            <div class="form-success" id="formSuccess">
+            <!-- FIX: Added aria-live for screen readers -->
+            <div class="form-success" id="formSuccess" aria-live="polite">
               <div class="success-icon"><i class="fas fa-check-circle"></i></div>
               <h3>Application received!</h3>
               <p>Thank you. One of our recruiters will contact you within 24 hours.</p>
@@ -995,6 +1051,26 @@
 
     <!-- ===== JAVASCRIPT ===== -->
     <script>
+      // ============================================================
+      // FIREBASE — Storage only (same project as submit-profile page)
+      // ============================================================
+      const firebaseConfig = {
+        apiKey: "AIzaSyBxeiG78oHv8wSLGRK_GAAD_mqvZKJtu30",
+        authDomain: "jobpitality-1cfb2.firebaseapp.com",
+        projectId: "jobpitality-1cfb2",
+        storageBucket: "jobpitality-1cfb2.firebasestorage.app",
+        messagingSenderId: "185191165097",
+        appId: "1:185191165097:web:e0aeab622e8d89ef9a8db8"
+      };
+      if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+
+      const MAX_CV_BYTES = 5 * 1024 * 1024; // 5 MB
+      const ALLOWED_TYPES = [
+        'application/pdf',
+        'application/msword',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+      ];
+
       document.addEventListener('DOMContentLoaded', function() {
         const yearEl = document.getElementById('currentYear');
         if (yearEl) yearEl.textContent = new Date().getFullYear();
@@ -1044,68 +1120,127 @@
           }
         });
 
-        /* ─── FILE UPLOAD UI ─── */
-        const fileInput = document.getElementById('cvFile');
-        const fileNameEl = document.getElementById('fileName');
-        const fileBox = document.getElementById('fileUploadBox');
-
-        if (fileInput && fileNameEl && fileBox) {
-          fileInput.addEventListener('change', function() {
-            if (this.files && this.files[0]) {
-              const file = this.files[0];
-              const maxMB = 5;
-              if (file.size > maxMB * 1024 * 1024) {
-                alert('File is too large. Maximum ' + maxMB + ' MB.');
-                this.value = '';
-                fileNameEl.textContent = 'Click to upload your CV';
-                fileBox.classList.remove('has-file');
-                return;
-              }
-              fileNameEl.textContent = file.name;
-              fileBox.classList.add('has-file');
-            } else {
-              fileNameEl.textContent = 'Click to upload your CV';
-              fileBox.classList.remove('has-file');
-            }
-          });
-        }
-
-        /* ─── AJAX FORM SUBMISSION ─── */
+        /* ─── FORM REFS ─── */
         const form = document.getElementById('candidateForm');
         const successDiv = document.getElementById('formSuccess');
+        const submitBtn = document.getElementById('submitBtn');
+        const cvInput = document.getElementById('cvFile');
+        const cvPathInput = document.getElementById('cvPath');
+        const cvError = document.getElementById('cvError');
+        const cvGroup = document.getElementById('cvGroup');
+        const fileNameEl = document.getElementById('fileName');
+        const fileBox = document.getElementById('fileUploadBox');
+        const uploadProgress = document.getElementById('uploadProgress');
+        const uploadProgressBar = document.getElementById('uploadProgressBar');
 
-        if (form) {
-          form.addEventListener('submit', async function(e) {
-            e.preventDefault();
+        if (!form) return;
 
-            const submitBtn = form.querySelector('button[type="submit"]');
-            const originalBtnText = submitBtn.innerHTML;
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+        /* ─── FILE VALIDATION ─── */
+        function validateCv(file) {
+          if (!file) return 'Please select a CV file.';
+          if (!ALLOWED_TYPES.includes(file.type)) return 'Only PDF, DOC, or DOCX files are allowed.';
+          if (file.size > MAX_CV_BYTES) return 'File must be under 5 MB.';
+          return null;
+        }
 
-            try {
-              const formData = new FormData(form);
-
-              const response = await fetch('/', {
-                method: 'POST',
-                body: formData
-              });
-
-              if (response.ok) {
-                form.style.display = 'none';
-                successDiv.style.display = 'block';
-                successDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
-              } else {
-                throw new Error('Form submission failed');
-              }
-            } catch (err) {
-              console.error(err);
-              alert('Sorry, something went wrong. Please email us at hello@hospitalityrecruit.com or WhatsApp +234 803 966 1354.');
-              submitBtn.disabled = false;
-              submitBtn.innerHTML = originalBtnText;
+        /* ─── FILE UPLOAD UI ─── */
+        if (cvInput && fileNameEl && fileBox) {
+          cvInput.addEventListener('change', function() {
+            const file = this.files && this.files[0];
+            const err = validateCv(file);
+            if (err) {
+              cvError.textContent = err;
+              cvGroup.classList.add('has-error');
+              fileNameEl.textContent = 'Click to upload your CV';
+              fileBox.classList.remove('has-file');
+            } else {
+              cvGroup.classList.remove('has-error');
+              fileNameEl.textContent = file.name;
+              fileBox.classList.add('has-file');
             }
           });
         }
+
+        /* ─── SUBMIT HANDLER ─── */
+        form.addEventListener('submit', async function(e) {
+          e.preventDefault();
+
+          // 1. Validate CV
+          const file = cvInput.files && cvInput.files[0];
+          const cvErr = validateCv(file);
+          if (cvErr) {
+            cvError.textContent = cvErr;
+            cvGroup.classList.add('has-error');
+            cvGroup.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            return;
+          }
+
+          // 2. Lock UI
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading CV…';
+          uploadProgress.classList.add('active');
+          uploadProgressBar.style.width = '0%';
+
+          try {
+            // 3. Upload to Firebase Storage — uses "applications/" prefix to
+            //    distinguish from "cvs/" on the submit-profile page (optional,
+            //    but keeps the two workflows organized).
+            const ext = (file.name.split('.').pop() || 'pdf').toLowerCase();
+            const safeName = 'cv-' + Date.now() + '-' + Math.random().toString(36).slice(2, 8) + '.' + ext;
+            const ref = firebase.storage().ref().child('applications/' + safeName);
+
+            const uploadTask = ref.put(file);
+            await new Promise((resolve, reject) => {
+              uploadTask.on('state_changed',
+                (snapshot) => {
+                  const pct = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                  uploadProgressBar.style.width = pct + '%';
+                },
+                reject,
+                resolve
+              );
+            });
+
+            // 4. Store the STORAGE PATH (not a public download URL)
+            cvPathInput.value = ref.fullPath;
+
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting…';
+
+            // 5. Submit text fields + cvPath to Netlify via fetch
+            const formData = new FormData(form);
+            formData.delete('cv'); // file already handled by Firebase
+            formData.set('cvPath', ref.fullPath);
+
+            const res = await fetch('/', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+              body: new URLSearchParams(formData).toString()
+            });
+
+            if (!res.ok) throw new Error('Netlify submission failed (' + res.status + ')');
+
+            // 6. Show success ONLY after Netlify confirms
+            form.style.display = 'none';
+            successDiv.style.display = 'block';
+            form.reset();
+            if (cvPathInput) cvPathInput.value = '';
+            if (fileNameEl) fileNameEl.textContent = 'Click to upload your CV';
+            if (fileBox) fileBox.classList.remove('has-file');
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Application';
+            uploadProgress.classList.remove('active');
+            document.querySelector('.form-wrapper').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+          } catch (err) {
+            console.error('Upload/submit error:', err);
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Application';
+            uploadProgress.classList.remove('active');
+            cvError.textContent = 'Upload failed: ' + (err.message || 'Please try again.');
+            cvGroup.classList.add('has-error');
+            cvGroup.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        });
 
         /* ─── RESET ─── */
         window.resetForm = function() {
@@ -1113,15 +1248,24 @@
           form.style.display = 'block';
           successDiv.style.display = 'none';
           form.reset();
+          if (cvPathInput) cvPathInput.value = '';
           if (fileNameEl) fileNameEl.textContent = 'Click to upload your CV';
           if (fileBox) fileBox.classList.remove('has-file');
-          const submitBtn = form.querySelector('button[type="submit"]');
-          if (submitBtn) {
+          if (cvGroup) cvGroup.classList.remove('has-error');
+          if (uploadProgress) uploadProgress.classList.remove('active');
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Application';
+          document.querySelector('.form-wrapper').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        };
+
+        /* ─── Reset UI on bfcache restore ─── */
+        window.addEventListener('pageshow', function(e) {
+          if (e.persisted) {
             submitBtn.disabled = false;
             submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Application';
+            uploadProgress.classList.remove('active');
           }
-          form.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        };
+        });
       });
     </script>
   </body>
