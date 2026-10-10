@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Submit Profile | Hospitality Recruit – Join Our Talent Network</title>
-  <meta name="description" content="Submit your profile to Hospitality Recruit and get matched with elite luxury hospitality roles across Nigeria and Africa." />
+  <title>Submit Your CV | HospitalityRecruit – Hotel & Restaurant Jobs in Osogbo & Ilorin</title>
+  <meta name="description" content="Submit your CV to HospitalityRecruit. We match chefs, cooks, waiters, housekeepers, receptionists, security, laundry, bar staff, and hotel managers with hotels and restaurants in Osogbo and Ilorin. Free for candidates." />
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -50,7 +50,7 @@
     h1 { font-size:2.5rem; }
     h2 { font-size:2rem; margin-bottom:1rem; }
     @media (min-width:768px) { h1 { font-size:3.5rem; } h2 { font-size:2.8rem; } }
-    @media (min-width:1024px) { h1 { font-size:4.5rem; } h2 { font-size:3.2rem; } }
+    @media (min-width:1024px) { h1 { font-size:4rem; } h2 { font-size:3rem; } }
     .text-gold { color:var(--color-gold); }
 
     .btn {
@@ -64,13 +64,14 @@
     .btn-gold { background:var(--color-gold); color:var(--color-primary); }
     .btn-gold:hover { background:var(--color-gold-light); transform:translateY(-2px); box-shadow:var(--shadow-lg); }
     .btn-gold:disabled { opacity:0.7; cursor:not-allowed; transform:none; }
+    .btn-whatsapp { background:#25d366; color:#ffffff; }
+    .btn-whatsapp:hover { background:#128c7e; transform:translateY(-2px); box-shadow:var(--shadow-lg); }
     .btn-outline-gold { background:transparent; color:var(--color-gold); border:2px solid var(--color-gold); }
     .btn-outline-gold:hover { background:var(--color-gold); color:var(--color-primary); transform:translateY(-2px); }
     .btn-outline-white { background:transparent; color:var(--color-white); border:2px solid var(--color-white); }
     .btn-outline-white:hover { background:var(--color-white); color:var(--color-primary); transform:translateY(-2px); }
     .btn-block { width:100%; }
     .btn-large { padding:1.25rem 3rem; font-size:1.1rem; }
-    .btn-sm { padding:0.5rem 1.25rem; font-size:0.85rem; min-height:40px; }
 
     .whatsapp-desktop {
       display: inline-flex; align-items: center; gap:0.75rem;
@@ -89,187 +90,176 @@
     .whatsapp-float:hover { transform:scale(1.1); background:#128c7e; }
     @media (min-width:769px) { .whatsapp-float { display:none; } }
 
-   /* ===== HEADER ===== */
-      .site-header {
+    /* ===== HEADER ===== */
+    .site-header {
+      background: var(--color-white);
+      box-shadow: var(--shadow-md);
+      position: sticky; top: 0; z-index: 1000;
+      padding: 0.75rem 0;
+      border-bottom: 2px solid var(--color-gold);
+    }
+    .header-container {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 1rem;
+    }
+    .logo { display: flex; align-items: center; flex-shrink: 0; min-width: 0; }
+    .logo a { display: flex; flex-direction: row; align-items: center; gap: 10px; text-decoration: none; min-width: 0; }
+    .logo-img {
+      height: 40px !important; width: 40px !important;
+      border-radius: 50% !important;
+      object-fit: cover !important;
+      border: 2px solid var(--color-gold);
+      display: block; flex-shrink: 0;
+      background-color: var(--color-white); padding: 2px;
+    }
+    .brand-name {
+      font-family: var(--font-serif);
+      font-size: 1.4rem; font-weight: 800;
+      color: var(--color-primary);
+      letter-spacing: -0.5px; white-space: nowrap; line-height: 1.1;
+    }
+    .brand-name .gold { color: var(--color-gold); }
+
+    @media (max-width: 480px) {
+      .site-header { padding: 0.5rem 0; }
+      .header-container { gap: 0.5rem; }
+      .logo-img { height: 34px !important; width: 34px !important; }
+      .brand-name { font-size: 1.15rem; letter-spacing: -0.3px; }
+      .mobile-menu-toggle { width: 38px; height: 38px; }
+      .mobile-menu-toggle i { font-size: 1.2rem; }
+    }
+
+    .mobile-menu-toggle {
+      display: flex; align-items: center; justify-content: center;
+      background: var(--color-gold); border: none;
+      width: 44px; height: 44px; border-radius: 8px;
+      cursor: pointer; z-index: 1001;
+      transition: all 0.3s ease; flex-shrink: 0;
+    }
+    .mobile-menu-toggle i { font-size: 1.5rem; color: var(--color-primary); }
+    .mobile-menu-toggle.active { background: var(--color-primary); }
+    .mobile-menu-toggle.active i { color: var(--color-gold); }
+    @media (min-width: 1024px) { .mobile-menu-toggle { display: none; } }
+
+    .mobile-close-btn {
+      display: none; background: var(--color-primary);
+      color: var(--color-gold);
+      border: 2px solid var(--color-gold);
+      padding: 12px 20px; border-radius: 8px;
+      font-size: 1rem; font-weight: 600;
+      cursor: pointer; width: 100%; margin-bottom: 20px; text-align: center;
+    }
+    @media (max-width: 1023px) { .mobile-close-btn { display: block; } }
+    .mobile-close-btn:hover { background: var(--color-gold); color: var(--color-primary); }
+
+    .main-nav { display: flex; align-items: center; }
+    @media (max-width: 1023px) {
+      .main-nav {
+        position: fixed; top: 0; right: -100%;
+        width: 85%; max-width: 400px; height: 100vh;
         background: var(--color-white);
-        box-shadow: var(--shadow-md);
-        position: sticky; top: 0; z-index: 1000;
-        padding: 0.75rem 0;
-        border-bottom: 2px solid var(--color-gold);
+        flex-direction: column; align-items: flex-start; justify-content: flex-start;
+        padding: 80px 20px 30px;
+        transition: right 0.3s ease;
+        z-index: 1001;
+        box-shadow: var(--shadow-xl);
+        overflow-y: auto; gap: 1rem;
       }
-      .header-container {
-        display: flex; align-items: center; justify-content: space-between;
-        gap: 1rem;
-      }
-
-      .logo { display: flex; align-items: center; flex-shrink: 0; min-width: 0; }
-      .logo a { display: flex; flex-direction: row; align-items: center; gap: 10px; text-decoration: none; min-width: 0; }
-      .logo-img {
-        height: 40px !important; width: 40px !important;
-        border-radius: 50% !important;
-        object-fit: cover !important;
-        border: 2px solid var(--color-gold);
-        display: block; flex-shrink: 0;
-        background-color: var(--color-white); padding: 2px;
-      }
-      .brand-name {
-        font-family: var(--font-serif);
-        font-size: 1.4rem; font-weight: 800;
-        color: var(--color-primary);
-        letter-spacing: -0.5px; white-space: nowrap; line-height: 1.1;
-      }
-      .brand-name .gold { color: var(--color-gold); }
-
-      @media (max-width: 480px) {
-        .site-header { padding: 0.5rem 0; }
-        .header-container { gap: 0.5rem; }
-        .logo-img { height: 34px !important; width: 34px !important; }
-        .brand-name { font-size: 1.15rem; letter-spacing: -0.3px; }
-        .mobile-menu-toggle { width: 38px; height: 38px; }
-        .mobile-menu-toggle i { font-size: 1.2rem; }
-      }
-
-      .mobile-menu-toggle {
-        display: flex; align-items: center; justify-content: center;
-        background: var(--color-gold); border: none;
-        width: 44px; height: 44px; border-radius: 8px;
-        cursor: pointer; z-index: 1001;
-        transition: all 0.3s ease; flex-shrink: 0;
-      }
-      .mobile-menu-toggle i { font-size: 1.5rem; color: var(--color-primary); }
-      .mobile-menu-toggle.active { background: var(--color-primary); }
-      .mobile-menu-toggle.active i { color: var(--color-gold); }
-      @media (min-width: 1024px) { .mobile-menu-toggle { display: none; } }
-
-      .mobile-close-btn {
-        display: none; background: var(--color-primary);
-        color: var(--color-gold);
-        border: 2px solid var(--color-gold);
-        padding: 12px 20px; border-radius: 8px;
-        font-size: 1rem; font-weight: 600;
-        cursor: pointer; width: 100%; margin-bottom: 20px; text-align: center;
-      }
-      @media (max-width: 1023px) { .mobile-close-btn { display: block; } }
-      .mobile-close-btn:hover { background: var(--color-gold); color: var(--color-primary); }
-
-      .main-nav { display: flex; align-items: center; }
-      @media (max-width: 1023px) {
-        .main-nav {
-          position: fixed; top: 0; right: -100%;
-          width: 85%; max-width: 400px; height: 100vh;
-          background: var(--color-white);
-          flex-direction: column; align-items: flex-start; justify-content: flex-start;
-          padding: 80px 20px 30px;
-          transition: right 0.3s ease;
-          z-index: 1001;
-          box-shadow: var(--shadow-xl);
-          overflow-y: auto; gap: 1rem;
-        }
-        .main-nav.active { right: 0; }
-      }
-
-      .nav-menu { display: flex; list-style: none; gap: 0; margin: 0; padding: 0; }
-      @media (max-width: 1023px) { .nav-menu { flex-direction: column; width: 100%; gap: 0.5rem; } }
-
-      .nav-item { position: relative; }
-      @media (max-width: 1023px) { .nav-item { width: 100%; } }
-
+      .main-nav.active { right: 0; }
+    }
+    .nav-menu { display: flex; list-style: none; gap: 0; margin: 0; padding: 0; }
+    @media (max-width: 1023px) { .nav-menu { flex-direction: column; width: 100%; gap: 0.5rem; } }
+    .nav-item { position: relative; }
+    @media (max-width: 1023px) { .nav-item { width: 100%; } }
+    .nav-link {
+      text-decoration: none; color: var(--color-gray-700);
+      font-weight: 600; font-size: 0.9rem;
+      padding: 0.5rem 0.75rem;
+      display: flex; align-items: center; gap: 0.5rem;
+      transition: all var(--transition-fast);
+      border-radius: var(--radius-md); white-space: nowrap;
+    }
+    @media (max-width: 1023px) {
       .nav-link {
-        text-decoration: none; color: var(--color-gray-700);
-        font-weight: 600; font-size: 0.9rem;
-        padding: 0.5rem 0.75rem;
-        display: flex; align-items: center; gap: 0.5rem;
-        transition: all var(--transition-fast);
-        border-radius: var(--radius-md); white-space: nowrap;
+        padding: 0.75rem;
+        border-bottom: 1px solid var(--color-gray-200);
+        width: 100%; font-size: 1rem; white-space: normal;
       }
-      @media (max-width: 1023px) {
-        .nav-link {
-          padding: 0.75rem;
-          border-bottom: 1px solid var(--color-gray-200);
-          width: 100%; font-size: 1rem; white-space: normal;
-        }
-      }
-      .nav-link:hover, .nav-link.active { color: var(--color-gold); }
-      .nav-link.active { font-weight: 700; }
+    }
+    .nav-link:hover, .nav-link.active { color: var(--color-gold); }
+    .nav-link.active { font-weight: 700; }
 
-      .dropdown-toggle { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; }
-      .dropdown-toggle i { font-size: 0.8rem; transition: transform var(--transition-fast); }
-      .dropdown.active .dropdown-toggle i { transform: rotate(180deg); }
-
+    .dropdown-toggle { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; }
+    .dropdown-toggle i { font-size: 0.8rem; transition: transform var(--transition-fast); }
+    .dropdown.active .dropdown-toggle i { transform: rotate(180deg); }
+    .dropdown-menu {
+      position: absolute; top: 100%; left: 0;
+      background: var(--color-white);
+      min-width: 240px;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-2xl);
+      padding: 0.5rem 0;
+      opacity: 0; visibility: hidden; transform: translateY(10px);
+      transition: all var(--transition-normal);
+      z-index: 1000;
+      border: 1px solid var(--color-gray-200);
+    }
+    .dropdown:hover .dropdown-menu { opacity: 1; visibility: visible; transform: translateY(5px); }
+    @media (max-width: 1023px) {
       .dropdown-menu {
-        position: absolute; top: 100%; left: 0;
-        background: var(--color-white);
-        min-width: 240px;
-        border-radius: var(--radius-lg);
-        box-shadow: var(--shadow-2xl);
-        padding: 0.5rem 0;
-        opacity: 0; visibility: hidden; transform: translateY(10px);
-        transition: all var(--transition-normal);
-        z-index: 1000;
-        border: 1px solid var(--color-gray-200);
+        position: static; box-shadow: none; border: none;
+        border-left: 2px solid var(--color-gold);
+        margin-left: 1rem; margin-top: 0.5rem;
+        padding: 0.5rem 0 0.5rem 1rem;
+        opacity: 1; visibility: visible; transform: none;
+        display: none;
+        background: var(--color-gray-soft);
+        width: calc(100% - 1rem);
       }
-      .dropdown:hover .dropdown-menu { opacity: 1; visibility: visible; transform: translateY(5px); }
-
-      @media (max-width: 1023px) {
-        .dropdown-menu {
-          position: static; box-shadow: none; border: none;
-          border-left: 2px solid var(--color-gold);
-          margin-left: 1rem; margin-top: 0.5rem;
-          padding: 0.5rem 0 0.5rem 1rem;
-          opacity: 1; visibility: visible; transform: none;
-          display: none;
-          background: var(--color-gray-soft);
-          width: calc(100% - 1rem);
-        }
-        .dropdown.active .dropdown-menu { display: block; }
-      }
-
+      .dropdown.active .dropdown-menu { display: block; }
+    }
+    .dropdown-item {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 0.75rem 1.25rem;
+      text-decoration: none; color: var(--color-gray-700);
+      font-size: 0.9rem; font-weight: 500;
+      transition: all var(--transition-fast);
+      white-space: nowrap;
+    }
+    @media (max-width: 1023px) {
       .dropdown-item {
-        display: flex; align-items: center; gap: 0.75rem;
-        padding: 0.75rem 1.25rem;
-        text-decoration: none; color: var(--color-gray-700);
-        font-size: 0.9rem; font-weight: 500;
-        transition: all var(--transition-fast);
-        white-space: nowrap;
+        padding: 0.75rem; white-space: normal;
+        border-bottom: 1px solid var(--color-gray-200);
       }
-      @media (max-width: 1023px) {
-        .dropdown-item {
-          padding: 0.75rem; white-space: normal;
-          border-bottom: 1px solid var(--color-gray-200);
-        }
-      }
-      .dropdown-item:hover { background: var(--color-gray-soft); color: var(--color-gold); padding-left: 1.75rem; }
-      .dropdown-divider { height: 1px; background: var(--color-gray-200); margin: 0.5rem 0; }
+    }
+    .dropdown-item:hover { background: var(--color-gray-soft); color: var(--color-gold); padding-left: 1.75rem; }
 
-      .nav-cta-group { display: flex; align-items: center; gap: 0.75rem; }
-      @media (max-width: 1023px) {
-        .nav-cta-group { flex-direction: column; width: 100%; margin-top: 1rem; gap: 0.75rem; }
-      }
+    .nav-cta-group { display: flex; align-items: center; gap: 0.75rem; }
+    @media (max-width: 1023px) {
+      .nav-cta-group { flex-direction: column; width: 100%; margin-top: 1rem; gap: 0.75rem; }
+    }
+    .nav-cta {
+      background: var(--color-gold); color: var(--color-primary) !important;
+      padding: 0.6rem 1.2rem !important;
+      border-radius: 50px; font-weight: 700 !important;
+      text-decoration: none;
+      display: inline-flex; align-items: center; justify-content: center;
+      gap: 0.5rem; font-size: 0.85rem;
+      border: none; cursor: pointer; white-space: nowrap;
+      font-family: var(--font-sans);
+    }
+    @media (max-width: 1023px) { .nav-cta { width: 100%; padding: 0.75rem !important; font-size: 1rem; } }
+    .nav-cta:hover { background: var(--color-gold-light); transform: translateY(-2px); box-shadow: var(--shadow-md); }
 
-      .nav-cta {
-        background: var(--color-gold); color: var(--color-primary) !important;
-        padding: 0.6rem 1.2rem !important;
-        border-radius: 50px; font-weight: 700 !important;
-        text-decoration: none;
-        display: inline-flex; align-items: center; justify-content: center;
-        gap: 0.5rem; font-size: 0.85rem;
-        border: none; cursor: pointer; white-space: nowrap;
-        font-family: var(--font-sans);
-      }
-      @media (max-width: 1023px) { .nav-cta { width: 100%; padding: 0.75rem !important; font-size: 1rem; } }
-      .nav-cta:hover { background: var(--color-gold-light); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+    .mobile-overlay {
+      display: none; position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(10, 22, 40, 0.8);
+      z-index: 999; backdrop-filter: blur(4px);
+    }
+    .mobile-overlay.active { display: block; }
 
-      .nav-cta-outline { background: transparent; color: var(--color-gold) !important; border: 2px solid var(--color-gold); }
-      .nav-cta-outline:hover { background: var(--color-gold); color: var(--color-primary) !important; }
-
-      .mobile-overlay {
-        display: none; position: fixed; top: 0; left: 0;
-        width: 100%; height: 100%;
-        background: rgba(10, 22, 40, 0.8);
-        z-index: 999; backdrop-filter: blur(4px);
-      }
-      .mobile-overlay.active { display: block; }
-
+    /* ===== HERO ===== */
     .submit-hero {
       padding:3rem 0 4rem; background:linear-gradient(135deg, var(--color-primary) 0%, #0F2844 100%);
       color:var(--color-white); text-align:center; position:relative; overflow:hidden;
@@ -285,19 +275,21 @@
     .submit-hero h1 .gold { color:var(--color-gold); }
     .submit-hero .lead { font-size:1.15rem; color:rgba(255,255,255,0.85); max-width:700px; margin:0 auto; line-height:1.7; }
 
+    /* ===== BENEFITS ===== */
     .benefits-section { padding:4rem 0; background:var(--color-white); border-bottom:1px solid var(--color-gray-200); }
     .section-header { text-align:center; margin-bottom:2.5rem; }
     .section-header h2 { margin-bottom:0.5rem; }
     .section-header p { color:var(--color-gray-600); max-width:700px; margin:0 auto; font-size:1.05rem; }
     .benefits-grid { display:grid; grid-template-columns:1fr; gap:1.5rem; margin-top:1.5rem; }
     @media (min-width:640px) { .benefits-grid { grid-template-columns:repeat(2,1fr); gap:2rem; } }
-    @media (min-width:1024px) { .benefits-grid { grid-template-columns:repeat(3,1fr); gap:2rem; } }
+    @media (min-width:1024px) { .benefits-grid { grid-template-columns:repeat(4,1fr); gap:2rem; } }
     .benefit-card { text-align:center; padding:2rem 1.5rem; border-radius:var(--radius-lg); border:1px solid var(--color-gray-200); transition:all var(--transition-normal); background:var(--color-white); }
     .benefit-card:hover { transform:translateY(-4px); box-shadow:var(--shadow-md); border-color:var(--color-gold); }
     .benefit-card .benefit-icon { font-size:2.5rem; color:var(--color-gold); margin-bottom:0.75rem; }
     .benefit-card h3 { font-family:var(--font-serif); font-size:1.1rem; margin-bottom:0.5rem; }
     .benefit-card p { color:var(--color-gray-600); font-size:0.9rem; line-height:1.6; margin-bottom:0; }
 
+    /* ===== FORM ===== */
     .form-section { padding:4rem 0; background:var(--color-gray-soft); }
     .form-wrapper { max-width:900px; margin:0 auto; background:var(--color-white); border-radius:var(--radius-lg); padding:2rem 1.5rem; border:1px solid var(--color-gray-200); box-shadow:var(--shadow-md); }
     @media (min-width:768px) { .form-wrapper { padding:2.5rem; } }
@@ -333,22 +325,25 @@
     .form-success h3 { font-family:var(--font-serif); color:var(--color-success); margin-bottom:0.5rem; }
     .form-success p { color:var(--color-gray-600); max-width:500px; margin:0 auto; }
 
-    .confidentiality-section { padding:4rem 0; background:var(--color-primary); color:var(--color-white); text-align:center; border-top:3px solid var(--color-gold); border-bottom:3px solid var(--color-gold); }
-    .confidentiality-section h2 { color:var(--color-white); margin-bottom:0.5rem; }
-    .confidentiality-section .lead { color:rgba(255,255,255,0.85); max-width:700px; margin:0 auto 1.5rem; font-size:1.05rem; }
-    .confidentiality-grid { display:grid; grid-template-columns:1fr; gap:1.5rem; max-width:800px; margin:0 auto; text-align:left; }
-    @media (min-width:640px) { .confidentiality-grid { grid-template-columns:repeat(2,1fr); gap:2rem; } }
-    .confidentiality-item { display:flex; align-items:flex-start; gap:1rem; background:rgba(255,255,255,0.05); padding:1.25rem; border-radius:var(--radius-md); border:1px solid rgba(255,255,255,0.1); }
-    .confidentiality-item .conf-icon { color:var(--color-gold); font-size:1.5rem; min-width:30px; margin-top:0.1rem; }
-    .confidentiality-item .conf-text h3 { color:var(--color-white); font-size:1rem; font-family:var(--font-sans); font-weight:700; margin-bottom:0.2rem; }
-    .confidentiality-item .conf-text p { color:rgba(255,255,255,0.7); font-size:0.9rem; line-height:1.6; margin-bottom:0; }
+    /* ===== TRUST SECTION ===== */
+    .trust-section { padding:4rem 0; background:var(--color-primary); color:var(--color-white); text-align:center; border-top:3px solid var(--color-gold); border-bottom:3px solid var(--color-gold); }
+    .trust-section h2 { color:var(--color-white); margin-bottom:0.5rem; }
+    .trust-section .lead { color:rgba(255,255,255,0.85); max-width:700px; margin:0 auto 1.5rem; font-size:1.05rem; }
+    .trust-grid { display:grid; grid-template-columns:1fr; gap:1.5rem; max-width:900px; margin:0 auto; text-align:left; }
+    @media (min-width:640px) { .trust-grid { grid-template-columns:repeat(3,1fr); gap:2rem; } }
+    .trust-item { display:flex; flex-direction:column; align-items:flex-start; gap:0.75rem; background:rgba(255,255,255,0.05); padding:1.5rem; border-radius:var(--radius-md); border:1px solid rgba(255,255,255,0.1); }
+    .trust-item .trust-icon { color:var(--color-gold); font-size:1.75rem; }
+    .trust-item h3 { color:var(--color-white); font-size:1rem; font-family:var(--font-sans); font-weight:700; margin-bottom:0.2rem; }
+    .trust-item p { color:rgba(255,255,255,0.7); font-size:0.9rem; line-height:1.6; margin-bottom:0; }
 
+    /* ===== CTA ===== */
     .submit-cta { padding:4rem 0; background:linear-gradient(135deg, var(--color-primary) 0%, #0F2844 100%); color:var(--color-white); text-align:center; border-top:3px solid var(--color-gold); border-bottom:3px solid var(--color-gold); }
     .submit-cta h2 { color:var(--color-white); margin-bottom:0.5rem; }
     .submit-cta .lead { color:rgba(255,255,255,0.85); max-width:700px; margin:0 auto 2rem; font-size:1.05rem; }
     .cta-buttons { display:flex; flex-direction:column; gap:1rem; justify-content:center; align-items:center; }
     @media (min-width:640px) { .cta-buttons { flex-direction:row; gap:1.5rem; } }
 
+    /* ===== FOOTER ===== */
     .footer { background:var(--color-primary); color:var(--color-white); padding:3rem 0 1.5rem; }
     .footer-grid { display:grid; grid-template-columns:1fr; gap:2rem; margin-bottom:2rem; }
     @media (min-width:640px) { .footer-grid { grid-template-columns:repeat(2,1fr); } }
@@ -361,18 +356,14 @@
     .footer-links a:hover { color:var(--color-gold); }
     .footer-contact p { margin-bottom:0.5rem; display:flex; align-items:center; gap:0.75rem; }
     .footer-bottom { text-align:center; padding-top:1.5rem; border-top:1px solid rgba(255,255,255,0.1); color:rgba(255,255,255,0.4); font-size:0.8rem; }
-    .footer-bottom-links { display:flex; justify-content:center; gap:1.5rem; margin-top:0.5rem; }
-    .footer-bottom-links a { color:rgba(255,255,255,0.4); text-decoration:none; }
-    .footer-bottom-links a:hover { color:var(--color-gold); }
 
     @media (max-width:768px) {
-      .submit-hero h1 { font-size:2.5rem; }
+      .submit-hero h1 { font-size:2.2rem; }
       .submit-hero .lead { font-size:1rem; }
       .form-wrapper { padding:1.5rem; }
-      .confidentiality-item { flex-direction:column; align-items:center; text-align:center; }
     }
     @media (max-width:480px) {
-      .submit-hero h1 { font-size:2rem; }
+      .submit-hero h1 { font-size:1.8rem; }
       .logo .brand-name { font-size:1.3rem; }
       .benefit-card { padding:1.5rem 1rem; }
       .form-row { grid-template-columns:1fr; }
@@ -382,82 +373,76 @@
 <body>
 
   <!-- ===== HEADER ===== -->
-    <header class="site-header">
-      <div class="container">
-        <div class="header-container">
+  <header class="site-header">
+    <div class="container">
+      <div class="header-container">
 
-          <div class="logo">
-            <a href="/index.html" aria-label="HospitalityRecruit Home">
-              <img src="/img/logo.jpg" alt="HospitalityRecruit Logo" class="logo-img" />
-              <span class="brand-name">Hospitality<span class="gold">Recruit</span></span>
-            </a>
-          </div>
+        <div class="logo">
+          <a href="/index.html" aria-label="HospitalityRecruit Home">
+            <img src="/img/logo.jpg" alt="HospitalityRecruit Logo" class="logo-img" />
+            <span class="brand-name">Hospitality<span class="gold">Recruit</span></span>
+          </a>
+        </div>
 
-          <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Open Menu" aria-expanded="false">
-            <i class="fas fa-bars"></i>
+        <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Open Menu" aria-expanded="false">
+          <i class="fas fa-bars"></i>
+        </button>
+
+        <nav class="main-nav" id="mainNav" aria-label="Main navigation">
+          <button class="mobile-close-btn" id="mobileCloseBtn" aria-label="Close Menu">
+            <i class="fas fa-times"></i> Close
           </button>
 
-          <nav class="main-nav" id="mainNav" aria-label="Main navigation">
-            <button class="mobile-close-btn" id="mobileCloseBtn" aria-label="Close Menu">
-              <i class="fas fa-times"></i> Close
-            </button>
+          <ul class="nav-menu">
+            <li class="nav-item">
+              <a href="/index.html" class="nav-link"><i class="fas fa-home"></i> Home</a>
+            </li>
+            <li class="nav-item">
+              <a href="/services.html" class="nav-link"><i class="fas fa-concierge-bell"></i> Services</a>
+            </li>
 
-            <ul class="nav-menu">
-              <li class="nav-item">
-                <a href="/index.html" class="nav-link"><i class="fas fa-home"></i> Home</a>
-              </li>
-              <li class="nav-item">
-                <a href="services.html" class="nav-link"><i class="fas fa-concierge-bell"></i> Services</a>
-              </li>
+            <li class="nav-item">
+              <a href="/contact/index.html" class="nav-link"><i class="fas fa-building"></i> For Employers</a>
+            </li>
 
-              <li class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false">
-                  <i class="fas fa-building"></i> Employers <i class="fas fa-chevron-down"></i>
-                </a>
-                <div class="dropdown-menu">
-                  <a href="/employers/post-job/index.html" class="dropdown-item"><i class="fas fa-user-plus"></i> Post a Job</a>
-                  <a href="/employers/search-talent/index.html" class="dropdown-item"><i class="fas fa-search"></i> Search Talent</a>
-                  <a href="/employers/pricing/index.html" class="dropdown-item"><i class="fas fa-tag"></i> Pricing</a>
-                  <a href="/employers/start-search/index.html" class="dropdown-item"><i class="fas fa-rocket"></i> Start a Search</a>
-                </div>
-              </li>
+            <li class="nav-item dropdown">
+              <a href="#" class="nav-link dropdown-toggle active" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-user-tie"></i> For Candidates <i class="fas fa-chevron-down"></i>
+              </a>
+              <div class="dropdown-menu">
+                <a href="/candidates/submit-profile/index.html" class="dropdown-item"><i class="fas fa-file-upload"></i> Submit Your CV</a>
+                <a href="https://wa.me/2348127706378?text=Hi%2C%20I%27m%20looking%20for%20hospitality%20jobs" class="dropdown-item"><i class="fab fa-whatsapp"></i> Ask About Open Roles</a>
+              </div>
+            </li>
 
-              <li class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false">
-                  <i class="fas fa-user-tie"></i> Candidates <i class="fas fa-chevron-down"></i>
-                </a>
-                <div class="dropdown-menu">
-                  <a href="/candidates/job-board/contact.html" class="dropdown-item"><i class="fas fa-briefcase"></i> Submit Your CV</a>
-                  <a href="/candidates/job-board/index.html" class="dropdown-item"><i class="fas fa-briefcase"></i> Job Alerts</a>
-                  <a href="/candidates/career-strategy/index.html" class="dropdown-item"><i class="fas fa-graduation-cap"></i> Career Advice</a>
-                </div>
-              </li>
+            <li class="nav-item">
+              <a href="/about/index.html" class="nav-link"><i class="fas fa-info-circle"></i> About</a>
+            </li>
+            <li class="nav-item">
+              <a href="/contact/index.html" class="nav-link"><i class="fas fa-envelope"></i> Contact</a>
+            </li>
+          </ul>
 
-              <li class="nav-item">
-                <a href="/about/index.html" class="nav-link active"><i class="fas fa-info-circle"></i> About</a>
-              </li>
-              <li class="nav-item">
-                <a href="/contact/index.html" class="nav-link"><i class="fas fa-envelope"></i> Contact</a>
-              </li>
-            </ul>
+          <div class="nav-cta-group">
+            <a href="/contact/index.html" class="nav-cta"><i class="fas fa-rocket"></i> Hire Staff</a>
+          </div>
+        </nav>
 
-            <div class="nav-cta-group">
-              <a href="/contact/index.html" class="nav-cta"><i class="fas fa-handshake"></i> Partner With Us</a>
-            </div>
-          </nav>
-
-          <div class="mobile-overlay" id="mobileOverlay"></div>
-        </div>
+        <div class="mobile-overlay" id="mobileOverlay"></div>
       </div>
-    </header>
+    </div>
+  </header>
 
   <!-- ===== HERO ===== -->
   <section class="submit-hero">
     <div class="container">
       <div class="submit-hero-content">
-        <div class="hero-badge"><i class="fas fa-file-upload"></i> SUBMIT YOUR PROFILE</div>
-        <h1>Join Africa's <span class="gold">elite hospitality</span> talent network.</h1>
-        <p class="lead">Submit your profile and let Hospitality Recruit match you with exclusive opportunities at luxury hotels, resorts, and restaurants across Nigeria and Africa.</p>
+        <div class="hero-badge"><i class="fas fa-file-upload"></i> SUBMIT YOUR CV</div>
+        <h1>Get matched with <span class="gold">hotel and restaurant jobs</span> in Osogbo &amp; Ilorin.</h1>
+        <p class="lead">
+          Submit your CV and we'll contact you when a hotel or restaurant in Osogbo or Ilorin
+          is hiring for your role. Free for candidates — always.
+        </p>
       </div>
     </div>
   </section>
@@ -466,29 +451,46 @@
   <section class="benefits-section">
     <div class="container">
       <div class="section-header">
-        <h2>Why Submit Your <span class="text-gold">Profile</span>?</h2>
-        <p>Get access to opportunities that aren't advertised elsewhere.</p>
+        <h2>Why Submit Your <span class="text-gold">CV</span> With Us?</h2>
+        <p>Four honest reasons. No fake promises.</p>
       </div>
       <div class="benefits-grid">
-        <div class="benefit-card"><div class="benefit-icon"><i class="fas fa-bolt"></i></div><h3>Exclusive Access</h3><p>Be the first to hear about unadvertised roles at luxury properties before they hit the job boards.</p></div>
-        <div class="benefit-card"><div class="benefit-icon"><i class="fas fa-user-tie"></i></div><h3>Personalised Matching</h3><p>We match your skills, experience, and career goals to roles that fit – no more irrelevant job alerts.</p></div>
-        <div class="benefit-card"><div class="benefit-icon"><i class="fas fa-shield-alt"></i></div><h3>Discreet &amp; Confidential</h3><p>Your job search remains private. We protect your identity until you're ready to move forward.</p></div>
-        <div class="benefit-card"><div class="benefit-icon"><i class="fas fa-chart-line"></i></div><h3>Career Guidance</h3><p>Get advice from industry experts on CV writing, interview preparation, and career progression.</p></div>
-        <div class="benefit-card"><div class="benefit-icon"><i class="fas fa-handshake"></i></div><h3>Direct Employer Access</h3><p>We connect you directly with hiring managers at Nigeria's top hospitality brands.</p></div>
-        <div class="benefit-card"><div class="benefit-icon"><i class="fas fa-crown"></i></div><h3>Premium Opportunities</h3><p>Access roles at 5-star hotels, luxury resorts, and high-end restaurants that only work with trusted partners.</p></div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon"><i class="fas fa-hand-holding-usd"></i></div>
+          <h3>Free for Candidates</h3>
+          <p>You never pay us anything. Employers pay the fee — not you. Ever.</p>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon"><i class="fas fa-map-marker-alt"></i></div>
+          <h3>Local Jobs</h3>
+          <p>We work with hotels and restaurants in Osogbo and Ilorin — not far-off cities you can't reach.</p>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon"><i class="fas fa-user-tie"></i></div>
+          <h3>Led by Industry Experience</h3>
+          <p>Run by a former DGM (Admin) of Whitefield Hotels, Ilorin, with 38 years in hospitality.</p>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon"><i class="fas fa-lock"></i></div>
+          <h3>Your CV, Your Permission</h3>
+          <p>We never share your CV with any employer without asking you first.</p>
+        </div>
+
       </div>
     </div>
   </section>
 
-  <!-- ===== FORM SECTION ===== -->
+  <!-- ===== FORM ===== -->
   <section id="submit-form" class="form-section">
     <div class="container">
       <div class="form-wrapper">
-        <h2>Submit Your <span class="text-gold">Profile</span></h2>
-        <p class="form-subtitle">Fill in your details. We'll be in touch within 48 hours.</p>
+        <h2>Submit Your <span class="text-gold">CV</span></h2>
+        <p class="form-subtitle">Fill in your details. We'll keep your CV on file and contact you when a role matches.</p>
 
-        <!-- FIX: Removed enctype="multipart/form-data" — Netlify free plan drops file uploads,
-             and the file is already uploaded to Firebase. We only send text fields + cvUrl. -->
         <form
           id="submitProfileForm"
           name="submit-profile"
@@ -516,7 +518,7 @@
 
           <div class="form-row">
             <div class="form-group">
-              <label for="phone">Phone Number <span class="required">*</span></label>
+              <label for="phone">Phone / WhatsApp <span class="required">*</span></label>
               <input type="tel" id="phone" name="phone" placeholder="+234 800 000 0000"
                      pattern="[+0-9 ()\-]{7,20}"
                      title="Enter a valid phone number (e.g. +234 803 966 1354)"
@@ -524,11 +526,26 @@
             </div>
             <div class="form-group">
               <label for="location">Current Location <span class="required">*</span></label>
-              <input type="text" id="location" name="location" placeholder="e.g. Lagos, Nigeria" required minlength="2" />
+              <input type="text" id="location" name="location" placeholder="e.g. Osogbo, Osun State" required minlength="2" />
             </div>
           </div>
 
           <div class="form-row">
+            <div class="form-group">
+              <label for="roleType">Preferred Role <span class="required">*</span></label>
+              <select id="roleType" name="roleType" required>
+                <option value="">Select a role</option>
+                <option value="chef">Chef / Cook / Pastry</option>
+                <option value="waiter">Waiter / Waitress</option>
+                <option value="housekeeper">Housekeeper / Cleaner</option>
+                <option value="receptionist">Receptionist / Front Desk</option>
+                <option value="security">Security</option>
+                <option value="laundry">Laundry</option>
+                <option value="bar">Bar / Bartender</option>
+                <option value="manager">Manager / Supervisor</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
             <div class="form-group">
               <label for="experience">Years of Experience <span class="required">*</span></label>
               <select id="experience" name="experience" required>
@@ -537,65 +554,47 @@
                 <option value="1-3">1-3 years</option>
                 <option value="3-5">3-5 years</option>
                 <option value="5-10">5-10 years</option>
-                <option value="10-15">10-15 years</option>
-                <option value="15+">15+ years</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="roleType">Role Type <span class="required">*</span></label>
-              <select id="roleType" name="roleType" required>
-                <option value="">Select role type</option>
-                <option value="executive">Executive / C-Suite</option>
-                <option value="management">Management</option>
-                <option value="supervisory">Supervisory</option>
-                <option value="specialist">Specialist</option>
-                <option value="entry">Entry Level</option>
+                <option value="10+">10+ years</option>
               </select>
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-group">
-              <label for="industry">Preferred Industry <span class="required">*</span></label>
-              <select id="industry" name="industry" required>
-                <option value="">Select industry</option>
-                <option value="hotel">Hotels &amp; Resorts</option>
-                <option value="restaurant">Restaurants</option>
-                <option value="catering">Events &amp; Catering</option>
-                <option value="travel">Travel &amp; Tourism</option>
-                <option value="culinary">Culinary</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
-            <div class="form-group">
               <label for="jobPreference">Job Preference <span class="required">*</span></label>
               <select id="jobPreference" name="jobPreference" required>
                 <option value="">Select preference</option>
                 <option value="full-time">Full-time</option>
                 <option value="part-time">Part-time</option>
-                <option value="remote">Remote</option>
                 <option value="contract">Contract</option>
-                <option value="internship">Internship</option>
+                <option value="any">Any</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="availability">Availability</label>
+              <select id="availability" name="availability">
+                <option value="immediate">Immediately</option>
+                <option value="2-weeks">Within 2 weeks</option>
+                <option value="1-month">Within 1 month</option>
+                <option value="flexible">Flexible</option>
               </select>
             </div>
           </div>
 
           <div class="form-group">
             <label for="skills">Key Skills &amp; Strengths <span class="required">*</span></label>
-            <textarea id="skills" name="skills" rows="3" placeholder="e.g. Leadership, Revenue Management, Fine Dining, Team Building, Guest Service Excellence" required minlength="10"></textarea>
+            <textarea id="skills" name="skills" rows="3" placeholder="e.g. Fine dining service, guest relations, kitchen hygiene, POS systems, team supervision" required minlength="10"></textarea>
             <div class="helper-text">List your top 5-10 skills</div>
           </div>
 
           <div class="form-group">
-            <label for="bio">Professional Summary <span class="required">*</span></label>
-            <textarea id="bio" name="bio" rows="4" placeholder="Tell us about yourself, your career highlights, and what you're looking for..." required minlength="50"></textarea>
+            <label for="bio">Brief Introduction <span class="required">*</span></label>
+            <textarea id="bio" name="bio" rows="4" placeholder="Tell us about your experience, what you're good at, and what kind of job you're looking for..." required minlength="50"></textarea>
             <div class="error-text" id="bioError">Please write at least 50 characters.</div>
           </div>
 
           <div class="form-group">
             <label for="cv">Upload CV / Résumé <span class="required">*</span></label>
-            <!-- FIX: Removed name="cv" — the file goes to Firebase Storage, not Netlify.
-                 The Firebase Storage path is sent as cvUrl instead. -->
             <input type="file" id="cv" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" required />
             <div class="helper-text">PDF or Word document, max 5 MB</div>
             <div class="error-text" id="cvError">Please upload a PDF or Word file under 5 MB.</div>
@@ -607,41 +606,55 @@
           <div class="form-group" style="display:flex; align-items:flex-start; gap:0.75rem;">
             <input type="checkbox" id="consent" name="consent" style="width:auto; margin-top:0.3rem; min-width:18px; height:18px;" required />
             <label for="consent" style="font-weight:400; font-size:0.9rem; color:var(--color-gray-700);">
-              I consent to Hospitality Recruit storing my personal data and contacting me about relevant job opportunities.
+              I agree that HospitalityRecruit can store my CV and share it with employers only when a suitable role matches, with my permission.
               <span class="required">*</span>
             </label>
           </div>
 
           <button type="submit" class="btn btn-gold btn-block btn-large" id="submitBtn">
-            <i class="fas fa-paper-plane"></i> Submit Profile
+            <i class="fas fa-paper-plane"></i> Submit My CV
           </button>
 
           <p style="font-size:0.8rem;color:var(--color-gray-600);margin-top:1rem;text-align:center;">
-            <i class="fas fa-lock"></i> Your information is secure and confidential. We'll review your profile within 48 hours.
+            <i class="fas fa-lock"></i> Your CV is stored securely and never shared without your permission.
           </p>
         </form>
 
-        <!-- FIX: Added aria-live="polite" so screen readers announce the success state -->
         <div class="form-success" id="formSuccess" aria-live="polite">
           <div class="success-icon"><i class="fas fa-check-circle"></i></div>
-          <h3>Profile Submitted Successfully!</h3>
-          <p>Thank you for submitting your profile to Hospitality Recruit. Our team will review your details and get back to you within 48 hours with relevant opportunities.</p>
-          <button class="btn btn-gold" onclick="resetForm()" style="margin-top:1.5rem;"><i class="fas fa-redo"></i> Submit Another Profile</button>
+          <h3>CV Submitted!</h3>
+          <p>Thank you. We've added your CV to our database. We'll contact you on WhatsApp or phone when a hotel or restaurant in Osogbo or Ilorin is hiring for your role.</p>
+          <button class="btn btn-gold" onclick="resetForm()" style="margin-top:1.5rem;"><i class="fas fa-redo"></i> Submit Another CV</button>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ===== CONFIDENTIALITY ===== -->
-  <section class="confidentiality-section">
+  <!-- ===== TRUST ===== -->
+  <section class="trust-section">
     <div class="container">
-      <h2>Your Privacy is <span style="color:var(--color-gold);">Our Priority</span></h2>
-      <p class="lead">We handle your data with the same discretion you expect from a luxury partner.</p>
-      <div class="confidentiality-grid">
-        <div class="confidentiality-item"><div class="conf-icon"><i class="fas fa-shield-alt"></i></div><div class="conf-text"><h3>NDPA Compliant</h3><p>Your data is stored securely in line with Nigeria's Data Protection Act 2023 and is never shared without your explicit consent.</p></div></div>
-        <div class="confidentiality-item"><div class="conf-icon"><i class="fas fa-user-secret"></i></div><div class="conf-text"><h3>Discreet Search</h3><p>We only share your profile with employers when you give us the green light.</p></div></div>
-        <div class="confidentiality-item"><div class="conf-icon"><i class="fas fa-file-contract"></i></div><div class="conf-text"><h3>NDA Protected</h3><p>All our client engagements are covered by strict non-disclosure agreements.</p></div></div>
-        <div class="confidentiality-item"><div class="conf-icon"><i class="fas fa-trash-alt"></i></div><div class="conf-text"><h3>Right to Erasure</h3><p>You can request to have your profile deleted at any time – no questions asked.</p></div></div>
+      <h2>How We <span style="color:var(--color-gold);">Handle Your CV</span></h2>
+      <p class="lead">Simple, honest, and built on trust.</p>
+      <div class="trust-grid">
+
+        <div class="trust-item">
+          <div class="trust-icon"><i class="fas fa-shield-alt"></i></div>
+          <h3>We Store It Securely</h3>
+          <p>Your CV is stored on encrypted cloud storage. Only HospitalityRecruit staff can access it.</p>
+        </div>
+
+        <div class="trust-item">
+          <div class="trust-icon"><i class="fas fa-user-secret"></i></div>
+          <h3>We Ask Before Sharing</h3>
+          <p>When a matching role comes up, we contact you first. Only if you say yes do we share your CV with the employer.</p>
+        </div>
+
+        <div class="trust-item">
+          <div class="trust-icon"><i class="fas fa-trash-alt"></i></div>
+          <h3>You Can Delete Anytime</h3>
+          <p>Want your CV removed from our records? WhatsApp us and we'll delete it within 48 hours.</p>
+        </div>
+
       </div>
     </div>
   </section>
@@ -649,11 +662,18 @@
   <!-- ===== CTA ===== -->
   <section class="submit-cta">
     <div class="container">
-      <h2>Already have a <span style="color:var(--color-gold);">profile</span>?</h2>
-      <p class="lead">Browse our job board for current opportunities or contact us directly to discuss your career ambitions.</p>
+      <h2>Have a <span style="color:var(--color-gold);">question</span>?</h2>
+      <p class="lead">
+        Not sure if we have a role that fits you? Message us on WhatsApp and ask.
+        We'll tell you honestly.
+      </p>
       <div class="cta-buttons">
-        <a href="/candidates/job-board/" class="btn btn-gold btn-large"><i class="fas fa-briefcase"></i> Browse Jobs</a>
-        <a href="/contact/" class="btn btn-outline-white btn-large"><i class="fas fa-envelope"></i> Talk to a Recruiter</a>
+        <a href="https://wa.me/2348127706378?text=Hi%2C%20I%20want%20to%20ask%20about%20hospitality%20jobs" class="btn btn-whatsapp btn-large">
+          <i class="fab fa-whatsapp"></i> WhatsApp Us
+        </a>
+        <a href="tel:+2348127706378" class="btn btn-outline-white btn-large">
+          <i class="fas fa-phone"></i> Call 0812 770 6378
+        </a>
       </div>
     </div>
   </section>
@@ -664,48 +684,40 @@
       <div class="footer-grid">
         <div class="footer-column">
           <h3>Hospitality<span style="color: var(--color-gold);">Recruit</span></h3>
-          <p>Precision talent for luxury hospitality. Executive search, operational management, and HR consulting across Africa.</p>
+          <p>Staff recruitment and training for hotels and restaurants in Osogbo and Ilorin. Flat fee. Fast turnaround. Trusted since 2020.</p>
           <div class="footer-contact" style="margin-top: 1rem;">
-            <p><i class="fas fa-phone"></i> +234 803 966 1354</p>
-            <p><i class="fas fa-envelope"></i> acquire@hospitalityrecruit.com</p>
-            <p><i class="fas fa-map-marker-alt"></i> Ilorin • Osogbo • Abuja • Lagos</p>
+            <p><i class="fas fa-phone"></i> 0812 770 6378</p>
+            <p><i class="fas fa-envelope"></i> hospitalityrecruit@gmail.com</p>
+            <p><i class="fas fa-map-marker-alt"></i> Osogbo, Osun State</p>
           </div>
-        </div>
-        <div class="footer-column">
-          <h3>For Candidates</h3>
-          <ul class="footer-links">
-            <li><a href="/candidates/job-board/"><i class="fas fa-chevron-right"></i> Browse Jobs</a></li>
-            <li><a href="/candidates/submit-profile/"><i class="fas fa-chevron-right"></i> Submit Profile</a></li>
-            <li><a href="/candidates/career-strategy/"><i class="fas fa-chevron-right"></i> Career Strategy</a></li>
-          </ul>
         </div>
         <div class="footer-column">
           <h3>For Employers</h3>
           <ul class="footer-links">
-            <li><a href="/employers/post-job/"><i class="fas fa-chevron-right"></i> Post a Job</a></li>
-            <li><a href="/employers/search-talent/"><i class="fas fa-chevron-right"></i> Search Talent</a></li>
-            <li><a href="/employers/pricing/"><i class="fas fa-chevron-right"></i> Pricing</a></li>
-            <li><a href="/employers/start-search/"><i class="fas fa-chevron-right"></i> Start a Search</a></li>
+            <li><a href="/contact/index.html"><i class="fas fa-chevron-right"></i> Start a Search</a></li>
+            <li><a href="/services.html#pricing"><i class="fas fa-chevron-right"></i> Pricing</a></li>
+            <li><a href="/services.html#process"><i class="fas fa-chevron-right"></i> How It Works</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>For Candidates</h3>
+          <ul class="footer-links">
+            <li><a href="/candidates/submit-profile/index.html"><i class="fas fa-chevron-right"></i> Submit Your CV</a></li>
+            <li><a href="https://wa.me/2348127706378?text=Hi%2C%20I%27m%20looking%20for%20hospitality%20jobs"><i class="fas fa-chevron-right"></i> Ask About Open Roles</a></li>
           </ul>
         </div>
         <div class="footer-column">
           <h3>Company</h3>
           <ul class="footer-links">
-            <li><a href="/about/"><i class="fas fa-chevron-right"></i> About Us</a></li>
-            <li><a href="/case-studies/" style="color: var(--color-gold); font-weight: 700;"><i class="fas fa-chevron-right"></i> Case Studies</a></li>
-            <li><a href="/contact/"><i class="fas fa-chevron-right"></i> Contact Us</a></li>
-            <li><a href="/blog/"><i class="fas fa-chevron-right"></i> Insights Blog</a></li>
+            <li><a href="/about/index.html"><i class="fas fa-chevron-right"></i> About Us</a></li>
+            <li><a href="/contact/index.html"><i class="fas fa-chevron-right"></i> Contact</a></li>
           </ul>
         </div>
       </div>
       <div class="footer-bottom">
         <p>&copy; <span id="currentYear"></span> HospitalityRecruit. All rights reserved.</p>
-        <div class="footer-bottom-links">
-          <a href="/privacy.html">Privacy Policy</a>
-          <a href="/terms.html">Terms of Service</a>
-        </div>
       </div>
-      <a href="https://wa.me/2348039661354?text=Hello%20Hospitality%20Recruit%2C%20I%27m%20interested%20in%20your%20services"
+      <a href="https://wa.me/2348127706378?text=Hello%20HospitalityRecruit%2C%20I%27m%20interested%20in%20your%20services"
          target="_blank" class="whatsapp-desktop" rel="noopener noreferrer" style="margin-top: 1.5rem;">
         <i class="fab fa-whatsapp"></i>
         <span>Chat with us on WhatsApp</span>
@@ -713,12 +725,12 @@
     </div>
   </footer>
 
-  <a href="https://wa.me/2348039661354?text=Hello%20Hospitality%20Recruit%2C%20I%20need%20assistance%20submitting%20my%20profile"
+  <a href="https://wa.me/2348127706378?text=Hello%20HospitalityRecruit%2C%20I%20need%20assistance%20submitting%20my%20CV"
      class="whatsapp-float" target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp"></i></a>
 
   <script>
     // ============================================================
-    // FIREBASE (Storage only on this page)
+    // FIREBASE (Storage only)
     // ============================================================
     const firebaseConfig = {
       apiKey: "AIzaSyBxeiG78oHv8wSLGRK_GAAD_mqvZKJtu30",
@@ -730,7 +742,7 @@
     };
     if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
 
-    const MAX_CV_BYTES = 5 * 1024 * 1024; // 5 MB
+    const MAX_CV_BYTES = 5 * 1024 * 1024;
     const ALLOWED_TYPES = [
       'application/pdf',
       'application/msword',
@@ -738,17 +750,17 @@
     ];
 
     document.addEventListener('DOMContentLoaded', function() {
-      document.getElementById('currentYear').textContent = new Date().getFullYear();
+      const yearEl = document.getElementById('currentYear');
+      if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-      // ============================================================
-      // MOBILE MENU
-      // ============================================================
+      // ===== MOBILE MENU =====
       const mobileToggle = document.getElementById('mobileMenuToggle');
       const mainNav = document.getElementById('mainNav');
       const overlay = document.getElementById('mobileOverlay');
       const closeBtn = document.getElementById('mobileCloseBtn');
 
       function toggleMenu(force) {
+        if (!mainNav || !overlay || !mobileToggle) return;
         const active = (typeof force === 'boolean') ? force : !mainNav.classList.contains('active');
         mainNav.classList.toggle('active', active);
         overlay.classList.toggle('active', active);
@@ -764,7 +776,7 @@
 
       document.querySelectorAll('.nav-link:not(.dropdown-toggle), .dropdown-item').forEach(function(link) {
         link.addEventListener('click', function() {
-          if (window.innerWidth <= 1024 && mainNav.classList.contains('active')) toggleMenu(false);
+          if (window.innerWidth <= 1024 && mainNav && mainNav.classList.contains('active')) toggleMenu(false);
         });
       });
 
@@ -786,9 +798,7 @@
         }
       });
 
-      // ============================================================
-      // FORM HANDLING
-      // ============================================================
+      // ===== FORM =====
       const form = document.getElementById('submitProfileForm');
       const successDiv = document.getElementById('formSuccess');
       const submitBtn = document.getElementById('submitBtn');
@@ -802,17 +812,6 @@
 
       if (!form) return;
 
-      // Success state via query string (legacy support for redirected submissions)
-      const urlParams = new URLSearchParams(window.location.search);
-      if (urlParams.get('success') === 'true') {
-        form.style.display = 'none';
-        if (successDiv) successDiv.style.display = 'block';
-        const cleanUrl = new URL(window.location.href);
-        cleanUrl.searchParams.delete('success');
-        window.history.replaceState({}, document.title, cleanUrl.pathname);
-      }
-
-      // Validate CV file
       function validateCv(file) {
         if (!file) return 'Please select a CV file.';
         if (!ALLOWED_TYPES.includes(file.type)) return 'Only PDF, DOC, or DOCX files are allowed.';
@@ -832,7 +831,6 @@
         }
       });
 
-      // Live bio length feedback
       bioInput.addEventListener('input', function() {
         const group = this.closest('.form-group');
         if (this.value.length > 0 && this.value.length < 50) {
@@ -842,14 +840,9 @@
         }
       });
 
-      // ============================================================
-      // SUBMIT: upload CV to Firebase Storage, then POST text fields
-      // to Netlify via fetch. Show success only after Netlify confirms.
-      // ============================================================
       form.addEventListener('submit', async function(e) {
         e.preventDefault();
 
-        // --- 1. Validate CV ---
         const file = cvInput.files && cvInput.files[0];
         const cvErr = validateCv(file);
         if (cvErr) {
@@ -859,7 +852,6 @@
           return;
         }
 
-        // --- 2. Validate bio length explicitly (minlength alone isn't enough UX) ---
         if (bioInput.value.trim().length < 50) {
           bioError.textContent = 'Please write at least 50 characters.';
           bioInput.closest('.form-group').classList.add('has-error');
@@ -867,14 +859,12 @@
           return;
         }
 
-        // --- 3. Lock UI ---
         submitBtn.disabled = true;
         submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading CV…';
         uploadProgress.classList.add('active');
         uploadProgressBar.style.width = '0%';
 
         try {
-          // --- 4. Upload to Firebase Storage ---
           const ext = (file.name.split('.').pop() || 'pdf').toLowerCase();
           const safeName = 'cv-' + Date.now() + '-' + Math.random().toString(36).slice(2, 8) + '.' + ext;
           const ref = firebase.storage().ref().child('cvs/' + safeName);
@@ -891,16 +881,12 @@
             );
           });
 
-          // --- 5. Store the STORAGE PATH, not a public download URL ---
-          // This keeps the CV private. Use the Firebase Admin SDK on the backend
-          // to generate short-lived signed URLs when you need to view the file.
           cvUrlInput.value = ref.fullPath;
 
           submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting…';
 
-          // --- 6. Submit to Netlify via fetch (no clone, no iframe) ---
           const formData = new FormData(form);
-          formData.delete('cv');                 // file already uploaded to Firebase
+          formData.delete('cv');
           formData.set('cvUrl', ref.fullPath);
 
           const res = await fetch('/', {
@@ -909,22 +895,21 @@
             body: new URLSearchParams(formData).toString()
           });
 
-          if (!res.ok) throw new Error('Netlify submission failed (' + res.status + ')');
+          if (!res.ok) throw new Error('Submission failed (' + res.status + ')');
 
-          // --- 7. Show success ONLY after Netlify confirms ---
           form.style.display = 'none';
           successDiv.style.display = 'block';
           form.reset();
           document.getElementById('cvUrl').value = '';
           submitBtn.disabled = false;
-          submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Profile';
+          submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit My CV';
           uploadProgress.classList.remove('active');
           document.getElementById('submit-form').scrollIntoView({ behavior: 'smooth', block: 'start' });
 
         } catch (err) {
           console.error('Upload/submit error:', err);
           submitBtn.disabled = false;
-          submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Profile';
+          submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit My CV';
           uploadProgress.classList.remove('active');
           cvError.textContent = 'Upload failed: ' + (err.message || 'Please try again.');
           cvInput.closest('.form-group').classList.add('has-error');
@@ -932,25 +917,20 @@
         }
       });
 
-      // Reset button state if user comes back via bfcache
       window.addEventListener('pageshow', function(e) {
         if (e.persisted) {
           submitBtn.disabled = false;
-          submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Profile';
+          submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit My CV';
           uploadProgress.classList.remove('active');
         }
       });
     });
 
-    // Reset for "Submit Another Profile"
     window.resetForm = function() {
       const profileForm = document.getElementById('submitProfileForm');
       const successBox = document.getElementById('formSuccess');
       const btn = document.getElementById('submitBtn');
       const prog = document.getElementById('uploadProgress');
-      const url = new URL(window.location.href);
-      url.searchParams.delete('success');
-      window.history.replaceState({}, document.title, url.pathname);
       if (profileForm) {
         profileForm.style.display = 'block';
         profileForm.reset();
@@ -958,7 +938,7 @@
       }
       if (btn) {
         btn.disabled = false;
-        btn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Profile';
+        btn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit My CV';
       }
       if (prog) prog.classList.remove('active');
       if (successBox) successBox.style.display = 'none';

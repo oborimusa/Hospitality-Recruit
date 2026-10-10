@@ -3,18 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
-    <title>About | HospitalityRecruit – Precision Talent for Luxury Hospitality</title>
-    <meta name="description" content="HospitalityRecruit connects elite talent with leading hotels, resorts, and hospitality groups across Nigeria. Executive search, HR consulting, and operational management." />
+    <title>About | HospitalityRecruit – 38 Years in Hospitality, 6 Years Recruiting</title>
+    <meta name="description" content="HospitalityRecruit is led by a 38-year hospitality veteran who rose to Deputy General Manager (Admin) at Whitefield Hotels, Ilorin. We place chefs, cooks, waiters, housekeepers, receptionists, and hotel managers for hotels and restaurants in Osogbo and Ilorin." />
     <link rel="canonical" href="https://hospitalityrecruit.netlify.app/about.html" />
 
-    <!-- Open Graph -->
     <meta property="og:title" content="About | HospitalityRecruit" />
-    <meta property="og:description" content="Executive search, HR consulting, and operational management for Nigeria's leading hotels and resorts." />
+    <meta property="og:description" content="38 years in Nigerian hospitality. 6 years in hospitality recruitment. Serving Osogbo and Ilorin." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://hospitalityrecruit.netlify.app/about.html" />
     <meta property="og:image" content="https://hospitalityrecruit.netlify.app/img/logo.jpg" />
 
-    <!-- Favicon -->
     <link rel="icon" type="image/jpeg" href="img/logo.jpg" />
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
@@ -77,7 +75,7 @@
       h1 { font-size: 2.5rem; }
       h2 { font-size: 2rem; margin-bottom: 1rem; }
       @media (min-width: 768px) { h1 { font-size: 3.5rem; } h2 { font-size: 2.8rem; } }
-      @media (min-width: 1024px) { h1 { font-size: 4.5rem; } h2 { font-size: 3.2rem; } }
+      @media (min-width: 1024px) { h1 { font-size: 4rem; } h2 { font-size: 3rem; } }
 
       .text-gold { color: var(--color-gold); }
 
@@ -97,6 +95,9 @@
       .btn-gold { background: var(--color-gold); color: var(--color-primary); }
       .btn-gold:hover { background: var(--color-gold-light); transform: translateY(-2px); box-shadow: var(--shadow-lg); }
 
+      .btn-whatsapp { background: #25d366; color: #ffffff; }
+      .btn-whatsapp:hover { background: #128c7e; transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+
       .btn-outline-gold { background: transparent; color: var(--color-gold); border: 2px solid var(--color-gold); }
       .btn-outline-gold:hover { background: var(--color-gold); color: var(--color-primary); transform: translateY(-2px); }
 
@@ -106,6 +107,16 @@
       .btn-large { padding: 1.25rem 3rem; font-size: 1.1rem; }
 
       /* ===== WHATSAPP ===== */
+      .whatsapp-desktop {
+        display: inline-flex; align-items: center; gap: 0.75rem;
+        background: #25d366; color: white; padding: 0.75rem 1.5rem;
+        border-radius: 50px; text-decoration: none; font-weight: 600;
+        transition: all 0.3s;
+      }
+      .whatsapp-desktop:hover { background: #128c7e; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3); }
+      .whatsapp-desktop i { font-size: 1.25rem; }
+      @media (max-width: 768px) { .whatsapp-desktop { display: none; } }
+
       .whatsapp-float {
         position: fixed; bottom: 20px; right: 20px;
         background-color: #25d366; color: white;
@@ -115,6 +126,7 @@
         z-index: 1000; transition: all 0.3s; text-decoration: none;
       }
       .whatsapp-float:hover { transform: scale(1.1); background-color: #128c7e; }
+      @media (min-width: 769px) { .whatsapp-float { display: none; } }
 
       /* ===== HEADER ===== */
       .site-header {
@@ -266,7 +278,6 @@
         }
       }
       .dropdown-item:hover { background: var(--color-gray-soft); color: var(--color-gold); padding-left: 1.75rem; }
-      .dropdown-divider { height: 1px; background: var(--color-gray-200); margin: 0.5rem 0; }
 
       .nav-cta-group { display: flex; align-items: center; gap: 0.75rem; }
       @media (max-width: 1023px) {
@@ -274,20 +285,17 @@
       }
 
       .nav-cta {
-        background: var(--color-gold); color: var(--color-primary) !important;
-        padding: 0.6rem 1.2rem !important;
-        border-radius: 50px; font-weight: 700 !important;
+        background: var(--color-gold); color: var(--color-primary);
+        padding: 0.6rem 1.2rem;
+        border-radius: 50px; font-weight: 700;
         text-decoration: none;
         display: inline-flex; align-items: center; justify-content: center;
         gap: 0.5rem; font-size: 0.85rem;
         border: none; cursor: pointer; white-space: nowrap;
         font-family: var(--font-sans);
       }
-      @media (max-width: 1023px) { .nav-cta { width: 100%; padding: 0.75rem !important; font-size: 1rem; } }
+      @media (max-width: 1023px) { .nav-cta { width: 100%; padding: 0.75rem; font-size: 1rem; } }
       .nav-cta:hover { background: var(--color-gold-light); transform: translateY(-2px); box-shadow: var(--shadow-md); }
-
-      .nav-cta-outline { background: transparent; color: var(--color-gold) !important; border: 2px solid var(--color-gold); }
-      .nav-cta-outline:hover { background: var(--color-gold); color: var(--color-primary) !important; }
 
       .mobile-overlay {
         display: none; position: fixed; top: 0; left: 0;
@@ -327,56 +335,99 @@
       .about-hero .lead {
         font-size: 1.15rem;
         color: rgba(255, 255, 255, 0.85);
-        max-width: 700px; margin: 0 auto 2rem; line-height: 1.7;
+        max-width: 700px; margin: 0 auto; line-height: 1.7;
       }
 
-      /* ===== MISSION ===== */
-      .mission-section { padding: 4rem 0; background: var(--color-white); }
-      .mission-grid {
+      /* ===== FOUNDER STORY ===== */
+      .founder-section { padding: 4rem 0; background: var(--color-white); }
+      .founder-grid {
         display: grid; grid-template-columns: 1fr;
-        gap: 2.5rem; align-items: center;
+        gap: 2.5rem; align-items: start;
+        max-width: 1000px; margin: 0 auto;
       }
-      @media (min-width: 1024px) { .mission-grid { grid-template-columns: 1fr 1fr; gap: 4rem; } }
-      .mission-content h2 { margin-bottom: 1.5rem; }
-      .mission-content p {
-        color: var(--color-gray-700);
-        font-size: 1.05rem; line-height: 1.7; margin-bottom: 1.25rem;
-      }
-      .mission-stats {
-        display: grid; grid-template-columns: 1fr 1fr;
-        gap: 1.5rem; margin-top: 2rem;
-      }
-      @media (max-width: 480px) { .mission-stats { gap: 1rem; } }
-      .mission-stat {
+      @media (min-width: 1024px) { .founder-grid { grid-template-columns: 1fr 1.5fr; gap: 4rem; } }
+
+      .founder-card {
         background: var(--color-gray-soft);
-        padding: 1.5rem 1rem;
         border-radius: var(--radius-lg);
+        padding: 2rem 1.5rem;
         text-align: center;
-        transition: all var(--transition-normal);
-        border: 1px solid transparent;
-      }
-      .mission-stat:hover { border-color: var(--color-gold); box-shadow: var(--shadow-md); }
-      .mission-stat-number {
-        font-family: var(--font-serif);
-        font-size: 2.5rem; font-weight: 900;
-        color: var(--color-gold); display: block;
-        line-height: 1; margin-bottom: 0.25rem;
-      }
-      .mission-stat-label {
-        color: var(--color-gray-700);
-        font-size: 0.85rem; font-weight: 600;
-        text-transform: uppercase; letter-spacing: 0.5px;
-      }
-      .mission-image {
-        border-radius: var(--radius-lg);
-        overflow: hidden; box-shadow: var(--shadow-xl);
-        background: var(--color-gray-soft);
-        aspect-ratio: 4/3;
-        display: flex; align-items: center; justify-content: center;
-        color: var(--color-gray-600); font-weight: 600;
         border: 1px solid var(--color-gray-200);
       }
-      .mission-image i { font-size: 4rem; color: var(--color-gold); opacity: 0.5; }
+
+      /* ===== FOUNDER PHOTO ===== */
+      /* Replace the placeholder below with:
+         <img src="/img/founder.jpg" alt="Founder, HospitalityRecruit" class="founder-photo" />
+         Once you upload your headshot to /img/founder.jpg
+      */
+      .founder-photo {
+        width: 140px;
+        height: 140px;
+        border-radius: 50%;
+        object-fit: cover;
+        object-position: center top;
+        margin: 0 auto 1rem;
+        display: block;
+        border: 4px solid var(--color-gold);
+        background: var(--color-primary);
+        box-shadow: var(--shadow-md);
+      }
+
+      /* Placeholder shown until photo is added */
+      .founder-photo-placeholder {
+        width: 140px;
+        height: 140px;
+        border-radius: 50%;
+        margin: 0 auto 1rem;
+        display: flex; align-items: center; justify-content: center;
+        color: var(--color-gold);
+        background: var(--color-primary);
+        border: 4px solid var(--color-gold);
+        box-shadow: var(--shadow-md);
+        font-size: 2.5rem;
+      }
+
+      .founder-card h3 {
+        font-family: var(--font-serif);
+        font-size: 1.25rem;
+        margin-bottom: 0.25rem;
+      }
+      .founder-card .founder-role {
+        color: var(--color-gold-dark);
+        font-weight: 700;
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+      }
+      .founder-card .founder-facts {
+        list-style: none;
+        text-align: left;
+        margin-top: 1rem;
+        border-top: 1px solid var(--color-gray-200);
+        padding-top: 1rem;
+      }
+      .founder-card .founder-facts li {
+        display: flex; align-items: flex-start; gap: 0.6rem;
+        font-size: 0.88rem;
+        color: var(--color-gray-700);
+        margin-bottom: 0.6rem;
+        line-height: 1.5;
+      }
+      .founder-card .founder-facts li i {
+        color: var(--color-gold);
+        margin-top: 0.25rem;
+        flex-shrink: 0;
+        font-size: 0.85rem;
+      }
+
+      .founder-story h2 { margin-bottom: 1.25rem; }
+      .founder-story p {
+        color: var(--color-gray-700);
+        font-size: 1.02rem;
+        line-height: 1.75;
+        margin-bottom: 1.15rem;
+      }
+      .founder-story p:last-child { margin-bottom: 0; }
+      .founder-story strong { color: var(--color-primary); font-weight: 700; }
 
       /* ===== VALUES ===== */
       .values-section { padding: 4rem 0; background: var(--color-gray-soft); }
@@ -391,7 +442,8 @@
         gap: 1.5rem; margin-top: 2rem;
       }
       @media (min-width: 640px) { .values-grid { grid-template-columns: repeat(2, 1fr); } }
-      @media (min-width: 1024px) { .values-grid { grid-template-columns: repeat(3, 1fr); gap: 2rem; } }
+      @media (min-width: 1024px) { .values-grid { grid-template-columns: repeat(4, 1fr); gap: 2rem; } }
+
       .value-card {
         background: var(--color-white);
         border-radius: var(--radius-lg);
@@ -399,11 +451,6 @@
         border: 1px solid var(--color-gray-200);
         transition: all var(--transition-normal);
         text-align: center;
-        opacity: 0; transform: translateY(30px);
-      }
-      .value-card.animate-in {
-        opacity: 1; transform: translateY(0);
-        transition: all 0.6s ease;
       }
       .value-card:hover {
         transform: translateY(-6px);
@@ -439,14 +486,12 @@
         border-radius: 4px;
       }
       @media (max-width: 768px) { .story-timeline::before { left: 20px; } }
+
       .story-event {
         display: flex; justify-content: flex-end;
         align-items: center; margin-bottom: 2.5rem;
         position: relative;
-        opacity: 0; transform: translateY(20px);
-        transition: all 0.6s ease;
       }
-      .story-event.animate-in { opacity: 1; transform: translateY(0); }
       .story-event:nth-child(even) { justify-content: flex-start; }
       @media (max-width: 768px) {
         .story-event { justify-content: flex-start !important; padding-left: 50px; }
@@ -454,20 +499,22 @@
       }
       .event-marker {
         position: absolute; left: 50%; transform: translateX(-50%);
-        width: 50px; height: 50px;
+        width: 60px; height: 60px;
         background: var(--color-primary);
         border-radius: 50%;
         display: flex; align-items: center; justify-content: center;
         color: var(--color-gold);
-        font-family: var(--font-serif);
-        font-weight: 900; font-size: 0.75rem;
+        font-family: var(--font-sans);
+        font-weight: 800; font-size: 0.7rem;
         border: 4px solid var(--color-gold);
         z-index: 2;
+        text-align: center;
+        padding: 0 4px;
       }
       @media (max-width: 768px) {
         .event-marker {
           left: 20px; transform: translateX(-50%);
-          width: 40px; height: 40px; font-size: 0.65rem;
+          width: 48px; height: 48px; font-size: 0.6rem;
         }
       }
       .event-content {
@@ -503,92 +550,6 @@
         color: var(--color-gray-700);
         font-size: 0.95rem; line-height: 1.6; margin-bottom: 0;
       }
-
-      /* ===== TEAM ===== */
-      .team-section {
-        padding: 4rem 0;
-        background: linear-gradient(135deg, var(--color-primary) 0%, #0f2844 100%);
-        color: var(--color-white);
-      }
-      .team-section .section-header h2 { color: var(--color-white); }
-      .team-section .section-header p { color: rgba(255, 255, 255, 0.8); }
-      .team-grid {
-        display: grid; grid-template-columns: 1fr;
-        gap: 1.5rem; margin-top: 2rem;
-      }
-      .team-member {
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: var(--radius-lg);
-        padding: 2rem 1.5rem;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
-        transition: all var(--transition-normal);
-        text-align: center;
-        opacity: 0; transform: translateY(20px);
-      }
-      .team-member.animate-in {
-        opacity: 1; transform: translateY(0);
-        transition: all 0.6s ease;
-      }
-      .team-member:hover {
-        background: rgba(255, 255, 255, 0.1);
-        transform: translateY(-6px);
-        border-color: var(--color-gold);
-      }
-      .member-avatar {
-        width: 100px; height: 100px;
-        background: var(--color-gold);
-        border-radius: 50%;
-        margin: 0 auto 1rem;
-        display: flex; align-items: center; justify-content: center;
-        color: var(--color-primary);
-        font-family: var(--font-serif);
-        font-weight: 900; font-size: 2rem;
-        border: 4px solid rgba(255, 255, 255, 0.2);
-      }
-      .team-member h3 {
-        color: var(--color-white);
-        font-family: var(--font-serif);
-        margin-bottom: 0.25rem;
-      }
-      .member-role {
-        color: var(--color-gold);
-        font-weight: 600;
-        margin-bottom: 0.75rem; font-size: 0.9rem;
-      }
-      .member-bio {
-        color: rgba(255, 255, 255, 0.8);
-        font-size: 0.9rem; line-height: 1.6;
-      }
-
-      /* ===== CLIENTS BAR ===== */
-      .clients-bar {
-        padding: 2rem 0;
-        background: var(--color-gray-soft);
-        border-top: 1px solid var(--color-gray-200);
-        border-bottom: 1px solid var(--color-gray-200);
-      }
-      .clients-bar-content {
-        display: flex; flex-wrap: wrap;
-        align-items: center; justify-content: center;
-        gap: 1.5rem 2.5rem;
-      }
-      .clients-bar-label {
-        font-weight: 700; font-size: 0.8rem;
-        text-transform: uppercase; letter-spacing: 1px;
-        color: var(--color-gray-600);
-      }
-      .client-logo-item {
-        font-family: var(--font-serif);
-        font-weight: 700;
-        color: var(--color-primary);
-        font-size: 0.9rem;
-        opacity: 0.7;
-        transition: opacity var(--transition-fast);
-        white-space: nowrap;
-      }
-      .client-logo-item:hover { opacity: 1; }
-      .client-logo-item .gold { color: var(--color-gold); }
 
       /* ===== CTA ===== */
       .about-cta {
@@ -668,15 +629,13 @@
 
       /* ===== RESPONSIVE ===== */
       @media (max-width: 768px) {
-        .about-hero h1 { font-size: 2.5rem; }
+        .about-hero h1 { font-size: 2.2rem; }
         .about-hero .lead { font-size: 1rem; }
-        .mission-stat-number { font-size: 2rem; }
       }
       @media (max-width: 480px) {
-        .about-hero h1 { font-size: 2rem; }
+        .about-hero h1 { font-size: 1.8rem; }
         .about-hero .lead { font-size: 0.95rem; }
-        .mission-stat { padding: 1rem 0.5rem; }
-        .mission-stat-number { font-size: 1.75rem; }
+        .founder-card { padding: 1.5rem 1.25rem; }
       }
     </style>
   </head>
@@ -708,30 +667,27 @@
                 <a href="/index.html" class="nav-link"><i class="fas fa-home"></i> Home</a>
               </li>
               <li class="nav-item">
-                <a href="services.html" class="nav-link"><i class="fas fa-concierge-bell"></i> Services</a>
+                <a href="/services.html" class="nav-link"><i class="fas fa-concierge-bell"></i> Services</a>
               </li>
 
               <li class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false">
-                  <i class="fas fa-building"></i> Employers <i class="fas fa-chevron-down"></i>
+                  <i class="fas fa-building"></i> For Employers <i class="fas fa-chevron-down"></i>
                 </a>
                 <div class="dropdown-menu">
-                  <a href="contact.html" class="dropdown-item"><i class="fas fa-user-plus"></i> Post a Job</a>
-                  <a href="contact.html" class="dropdown-item"><i class="fas fa-search"></i> Search Talent</a>
-                  <a href="contact.html" class="dropdown-item"><i class="fas fa-tag"></i> Pricing</a>
-                  <a href="contact.html" class="dropdown-item"><i class="fas fa-rocket"></i> Start a Search</a>
+                  <a href="/contact/index.html" class="dropdown-item"><i class="fas fa-rocket"></i> Start a Search</a>
+                  <a href="/services.html#pricing" class="dropdown-item"><i class="fas fa-tag"></i> Pricing</a>
+                  <a href="/services.html#process" class="dropdown-item"><i class="fas fa-list-ol"></i> How It Works</a>
                 </div>
               </li>
 
               <li class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false">
-                  <i class="fas fa-user-tie"></i> Candidates <i class="fas fa-chevron-down"></i>
+                  <i class="fas fa-user-tie"></i> For Candidates <i class="fas fa-chevron-down"></i>
                 </a>
                 <div class="dropdown-menu">
-                  <a href="/candidates/submit-profile/index.html" class="dropdown-item"><i class="fas fa-graduation-cap"></i>Submit Profile</a>
-                   <a href="/candidates/job-board/contact.html" class="dropdown-item"><i class="fas fa-briefcase"></i> Submit CV</a>
-                  <a href="/candidates/job-board/index.html" class="dropdown-item"><i class="fas fa-briefcase"></i> Job Alerts</a>
-                  <a href="/candidates/career-strategy/index.html" class="dropdown-item"><i class="fas fa-graduation-cap"></i> Career Advice</a>
+                  <a href="/candidates/submit-profile/" class="dropdown-item"><i class="fas fa-file-upload"></i> Submit Your CV</a>
+                  <a href="/candidates/career-strategy/" class="dropdown-item"><i class="fas fa-graduation-cap"></i> Career Tips</a>
                 </div>
               </li>
 
@@ -739,12 +695,12 @@
                 <a href="about.html" class="nav-link active"><i class="fas fa-info-circle"></i> About</a>
               </li>
               <li class="nav-item">
-                <a href="contact.html" class="nav-link"><i class="fas fa-envelope"></i> Contact</a>
+                <a href="/contact/index.html" class="nav-link"><i class="fas fa-envelope"></i> Contact</a>
               </li>
             </ul>
 
             <div class="nav-cta-group">
-              <a href="contact.html" class="nav-cta"><i class="fas fa-handshake"></i> Partner With Us</a>
+              <a href="/contact/index.html" class="nav-cta"><i class="fas fa-rocket"></i> Start a Search</a>
             </div>
           </nav>
 
@@ -758,99 +714,88 @@
       <div class="container">
         <div class="about-hero-content">
           <div class="about-badge">
-            <i class="fas fa-crown"></i> ABOUT HOSPITALITYRECRUIT
+            <i class="fas fa-user-tie"></i> ABOUT HOSPITALITYRECRUIT
           </div>
           <h1>
-            Precision talent for
-            <span class="gold">Nigeria's luxury</span> hospitality.
+            38 years in hospitality.
+            <span class="gold">6 years recruiting.</span>
           </h1>
           <p class="lead">
-            HospitalityRecruit bridges the gap between exceptional professionals
-            and leading hospitality establishments across Nigeria. We deliver
-            executive search, operational management, and HR consulting with
-            precision, discretion, and measurable results.
+            HospitalityRecruit is led by someone who has actually worked in
+            Nigerian hospitality — from security officer to Deputy General
+            Manager (Admin) at Whitefield Hotels, Ilorin — and now places the
+            next generation of staff for hotels and restaurants in Osogbo and Ilorin.
           </p>
-          <a href="#mission" class="btn btn-gold btn-large">
-            <i class="fas fa-arrow-down"></i> Our Mission
-          </a>
         </div>
       </div>
     </section>
 
-    <!-- ===== CLIENTS BAR ===== -->
-    <section class="clients-bar">
+    <!-- ===== FOUNDER STORY ===== -->
+    <section class="founder-section">
       <div class="container">
-        <div class="clients-bar-content">
-          <span class="clients-bar-label"><i class="fas fa-hotel"></i> Trusted By</span>
-          <span class="client-logo-item">Calmcity <span class="gold">Hotel</span></span>
-          <span class="client-logo-item">Princess <span class="gold">Hotel</span></span>
-          <span class="client-logo-item">Pronto <span class="gold">Restaurant</span></span>
-          <span class="client-logo-item">Golden <span class="gold">Sands</span></span>
-          <span class="client-logo-item">4T <span class="gold">Luxury Hotel</span></span>
-        </div>
-      </div>
-    </section>
+        <div class="founder-grid">
 
-    <!-- ===== MISSION ===== -->
-    <section id="mission" class="mission-section">
-      <div class="container">
-        <div class="mission-grid">
-          <div class="mission-content">
-            <h2>Our Mission: <span class="text-gold">Excellence in every placement.</span></h2>
+          <!-- FOUNDER CARD (photo + name + facts) -->
+          <div class="founder-card">
+
+            <!-- ═══════════════════════════════════════════════════
+                 PHOTO POSITION — Replace the placeholder below with:
+                 <img src="/img/founder.jpg" alt="Founder, HospitalityRecruit" class="founder-photo" />
+                 Once you upload your headshot to /img/founder.jpg
+                 ═══════════════════════════════════════════════════ -->
+            <img src="/img/founder.jpg" alt="Founder, HospitalityRecruit" class="founder-photo" />
+
+            <h3>HospitalityRecruit</h3>
+            <div class="founder-role">Founder &amp; Lead Recruiter</div>
+            <ul class="founder-facts">
+              <li><i class="fas fa-briefcase"></i> <span>38 years in Nigerian hospitality</span></li>
+              <li><i class="fas fa-map-marker-alt"></i> <span>Worked in Lagos, Jos, and Ilorin</span></li>
+              <li><i class="fas fa-user-tie"></i> <span>Former DGM (Admin), Whitefield Hotels, Ilorin</span></li>
+              <li><i class="fas fa-users"></i> <span>100+ hospitality placements since 2020</span></li>
+              <li><i class="fas fa-handshake"></i> <span>Trusted by hotels and restaurants across Osun and Kwara</span></li>
+            </ul>
+          </div>
+
+          <!-- FOUNDER STORY (text) -->
+          <div class="founder-story">
+            <h2>The <span class="text-gold">Story</span></h2>
             <p>
-              HospitalityRecruit was built on a single, uncompromising belief:
-              <strong>Nigeria's hospitality sector deserves elite talent.</strong>
-              Not generic recruitment. Not volume-driven placement. But precision
-              search that delivers leaders who transform businesses.
+              I started in hospitality in <strong>1987 as a security officer at a hotel in Lagos</strong>.
+              Over the next 38 years, I worked my way through almost every part
+              of the business — <strong>event management in Lagos and Jos</strong>,
+              then <strong>HR and Admin in Ilorin</strong>, rising to
+              <strong>HR/Admin Manager</strong> and finally serving as
+              <strong>Deputy General Manager (Admin) at Whitefield Hotels, Ilorin</strong>
+              for 2 years before I resigned.
             </p>
             <p>
-              With deep operational experience across hotels, resorts, and
-              restaurants, we don't just read CVs — we understand the culture,
-              the pressure, and the unique demands of luxury hospitality. Every
-              placement we make is a partnership. Every hire we execute is
-              designed to move the needle.
+              Along the way, I also consulted for a handful of hotels — helping
+              them fix their staffing, tighten their operations, and train
+              their teams. That's when I saw the real problem: <strong>hotels and
+              restaurants in Nigeria struggle to find reliable, vetted staff.</strong>
+              Not because good people aren't out there — but because most
+              recruiters don't know the industry from the inside.
             </p>
-            <div class="mission-stats">
-              <div class="mission-stat">
-                <span class="mission-stat-number" data-target="94" data-suffix="%">0</span>
-                <span class="mission-stat-label">Placement Retention</span>
-              </div>
-              <div class="mission-stat">
-                <span class="mission-stat-number" data-target="72" data-suffix="h">0</span>
-                <span class="mission-stat-label">Shortlist Guarantee</span>
-              </div>
-              <div class="mission-stat">
-                <span class="mission-stat-number" data-target="200" data-suffix="+">0</span>
-                <span class="mission-stat-label">Network Members</span>
-              </div>
-              <div class="mission-stat">
-                <span class="mission-stat-number" data-target="90" data-suffix="%">0</span>
-                <span class="mission-stat-label">Client Satisfaction</span>
-              </div>
-            </div>
+            <p>
+              In <strong>2020, I started HospitalityRecruit</strong> to fix that.
+              Since then, I've placed over <strong>100 people</strong> — chefs,
+              cooks, waiters, housekeepers, receptionists, and hotel managers —
+              with hotels and restaurants across Osogbo and Ilorin.
+            </p>
+            <p>
+              I'm not a big agency. I don't have a call center. I don't promise
+              200-person networks or 94% retention rates. What I do is simple:
+              <strong>you tell me the role, I send you 3 vetted candidates within
+              72 hours, and you pay ₦25,000 when you hire.</strong> If the person
+              leaves within 30 days, I replace them free.
+            </p>
+            <p>
+              That's the whole business. And after 38 years in hospitality —
+              including 2 years running Admin as DGM at Whitefield Hotels —
+              I know exactly how to run it.
+            </p>
           </div>
-          <div class="mission-image">
-            <i class="fas fa-handshake"></i>
-          </div>
-        </div>
-      </div>
-    </section>
 
-    <!-- ===== FOR EMPLOYERS SECTION ===== -->
-    <section class="employer-cta-section" style="padding: 4rem 0; background: var(--color-gray-soft);">
-      <div class="container">
-        <div style="max-width: 700px; margin: 0 auto; text-align: center;">
-          <h2>Looking to <span class="text-gold">hire</span> top talent?</h2>
-          <p style="color: var(--color-gray-700); font-size: 1.05rem; margin-bottom: 1.5rem;">
-            Get in touch and we'll help you find the right people for your team.
-            No complicated registration. Just a conversation.
-          </p>
-          <a href="contact.html" class="btn btn-gold btn-large">
-            <i class="fas fa-envelope"></i> Talk to Us
-          </a>
-          <p style="font-size: 0.85rem; color: var(--color-gray-600); margin-top: 0.75rem;">
-            <i class="fas fa-lock"></i> First consultation is free.
-          </p>
         </div>
       </div>
     </section>
@@ -859,40 +804,35 @@
     <section class="values-section">
       <div class="container">
         <div class="section-header">
-          <h2>Our <span class="text-gold">Core Values</span></h2>
-          <p>The principles that guide every search, placement, and partnership.</p>
+          <h2>What We <span class="text-gold">Stand For</span></h2>
+          <p>Four principles. No fluff.</p>
         </div>
         <div class="values-grid">
+
           <div class="value-card">
-            <div class="value-icon"><i class="fas fa-crosshairs"></i></div>
-            <h3>Precision Over Volume</h3>
-            <p>We deliver 2-3 elite candidates, not 20 average ones. Every search is surgical, targeted, and ruthlessly focused on quality.</p>
+            <div class="value-icon"><i class="fas fa-eye"></i></div>
+            <h3>Honest Pricing</h3>
+            <p>₦25,000 per placement. No percentages, no hidden charges, no surprises. You know the price before we start.</p>
           </div>
+
           <div class="value-card">
-            <div class="value-icon"><i class="fas fa-gavel"></i></div>
-            <h3>Radical Accountability</h3>
-            <p>We stand behind our work. From fast-track shortlists to 90-day placement guarantees, we back every hire.</p>
+            <div class="value-icon"><i class="fas fa-clock"></i></div>
+            <h3>Fast Delivery</h3>
+            <p>You get 3 vetted candidates within 72 hours — not 30, not "when we find someone." Three good ones, fast.</p>
           </div>
+
           <div class="value-card">
             <div class="value-icon"><i class="fas fa-shield-alt"></i></div>
-            <h3>Absolute Confidentiality</h3>
-            <p>Your search is protected by ironclad NDAs. We operate with discretion that matches the sensitivity of executive search.</p>
+            <h3>Real Guarantee</h3>
+            <p>If the person you hire leaves within 30 days, we replace them free. No arguments, no extra fee.</p>
           </div>
+
           <div class="value-card">
-            <div class="value-icon"><i class="fas fa-chart-line"></i></div>
-            <h3>Impact-Driven Results</h3>
-            <p>We measure success by business transformation delivered — not just placements made. Every hire must move the needle.</p>
+            <div class="value-icon"><i class="fas fa-map-marker-alt"></i></div>
+            <h3>Local Presence</h3>
+            <p>Based in Osogbo. Serving Osogbo and Ilorin. We're not an out-of-town agency — we know the market.</p>
           </div>
-          <div class="value-card">
-            <div class="value-icon"><i class="fas fa-network-wired"></i></div>
-            <h3>Deep Industry Integration</h3>
-            <p>Our team comes from hospitality. We understand the culture, the challenges, and what truly defines elite performance.</p>
-          </div>
-          <div class="value-card">
-            <div class="value-icon"><i class="fas fa-bolt"></i></div>
-            <h3>Urgent Execution</h3>
-            <p>In crisis staffing, hours matter. Our rapid response deploys interim talent within 8-24 hours to stabilize operations.</p>
-          </div>
+
         </div>
       </div>
     </section>
@@ -903,96 +843,86 @@
         <div class="story-content">
           <div class="section-header">
             <h2>Our <span class="text-gold">Journey</span></h2>
-            <p>From a bold idea to Nigeria's trusted hospitality talent partner.</p>
+            <p>From a hotel security post in 1987 to a recruitment business in 2025.</p>
           </div>
           <div class="story-timeline">
+
             <div class="story-event">
-              <div class="event-marker">1</div>
+              <div class="event-marker">1987</div>
               <div class="event-content">
-                <div class="event-year">THE BEGINNING</div>
-                <h3>Genesis</h3>
+                <div class="event-year">1987</div>
+                <h3>Starting in Hospitality</h3>
                 <p>
-                  Founded by a 38-year hospitality veteran who started as a
-                  hotel security officer in 1987 and rose to Deputy General
-                  Manager. HospitalityRecruit was born from lived experience
-                  of the talent gap at every level of Nigerian hospitality.
+                  Began as a security officer at a hotel in Lagos — the entry
+                  point into a 38-year career in Nigerian hospitality.
                 </p>
               </div>
             </div>
+
             <div class="story-event">
-              <div class="event-marker">2</div>
+              <div class="event-marker">1990s</div>
               <div class="event-content">
-                <div class="event-year">RESEARCH</div>
-                <h3>Industry Insight</h3>
+                <div class="event-year">1990s</div>
+                <h3>Event Management</h3>
                 <p>
-                  Extensive research across Nigerian hotels, resorts, and
-                  restaurants. Identified the true pain points: unreliable
-                  staff pipelines, unvetted candidates, and no structured
-                  executive search for hospitality roles.
+                  Worked in event management in Lagos and Jos, Plateau State —
+                  handling large-scale hospitality operations.
                 </p>
               </div>
             </div>
+
             <div class="story-event">
-              <div class="event-marker">3</div>
+              <div class="event-marker">2000s</div>
               <div class="event-content">
-                <div class="event-year">BUILD</div>
-                <h3>Platform Development</h3>
+                <div class="event-year">2000s</div>
+                <h3>HR &amp; Administration</h3>
                 <p>
-                  Built a digital platform combining a job board with elite
-                  recruitment services. Verified client partners including
-                  Calmcity Hotel, Princess Hotel, Pronto Restaurant, and 4T
-                  Luxury Hotel.
+                  Moved into HR/Admin in Ilorin. Rose from HR/Admin Officer to
+                  HR/Admin Manager.
                 </p>
               </div>
             </div>
+
             <div class="story-event">
-              <div class="event-marker">4</div>
+              <div class="event-marker">2010s</div>
               <div class="event-content">
-                <div class="event-year">LAUNCH</div>
-                <h3>Kwara &amp; Osun Focus</h3>
+                <div class="event-year">2010s</div>
+                <h3>DGM (Admin) — Whitefield Hotels</h3>
                 <p>
-                  Launching first in Kwara State and Osun State, with a
-                  deliberate focus on quality over quantity. Serving hotels,
-                  resorts, and restaurants across Nigeria's hospitality
-                  heartland.
+                  Served as Deputy General Manager (Admin) at Whitefield Hotels,
+                  Ilorin, for 2 years. Oversaw staff, operations, and
+                  administration. Also began consulting for select hotels on
+                  staffing and operations.
                 </p>
               </div>
             </div>
+
             <div class="story-event">
-              <div class="event-marker">5</div>
+              <div class="event-marker">2020</div>
+              <div class="event-content">
+                <div class="event-year">2020</div>
+                <h3>HospitalityRecruit Founded</h3>
+                <p>
+                  Launched HospitalityRecruit after seeing how many hotels
+                  struggled to find reliable staff. Started with a simple
+                  promise: send 3 vetted candidates, charge a flat fee.
+                </p>
+              </div>
+            </div>
+
+            <div class="story-event">
+              <div class="event-marker">Today</div>
               <div class="event-content">
                 <div class="event-year">TODAY</div>
-                <h3>Growing Nationally</h3>
+                <h3>Serving Osun &amp; Kwara</h3>
                 <p>
-                  Dozens of successful placements, 94% retention rate, and a
-                  trusted network of top hospitality professionals. Expanding
-                  to Abuja and Lagos in the coming months.
+                  100+ placements. Flat ₦25,000 per hire. Trusted by hotels
+                  and restaurants across Osogbo and Ilorin. Expanding
+                  carefully — one client at a time.
                 </p>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </section>
 
-    <!-- ===== TEAM ===== -->
-    <section class="team-section">
-      <div class="container">
-        <div class="section-header">
-          <h2>Led by <span style="color: var(--color-gold);">Hospitality People</span></h2>
-          <p>Built by someone who has spent 38 years inside the industry — not an outsider trying to understand it.</p>
-        </div>
-        <div class="team-grid" style="grid-template-columns: 1fr; max-width: 500px; margin: 2rem auto 0;">
-          <div class="team-member">
-            <div class="member-avatar">HR</div>
-            <h3>HospitalityRecruit</h3>
-            <div class="member-role">Founder &amp; Lead Consultant</div>
-            <p class="member-bio">
-              A 38-year hospitality veteran who started as a hotel security
-              officer in 1987 and worked up to Deputy General Manager. Now
-              combining deep industry knowledge with hands-on recruitment and
-              operations expertise to help Nigerian hotels find the right people.
-            </p>
           </div>
         </div>
       </div>
@@ -1001,84 +931,76 @@
     <!-- ===== CTA ===== -->
     <section class="about-cta">
       <div class="container">
-        <h2>Ready to build your <span style="color: var(--color-gold);">elite team</span>?</h2>
+        <h2>Need staff in <span style="color: var(--color-gold);">Osogbo or Ilorin</span>?</h2>
         <p class="lead">
-          Whether you need a single critical hire or full operational management,
-          HospitalityRecruit delivers precision talent for luxury hospitality.
+          Call or WhatsApp. We'll get you 3 vetted candidates within 72 hours.
+          Flat ₦25,000 on hire. Free replacement if it doesn't work out.
         </p>
         <div class="cta-buttons">
-          <a href="contact.html" class="btn btn-gold btn-large">
-            <i class="fas fa-handshake"></i> Partner With Us
+          <a href="https://wa.me/2348127706378?text=Hi%2C%20I%20need%20staff%20for%20my%20hotel%2Frestaurant" class="btn btn-whatsapp btn-large">
+            <i class="fab fa-whatsapp"></i> WhatsApp Us Now
           </a>
-          <a href="tel:+2348039661354" class="btn btn-outline-white btn-large">
-            <i class="fas fa-phone"></i> Call +234 803 966 1354
+          <a href="/services.html" class="btn btn-outline-white btn-large">
+            <i class="fas fa-concierge-bell"></i> See Our Services
           </a>
         </div>
       </div>
     </section>
 
     <!-- ===== FOOTER ===== -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-column">
-          <h3>Hospitality<span style="color: var(--color-gold);">Recruit</span></h3>
-          <p>Precision talent for luxury hospitality. Executive search, operational management, and HR consulting across Africa.</p>
-          <div class="footer-contact" style="margin-top: 1rem;">
-            <p><i class="fas fa-phone"></i> +234 803 966 1354</p>
-            <p><i class="fas fa-envelope"></i> acquire@hospitalityrecruit.com</p>
-            <p><i class="fas fa-map-marker-alt"></i> Ilorin • Osogbo • Abuja • Lagos</p>
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-column">
+            <h3>Hospitality<span style="color: var(--color-gold);">Recruit</span></h3>
+            <p>Staff recruitment and training for hotels and restaurants in Osogbo and Ilorin. Flat fee. Fast turnaround. Trusted since 2020.</p>
+            <div class="footer-contact" style="margin-top: 1rem;">
+              <p><i class="fas fa-phone"></i> 0812 770 6378</p>
+              <p><i class="fas fa-envelope"></i> hospitalityrecruit@gmail.com</p>
+              <p><i class="fas fa-map-marker-alt"></i> Osogbo, Osun State</p>
+            </div>
+          </div>
+          <div class="footer-column">
+            <h3>For Employers</h3>
+            <ul class="footer-links">
+              <li><a href="/contact/index.html"><i class="fas fa-chevron-right"></i> Start a Search</a></li>
+              <li><a href="/services.html#pricing"><i class="fas fa-chevron-right"></i> Pricing</a></li>
+              <li><a href="/services.html#process"><i class="fas fa-chevron-right"></i> How It Works</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h3>For Candidates</h3>
+            <ul class="footer-links">
+              <li><a href="/candidates/submit-profile/"><i class="fas fa-chevron-right"></i> Submit Your CV</a></li>
+              <li><a href="/candidates/career-strategy/"><i class="fas fa-chevron-right"></i> Career Tips</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h3>Company</h3>
+            <ul class="footer-links">
+              <li><a href="about.html"><i class="fas fa-chevron-right"></i> About Us</a></li>
+              <li><a href="/contact/index.html"><i class="fas fa-chevron-right"></i> Contact</a></li>
+              <li><a href="/privacy.html"><i class="fas fa-chevron-right"></i> Privacy Policy</a></li>
+              <li><a href="/terms.html"><i class="fas fa-chevron-right"></i> Terms of Service</a></li>
+            </ul>
           </div>
         </div>
-        <div class="footer-column">
-          <h3>For Candidates</h3>
-          <ul class="footer-links">
-            <li><a href="/candidates/job-board/"><i class="fas fa-chevron-right"></i> Browse Jobs</a></li>
-            <li><a href="/candidates/submit-profile/"><i class="fas fa-chevron-right"></i> Submit Profile</a></li>
-            <li><a href="/candidates/career-strategy/"><i class="fas fa-chevron-right"></i> Career Strategy</a></li>
-          </ul>
+        <div class="footer-bottom">
+          <p>&copy; <span id="currentYear"></span> HospitalityRecruit. All rights reserved.</p>
         </div>
-        <div class="footer-column">
-          <h3>For Employers</h3>
-          <ul class="footer-links">
-            <li><a href="/employers/post-job/"><i class="fas fa-chevron-right"></i> Post a Job</a></li>
-            <li><a href="/employers/search-talent/"><i class="fas fa-chevron-right"></i> Search Talent</a></li>
-            <li><a href="/employers/pricing/"><i class="fas fa-chevron-right"></i> Pricing</a></li>
-            <li><a href="/employers/start-search/"><i class="fas fa-chevron-right"></i> Start a Search</a></li>
-          </ul>
-        </div>
-        <div class="footer-column">
-          <h3>Company</h3>
-          <ul class="footer-links">
-            <li><a href="/about/"><i class="fas fa-chevron-right"></i> About Us</a></li>
-            <li><a href="/case-studies/" style="color: var(--color-gold); font-weight: 700;"><i class="fas fa-chevron-right"></i> Case Studies</a></li>
-            <li><a href="/contact/"><i class="fas fa-chevron-right"></i> Contact Us</a></li>
-            <li><a href="/blog/"><i class="fas fa-chevron-right"></i> Insights Blog</a></li>
-          </ul>
-        </div>
+        <a href="https://wa.me/2348127706378?text=Hello%20HospitalityRecruit%2C%20I%27m%20interested%20in%20your%20services"
+           target="_blank" class="whatsapp-desktop" rel="noopener noreferrer" style="margin-top: 1.5rem;">
+          <i class="fab fa-whatsapp"></i>
+          <span>Chat with us on WhatsApp</span>
+        </a>
       </div>
-      <div class="footer-bottom">
-        <p>&copy; <span id="currentYear"></span> HospitalityRecruit. All rights reserved.</p>
-        <div class="footer-bottom-links">
-          <a href="/privacy.html">Privacy Policy</a>
-          <a href="/terms.html">Terms of Service</a>
-        </div>
-      </div>
-      <a href="https://wa.me/2348039661354?text=Hello%20Hospitality%20Recruit%2C%20I%27m%20interested%20in%20your%20services"
-         target="_blank" class="whatsapp-desktop" rel="noopener noreferrer" style="margin-top: 1.5rem;">
-        <i class="fab fa-whatsapp"></i>
-        <span>Chat with us on WhatsApp</span>
-      </a>
-    </div>
-  </footer>
+    </footer>
 
-    <a
-      href="https://wa.me/2348039661354?text=Hello%20HospitalityRecruit%2C%20I%27m%20interested%20in%20your%20services"
-      class="whatsapp-float"
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label="Chat on WhatsApp"
-    >
+    <a href="https://wa.me/2348127706378?text=Hello%20HospitalityRecruit%2C%20I%20need%20staff"
+       class="whatsapp-float"
+       target="_blank"
+       rel="noopener noreferrer"
+       aria-label="Chat on WhatsApp">
       <i class="fab fa-whatsapp"></i>
     </a>
 
@@ -1131,52 +1053,6 @@
             document.querySelectorAll(".dropdown").forEach((d) => d.classList.remove("active"));
           }
         });
-
-        // Intersection Observer for animations
-        const observerOptions = { threshold: 0.2, rootMargin: "0px 0px -30px 0px" };
-
-        const observer = new IntersectionObserver(function (entries) {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              if (
-                entry.target.classList.contains("value-card") ||
-                entry.target.classList.contains("team-member") ||
-                entry.target.classList.contains("story-event")
-              ) {
-                entry.target.classList.add("animate-in");
-              }
-              if (entry.target.classList.contains("mission-stat")) {
-                const numberEl = entry.target.querySelector(".mission-stat-number");
-                if (numberEl && numberEl.dataset.target && !numberEl.dataset.counted) {
-                  numberEl.dataset.counted = "true";
-                  const target = parseInt(numberEl.dataset.target);
-                  const suffix = numberEl.dataset.suffix || "";
-                  animateCounter(numberEl, target, suffix);
-                }
-              }
-            }
-          });
-        }, observerOptions);
-
-        document.querySelectorAll(".value-card, .team-member, .story-event, .mission-stat").forEach((el) => {
-          observer.observe(el);
-        });
-
-        function animateCounter(element, target, suffix) {
-          const duration = 1800;
-          const steps = 50;
-          const increment = target / steps;
-          let current = 0;
-          const timer = setInterval(() => {
-            current += increment;
-            if (current >= target) {
-              clearInterval(timer);
-              element.textContent = target + suffix;
-            } else {
-              element.textContent = Math.floor(current) + suffix;
-            }
-          }, duration / steps);
-        }
       });
     </script>
   </body>
