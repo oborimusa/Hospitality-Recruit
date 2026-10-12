@@ -229,7 +229,21 @@
       }
       .contact-detail .detail-content h3 { font-family: var(--font-sans); font-weight: 700; font-size: 1rem; color: var(--color-primary); margin-bottom: 0.25rem; }
       .contact-detail .detail-content p { color: var(--color-gray-600); font-size: 0.95rem; margin-bottom: 0; }
-      .contact-detail .detail-content a { color: var(--color-gray-600); text-decoration: none; transition: color var(--transition-fast); }
+      .contact-detail .detail-content a {
+      color: var(--color-gray-600);
+      text-decoration: none;
+      transition: color var(--transition-fast);
+      word-break: break-all;
+      overflow-wrap: anywhere;
+    }
+
+    /* Prevent overflow of long emails and URLs */
+    a[href^="mailto:"],
+    a[href^="tel:"],
+    a[href^="https://wa.me"] {
+      word-break: break-all;
+      overflow-wrap: anywhere;
+    }
       .contact-detail .detail-content a:hover { color: var(--color-gold); }
 
       .contact-form-wrapper {

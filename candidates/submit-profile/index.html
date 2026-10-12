@@ -172,7 +172,13 @@
       .submit-hero h1 { color:var(--color-white); margin-bottom:1rem; }
       .submit-hero h1 .gold { color:var(--color-gold); }
       .submit-hero .lead { font-size:1.15rem; color:rgba(255,255,255,0.85); max-width:700px; margin:0 auto; line-height:1.7; }
-
+      /* Prevent overflow of long emails and URLs */
+      a[href^="mailto:"],
+      a[href^="tel:"],
+      a[href^="https://wa.me"] {
+        word-break: break-all;
+        overflow-wrap: anywhere;
+      }
       /* HOW IT WORKS */
       .how-section { padding:3rem 0; background:var(--color-white); border-bottom:1px solid var(--color-gray-200); }
       .how-grid { display:grid; grid-template-columns:1fr; gap:1.5rem; max-width:900px; margin:0 auto; }
@@ -211,7 +217,22 @@
       }
       .notice i { color:var(--color-gold); font-size:1.5rem; flex-shrink:0; margin-top:0.15rem; }
       .notice-text h4 { font-family:var(--font-sans); font-size:1rem; font-weight:700; color:var(--color-primary); margin-bottom:0.35rem; }
-      .notice-text p { color:var(--color-gray-700); font-size:0.92rem; line-height:1.6; margin:0; }
+      .notice-text p {
+  color:var(--color-gray-700);
+  font-size:0.92rem;
+  line-height:1.6;
+  margin:0;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+      .notice-text p a {
+        color:var(--color-gold-dark);
+        font-weight:700;
+        text-decoration:none;
+        word-break: break-all;
+        overflow-wrap: anywhere;
+      }
       .notice-text p a { color:var(--color-gold-dark); font-weight:700; text-decoration:none; }
       .notice-text p a:hover { text-decoration:underline; }
 
@@ -258,9 +279,22 @@
         color:#0A5C34; margin-bottom:0.5rem; display:flex; align-items:center; gap:0.5rem;
         flex-wrap: wrap;
       }
-      .form-success .next-step p { color:var(--color-gray-700); font-size:0.92rem; line-height:1.6; margin:0; text-align:left; word-wrap: break-word; overflow-wrap: break-word; }
+      .form-success .next-step p {
+      color:var(--color-gray-700);
+      font-size:0.92rem;
+      line-height:1.6;
+      margin:0;
+      text-align:left;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .form-success .next-step p strong {
+      word-break: break-all;
+      overflow-wrap: anywhere;
+    }
 
-      /* TRUST */
+          /* TRUST */
       .trust-section { padding:4rem 0; background:var(--color-primary); color:var(--color-white); text-align:center; border-top:3px solid var(--color-gold); border-bottom:3px solid var(--color-gold); }
       .trust-section h2 { color:var(--color-white); margin-bottom:0.5rem; }
       .trust-section .lead { color:rgba(255,255,255,0.85); max-width:700px; margin:0 auto 1.5rem; font-size:1.05rem; }
@@ -289,7 +323,16 @@
       .footer-links li { margin-bottom:0.75rem; }
       .footer-links a { color:rgba(255,255,255,0.7); text-decoration:none; transition:color 0.3s; display:flex; align-items:center; gap:0.5rem; font-size:0.9rem; }
       .footer-links a:hover { color:var(--color-gold); }
-      .footer-contact p { margin-bottom:0.5rem; display:flex; align-items:center; gap:0.75rem; }
+      .footer-contact p {
+        margin-bottom:0.5rem;
+        display:flex;
+        align-items:flex-start;
+        gap:0.75rem;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        word-break: break-word;
+        flex-wrap: wrap;
+      }
       .footer-bottom { text-align:center; padding-top:1.5rem; border-top:1px solid rgba(255,255,255,0.1); color:rgba(255,255,255,0.4); font-size:0.8rem; }
 
       @media (max-width:768px) {
